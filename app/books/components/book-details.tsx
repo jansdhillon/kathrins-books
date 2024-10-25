@@ -204,22 +204,25 @@ export function BookDetails({ book }: BookDetailsProps) {
               )}
             </div>
             <div className="flex flex-col justify-between items-end">
-              <p className="text-xl font-semibold text-primary mb-4">
               <>
-              {book.stock > 0 ? (
-                <>${book.price.toFixed(2)} CAD</>
-              ) : (
-                `Sold for $${book.price.toFixed(2)}`
-              )}
-            </>
-              </p>
+                {book.stock > 0 && (
+                  <p className="text-xl font-semibold text-primary mb-4">
+                    ${book.price.toFixed(2)} CAD{" "}
+                  </p>
+                )}
+              </>
 
-              <Button onClick={handleAddToCart} disabled={isPending}>
+              <Button onClick={handleAddToCart} disabled={isPending || book.stock <= 0}>
                 {isPending ? (
                   "Adding to Cart..."
                 ) : (
                   <>
-                    <ShoppingCart className="mr-2 h-5 w-5" /> Add to Cart
+                    <ShoppingCart className="mr-2 h-5 w-5" />{" "}
+                    <>
+                      {book.stock > 0
+                        ? "Add to Cart"
+                        : `Sold for $${book.price.toFixed(2)}`}
+                    </>
                   </>
                 )}
               </Button>
