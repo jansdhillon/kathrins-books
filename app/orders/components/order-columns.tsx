@@ -6,6 +6,8 @@ import { format } from "date-fns";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { Eye } from "lucide-react";
 
 export const orderColumns: ColumnDef<OrderWithItemsType>[] = [
   {
@@ -77,13 +79,18 @@ export const orderColumns: ColumnDef<OrderWithItemsType>[] = [
   {
     id: "actions",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Actions" />
+      <DataTableColumnHeader column={column} title="View" />
     ),
     cell: ({ row }) => (
       <Link href={`/orders/${row.original.id}`}>
-        <Button variant="outline" size="sm">
-          View Order
-        </Button>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button variant="ghost" size={"sm"}>
+              <Eye size={16} />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>View Order</TooltipContent>
+        </Tooltip>
       </Link>
     ),
   },

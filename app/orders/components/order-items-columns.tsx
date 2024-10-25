@@ -2,6 +2,15 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { OrderItemType } from "@/lib/types/types";
 import Image from "next/image";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Button } from "@/components/ui/button";
+import { Eye } from "lucide-react";
+import { DataTableColumnHeader } from "./data-table-column-header";
+import Link from "next/link";
 
 export const orderItemColumns: ColumnDef<OrderItemType>[] = [
   {
@@ -31,5 +40,23 @@ export const orderItemColumns: ColumnDef<OrderItemType>[] = [
     accessorKey: "price",
     header: "Price",
     cell: ({ row }) => `$${row.original.price.toFixed(2)}`,
+  },
+  {
+    id: "actions",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="" />
+    ),
+    cell: ({ row }) => (
+      <Link href={`/books/${row.original.book_id}`}>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button variant="ghost" size={"sm"}>
+              <Eye size={16} />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>View Book</TooltipContent>
+        </Tooltip>
+      </Link>
+    ),
   },
 ];
