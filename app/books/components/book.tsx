@@ -69,20 +69,19 @@ export function Book({ book }: BookProps) {
         <Separator />
         <p> by {book.author}</p>
         {book.genre && (
-          <div className="">
+         <div className="flex gap-1 flex-wrap">
             {book.genre.map((g) =>
               g
                 .split(",")
                 .filter((g) => g.length > 0)
                 .map((g) => (
-                  <Link
+                  <div
                     key={g}
-                    href={`/search?query=${encodeURIComponent(g.trim())}`}
                   >
                     <Badge className="mr-0.5">
                       <p className="line-clamp-1 max-w-[200px]">{g}</p>
                     </Badge>
-                  </Link>
+                  </div>
                 ))
             )}
           </div>

@@ -30,7 +30,7 @@ export const orderColumns: ColumnDef<OrderWithItemsType>[] = [
       <DataTableColumnHeader column={column} title="Items" />
     ),
     cell: ({ row }) => (
-      <div>
+      <div className="flex gap-1 flex-wrap">
         {row.original.items.length > 0 ? (
           row.original.items.map((item) => (
             <div key={item.id}>{item.book_title}</div>
@@ -40,6 +40,13 @@ export const orderColumns: ColumnDef<OrderWithItemsType>[] = [
         )}
       </div>
     ),
+    filterFn: (row, columnId, filterValue) => {
+      return row.original.items.some((item) =>
+        item?.book_title?.toLowerCase().includes(filterValue.toLowerCase())
+      );
+    },
+    enableSorting: true,
+    enableHiding: true,
   },
   {
     accessorKey: "status",
@@ -55,7 +62,17 @@ export const orderColumns: ColumnDef<OrderWithItemsType>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Total" />
     ),
-    cell: ({ row }) => <div>${((row?.original?.items_total || 0) + (row?.original?.shipping_cost && row?.original?.shipping_cost / 100 || 0)).toFixed(2)}</div>,
+    cell: ({ row }) => (
+      <div>
+        $
+        {(
+          (row?.original?.items_total || 0) +
+          ((row?.original?.shipping_cost &&
+            row?.original?.shipping_cost / 100) ||
+            0)
+        ).toFixed(2)}
+      </div>
+    ),
   },
   {
     id: "actions",

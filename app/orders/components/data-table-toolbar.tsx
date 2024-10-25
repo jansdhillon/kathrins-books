@@ -9,37 +9,35 @@ import { Search } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { statusOptions } from "./status-options";
+import { DataTableViewOptions } from "./data-table-view-options";
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
+  globalFilter?: string;
+  setGlobalFilter: (value: string) => void;
 }
 
 export function DataTableToolbar<TData>({
   table,
+  globalFilter,
+  setGlobalFilter,
 }: DataTableToolbarProps<TData>) {
   const isFiltered =
     table.getState().columnFilters.length > 0 || table.getState().globalFilter;
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const query = searchParams.get("query");
+
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchTerm = e.target.value;
-    table.setGlobalFilter(searchTerm);
+    setGlobalFilter(searchTerm);
   };
 
-  useEffect(() => {
-    if (query) {
-      table.setGlobalFilter(decodeURIComponent(query));
-    }
-  }, [query]);
 
   return (
     <div className="flex items-center justify-between gap-4">
       <div className="flex flex-1 items-center space-x-2">
         <div className="relative">
           <Input
-            value={table.getState().globalFilter ?? ""}
+            value={globalFilter}
             onChange={handleFilterChange}
             placeholder="Search orders..."
             className="w-full max-w-sm pl-8"
@@ -69,6 +67,7 @@ export function DataTableToolbar<TData>({
             <Cross2Icon className="ml-2 h-4 w-4" />
           </Button>
         )}
+        <DataTableViewOptions table={table} />
       </div>
     </div>
   );

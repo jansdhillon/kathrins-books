@@ -6,6 +6,7 @@ import { DataTableRowActions } from "./data-table-row-actions";
 import { BookType } from "@/lib/types/types";
 import Image from "next/image";
 import { format } from "date-fns";
+import Link from "next/link";
 
 export const bookColumns: ColumnDef<BookType>[] = [
   // {
@@ -76,14 +77,16 @@ export const bookColumns: ColumnDef<BookType>[] = [
         .toString()
         .split(",") || ["-"];
       return (
-        <div className="flex space-x-2">
-          <span className="max-w-[100px] md:max-w-[200px] flex-wrap-reverse truncate font-medium">
-            {genres
-              .filter((g) => g.length > 0)
-              .map((genre, index) => (
-                <Badge key={index}>{genre}</Badge>
-              ))}
-          </span>
+        <div className="flex gap-1 flex-wrap">
+          {genres
+            .filter((g) => g.length > 0)
+            .map((g) => (
+              <div key={g}>
+                <Badge className="mr-0.5">
+                  <p className="line-clamp-1 max-w-[200px]">{g}</p>
+                </Badge>
+              </div>
+            ))}
         </div>
       );
     },

@@ -170,9 +170,11 @@ export function BookDetails({ book }: BookDetailsProps) {
                     .split(",")
                     .filter((g) => g.trim().length > 0)
                     .map((g) => (
-                      <Link href={`/search?query=${g.trim()}`} key={g.trim()}>
-                        <Badge key={g.trim()}>{g.trim()}</Badge>
-                      </Link>
+                      <div key={g}>
+                        <Badge className="mr-0.5">
+                          <p className="line-clamp-1 max-w-[200px]">{g}</p>
+                        </Badge>
+                      </div>
                     ))}
                 </div>
               )}
@@ -212,7 +214,10 @@ export function BookDetails({ book }: BookDetailsProps) {
                 )}
               </>
 
-              <Button onClick={handleAddToCart} disabled={isPending || book.stock <= 0}>
+              <Button
+                onClick={handleAddToCart}
+                disabled={isPending || book.stock <= 0}
+              >
                 {isPending ? (
                   "Adding to Cart..."
                 ) : (
