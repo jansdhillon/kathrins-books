@@ -21,7 +21,7 @@ const BookDisplay = ({ books }: { books: BookType[] }) => {
       <Carousel className="">
         <CarouselContent>
           {books.map((book: BookType) => (
-            <CarouselItem className="md:basis-1/3 lg:basis-1/4 mr-2 lg:mr-0" key={book.id}>
+            <CarouselItem className="md:basis-1/3 lg:basis-1/4 mr-2 lg:mr-0 mx-auto flex justify-center" key={book.id}>
               <Book key={book.id} book={book} />
             </CarouselItem>
           ))}

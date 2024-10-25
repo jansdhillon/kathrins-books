@@ -16,7 +16,7 @@ import { createClient } from "@/utils/supabase/server";
 const FeaturedBooks = ({ featuredBooks }: { featuredBooks: BookType[] }) => {
   return (
     <section className="space-y-6 p-8 flex flex-col md:flex-row items-center gap-8 -mt-8 ">
-      <div className="flex flex-col space-y-6 container mx-auto">
+    <div className="flex flex-col space-y-6 lg:container lg:justify-center ">
         <h2 className="text-xl font-bold" id="featured">
           Featured
         </h2>
@@ -41,9 +41,9 @@ export default async function HomePage() {
   const featuredBooks = await getFeaturedBooks(supabase);
 
   return (
-    <div className="flex flex-col justify-center h-full gap-16 -mt-14">
+    <div className="flex flex-col justify-center h-full gap-8 -mt-14">
       <BgGlowContainer>
-        <div className="flex flex-col gap-6 container mx-auto justify-between items-start text-left text-primary w-full py-24 md:py-36 pb-10 leading-loose">
+        <div className="flex flex-col gap-6 container mx-auto justify-between items-start text-left text-primary w-full py-24 md:py-36  leading-loose">
           <div className="text-4xl md:text-5xl font-extrabold text-left ">
             Find Your Next
             <br /> Great Read.
@@ -65,8 +65,8 @@ export default async function HomePage() {
 
       <FeaturedBooks featuredBooks={featuredBooks} />
 
-      <section className="space-y-6 p-8 flex flex-col md:flex-row items-center gap-8  bg-secondary dark:bg-accent/40 -mt-8  ">
-        <div className="flex flex-col space-y-6 container mx-auto">
+      <section className="space-y-6 p-8 flex flex-col md:flex-row items-center gap-8  bg-secondary dark:bg-accent/40  ">
+        <div className="flex flex-col space-y-6 container justify-center ">
           <h2 className="text-xl font-bold">Latest Books</h2>
 
           <p className="text-base mb-6 text-muted-foreground font-medium">
@@ -76,7 +76,7 @@ export default async function HomePage() {
 
           <Link
             href="/books"
-            className="flex items-center justify-center w-full py-6 md:py-12 "
+            className="flex items-center justify-center w-full  "
           >
             <Button className="flex items-center justify-center space-x-2 font-bold">
               <span>View All Books</span>
@@ -86,9 +86,9 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="px-8 flex flex-col md:flex-row items-center gap-8 -mt-8 ">
+      <section className="px-8 flex flex-col md:flex-row items-center gap-8 ">
 
-        <div className="flex flex-col space-y-6 container mx-auto ">
+      <div className="flex flex-col space-y-6 container justify-center ">
           <h2 className="text-xl font-bold">About</h2>
           <p className="font-medium text-muted-foreground md:max-w-[50%]">
             Kathrin is a passionate book lover and curator who believes in the
