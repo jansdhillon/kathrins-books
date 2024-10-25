@@ -57,6 +57,12 @@ export function DataTableToolbar<TData>({
           />
         </div>
 
+        <DataTableFacetedFilter
+          column={table.getColumn("genre")}
+          title="Genre"
+          options={genreOptions}
+        />
+
         {isFiltered && (
           <Button
             variant="ghost"
