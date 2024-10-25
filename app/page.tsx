@@ -41,7 +41,7 @@ export default async function HomePage() {
   return (
     <div className="flex flex-col justify-center h-full gap-16 -mt-14">
       <BgGlowContainer>
-        <div className="flex flex-col gap-6 container mx-auto justify-between items-start text-left text-primary w-full py-20 ">
+        <div className="flex flex-col gap-6 container mx-auto justify-between items-start text-left text-primary w-full py-36 ">
           <div className="text-4xl md:text-5xl font-extrabold text-left ">
             Find Your Next
             <br /> Great Read.
@@ -84,7 +84,8 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="space-y-6 p-8 rounded-xl bg-accent flex flex-col md:flex-row items-center gap-8 dark:bg-accent/60">
+      <section className="space-y-6 p-8 rounded-xl bg-accent flex flex-col md:flex-row items-center gap-8 dark:bg-accent/60 -mb-7">
+
         <div className="flex flex-col space-y-4 container mx-auto ">
           <h2 className="text-xl font-bold">About</h2>
           <p className="font-medium text-muted-foreground md:max-w-[50%]">

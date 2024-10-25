@@ -7,7 +7,7 @@ import Link from "next/link";
 
 export default function Login() {
   return (
-    <div className="flex flex-1 flex-col space-y-6 mx-auto">
+    <>
       <h1 className="text-2xl font-bold text-left">Sign In</h1>
       <Separator />
 
@@ -41,6 +41,6 @@ export default function Login() {
           </SubmitButton>
         </div>
       </form>
-    </div>
+    </>
   );
 }

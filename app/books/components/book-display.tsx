@@ -28,8 +28,8 @@ const BookDisplay = ({ books }: { books: BookType[] }) => {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="ml-5 lg:ml-0" />
-        <CarouselNext className="mr-5 lg:mr-0"/>
+        <CarouselPrevious className="ml-2 lg:ml-0" />
+        <CarouselNext className="mr-2 lg:mr-0"/>
       </Carousel>
     </Suspense>
   );

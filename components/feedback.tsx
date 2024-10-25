@@ -47,7 +47,7 @@ const Feedback = ({ children }: { children: ReactNode | ReactNode[] }) => {
     }
   }, [status, statusDescription, error, errorDescription, toast, router]);
 
-  return <div>{children}</div>;
+  return <>{children}</>;
 };
 
 export default Feedback;
