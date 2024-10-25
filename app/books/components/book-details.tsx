@@ -233,7 +233,7 @@ export function BookDetails({ book }: BookDetailsProps) {
               Description
             </h3>
             <Separator className="my-4" />
-            <p className="leading-loose">
+            <p className="leading-loose ">
               {book.description || "No description available."}
             </p>
           </CardContent>

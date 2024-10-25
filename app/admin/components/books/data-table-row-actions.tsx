@@ -42,7 +42,7 @@ export function DataTableRowActions<TData>({
 
   return (
     <>
-      <div className="hidden md:flex justify-center items-center gap-4">
+      <div className="flex justify-center items-center gap-4">
         <Link
           href={`/books/${book.id}`}
           className="flex justify-center items-center "
@@ -97,55 +97,6 @@ export function DataTableRowActions<TData>({
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
-      </div>
-      <div className="flex md:hidden justify-center items-center gap-4">
-        <DropdownMenu>
-          <DropdownMenuTrigger>
-            {" "}
-            <Ellipsis size={16} />
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="flex flex-col gap-3 items-start p-4 text-sm">
-            {" "}
-            <Link href={`/books/${book.id}`}>
-              <button>View</button>
-            </Link>
-            <Separator />
-            <Link href={`/admin/edit/${book.id}`}>
-              <button>Edit</button>
-            </Link>
-            <Separator />
-            <AlertDialog>
-              <AlertDialogTrigger className="text-destructive hover:text-destructive/90 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
-                Delete
-              </AlertDialogTrigger>
-              <AlertDialogContent className="max-w-xs">
-                <AlertDialogHeader>
-                  <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                  <AlertDialogDescription>
-                    This action cannot be undone. This will permanently delete
-                    this book.
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <DeleteBookForm
-                    deleteBook={deleteBook}
-                    bookId={book.id}
-                    getProductByBookId={getProductByBookId}
-                    alertDialogAction={
-                      <AlertDialogAction
-                        type="submit"
-                        className="h-10 px-4 py-2 bg-destructive text-destructive-foreground hover:bg-destructive/90"
-                      >
-                        Delete
-                      </AlertDialogAction>
-                    }
-                  />
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
-          </DropdownMenuContent>
-        </DropdownMenu>
       </div>
     </>
   );

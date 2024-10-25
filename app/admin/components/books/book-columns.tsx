@@ -8,31 +8,30 @@ import Image from "next/image";
 import { format } from "date-fns";
 
 export const bookColumns: ColumnDef<BookType>[] = [
-
-  {
-    accessorKey: "cover",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Cover" />
-    ),
-    cell: ({ row }) => {
-      return (
-        <div className="flex space-x-2">
-          <span className="max-w-[50px] md:max-w-[200px] truncate font-medium">
-            {row?.original.image_directory && (
-              <Image
-                src={`${row?.original?.image_directory}image-1.png`}
-                alt={row?.original.title}
-                width={50}
-                height={50}
-              />
-            )}
-          </span>
-        </div>
-      );
-    },
-    enableSorting: false,
-    enableHiding: true,
-  },
+  // {
+  //   accessorKey: "cover",
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader column={column} title="Cover" />
+  //   ),
+  //   cell: ({ row }) => {
+  //     return (
+  //       <div className="flex space-x-2">
+  //         <span className="max-w-[50px] md:max-w-[200px] truncate font-medium">
+  //           {row?.original.image_directory && (
+  //             <Image
+  //               src={`${row?.original?.image_directory}image-1.png`}
+  //               alt={row?.original.title}
+  //               width={50}
+  //               height={50}
+  //             />
+  //           )}
+  //         </span>
+  //       </div>
+  //     );
+  //   },
+  //   enableSorting: false,
+  //   enableHiding: true,
+  // },
   {
     accessorKey: "title",
     header: ({ column }) => (
@@ -59,6 +58,53 @@ export const bookColumns: ColumnDef<BookType>[] = [
         <div className="flex space-x-2">
           <span className="max-w-[100px] md:max-w-[200px] truncate font-medium">
             {row.getValue("author")}
+          </span>
+        </div>
+      );
+    },
+    enableSorting: true,
+    enableHiding: true,
+  },
+  {
+    accessorKey: "genre",
+    accessorFn: (row) => row.genre,
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Genre(s)" />
+    ),
+    cell: ({ row }) => {
+      const genres = ((row.getValue("genre") as string) || "")
+        .toString()
+        .split(",") || ["-"];
+      return (
+        <div className="flex space-x-2">
+          <span className="max-w-[100px] md:max-w-[200px] flex-wrap-reverse truncate font-medium">
+            {genres
+              .filter((g) => g.length > 0)
+              .map((genre, index) => (
+                <Badge key={index}>{genre}</Badge>
+              ))}
+          </span>
+        </div>
+      );
+    },
+    filterFn: (row, columnId, filterValue) => {
+      const genres = row.getValue(columnId) as string;
+      return filterValue.every((filter: any) => genres.includes(filter));
+    },
+    enableSorting: true,
+    enableHiding: true,
+  },
+  {
+    accessorKey: "price",
+    accessorFn: (row) => row.price,
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Price" />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="flex space-x-2">
+          <span className="max-w-[100px] md:max-w-[200px] truncate font-medium">
+            ${(row.getValue("price") as number).toFixed(2)}
           </span>
         </div>
       );

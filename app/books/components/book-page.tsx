@@ -78,9 +78,20 @@ export const BookPage = ({ books, title, subtitle, query }: BookPageProps) => {
     },
   });
 
-  const genreOptions = Array.from(
-    new Set(books.flatMap((book) => book.genre?.toString()?.split(",") ?? []))
-  )?.map((genre) => ({ label: genre, value: genre }));
+  const genreOptions = React.useMemo(() => {
+    const genres = new Set<string>();
+    books.forEach((item: any) => {
+      if (item.genre) {
+        item.genre.forEach((genre: string) => {
+          genres.add(genre);
+        })
+      }
+    });
+    return Array.from(genres).map((genre) => ({
+      label: genre,
+      value: genre,
+    }));
+  }, [books]);
 
   return (
     <div className="flex flex-col space-y-6 container mx-auto ">

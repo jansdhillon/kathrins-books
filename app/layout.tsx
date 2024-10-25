@@ -34,7 +34,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.className} suppressHydrationWarning>
-      <body className="bg-background ">
+      <body className="bg-background font-medium ">
         <ThemeProvider
           attribute="class"
           defaultTheme="light"

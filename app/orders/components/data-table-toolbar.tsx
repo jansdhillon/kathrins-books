@@ -14,8 +14,6 @@ interface DataTableToolbarProps<TData> {
   table: Table<TData>;
 }
 
-
-
 export function DataTableToolbar<TData>({
   table,
 }: DataTableToolbarProps<TData>) {
@@ -48,7 +46,7 @@ export function DataTableToolbar<TData>({
           />
           <Search
             className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground"
-            size={16}
+            size={10}
           />
         </div>
 
