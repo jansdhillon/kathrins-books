@@ -47,7 +47,7 @@ export default function RootLayout({
               <main className="mt-20 w-full overflow-x-clip ">
                 <Feedback>{children}</Feedback>
               </main>
-              <Footer />
+              <Footer  />
             </div>
 
             <Toaster />
