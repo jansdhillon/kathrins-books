@@ -11,7 +11,7 @@ const BgGlowContainer = ({
   return (
     <div className="relative">
       <div
-        className={cn(className, `z-0 absolute h-full w-full bg-accent dark:bg-accent/40 `)}
+        className={cn(className, `z-0 absolute h-full w-full bg-secondary dark:bg-accent/40 `)}
       ></div>
       <div className="relative z-10 ">{children}</div>
     </div>

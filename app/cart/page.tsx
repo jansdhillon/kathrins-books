@@ -17,7 +17,14 @@ import { removeFromCartAction } from "../actions/remove-from-cart";
 import { getStripe } from "@/utils/stripe/client";
 import Loading from "../loading";
 import Image from "next/image";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Eye, Trash } from "lucide-react";
 import { postData } from "@/utils/helpers";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -103,10 +110,6 @@ export default function CartPage() {
   return (
     <div className="flex flex-1 flex-col container mx-auto space-y-6">
       <h1 className="text-2xl font-bold text-left">Your Cart</h1>
-
-      <p className="text-lg text-muted-foreground">
-        Review and manage the items in your cart.
-      </p>
 
       {isLoading ? (
         <Loading />
@@ -263,6 +266,7 @@ export default function CartPage() {
                         alt={item.book.title}
                         width={75}
                         height={100}
+                        className="object-contain rounded-md"
                       />
                     </Suspense>
                     <div className="flex-1">
@@ -280,24 +284,32 @@ export default function CartPage() {
                   <CardFooter className="flex justify-end space-x-2 mt-4">
                     <Button
                       variant="ghost"
-                      size="sm"
                       onClick={() => router.push(`/books/${item.book.id}`)}
                     >
-                      <Eye className="h-4 w-4 " />
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Eye size={16} />
+                        </TooltipTrigger>
+                        <TooltipContent>View Book</TooltipContent>
+                      </Tooltip>
                     </Button>
                     <Button
                       variant="ghost"
-                      size="sm"
                       onClick={() => handleRemoveFromCart(item.id)}
                     >
-                      <Trash className="h-4 w-4 text-destructive" />
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Trash className="text-destructive" size={16} />
+                        </TooltipTrigger>
+                        <TooltipContent>Remove From Cart</TooltipContent>
+                      </Tooltip>
                     </Button>
                   </CardFooter>
                 </Card>
               ))
             )}
             {cartItems && cartItems.length > 0 && (
-              <Card className="p-4">
+              <Card className="p-4 space-y-4 leading-loose flex flex-col gap-4">
                 <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
                 <div className="flex justify-between">
                   <p>Subtotal:</p>
@@ -312,7 +324,7 @@ export default function CartPage() {
                   <p>${totalAmount.toFixed(2)}</p>
                 </div>
 
-                <div className="flex items-center space-x-2 mt-4">
+                <div className="flex items-center space-x-2">
                   <Checkbox
                     id="terms-mobile"
                     checked={agreedToTerms}
@@ -337,7 +349,7 @@ export default function CartPage() {
                 </div>
 
                 <Button
-                  className="w-full mt-4"
+                  className="w-full "
                   onClick={handleCheckout}
                   disabled={cartItems?.length === 0 || !agreedToTerms}
                 >
