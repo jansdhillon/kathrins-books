@@ -9,6 +9,8 @@ import { Search } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { DataTableFacetedFilter } from "../data-table-faceted-filter";
+import Link from "next/link";
+import { DataTableViewOptions } from "../data-table-view-options";
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
@@ -55,12 +57,6 @@ export function DataTableToolbar<TData>({
           />
         </div>
 
-        <DataTableFacetedFilter
-          column={table.getColumn("genre")}
-          title="Genre"
-          options={genreOptions}
-        />
-
         {isFiltered && (
           <Button
             variant="ghost"
@@ -71,34 +67,13 @@ export function DataTableToolbar<TData>({
             <Cross2Icon className="ml-2 h-4 w-4" />
           </Button>
         )}
-        {/* <Tooltip>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                >
-                  <SortDescIcon className="w-4 h-4  " />
-                  <span className="sr-only">Sort Results</span>
-                </Button>
-              </TooltipTrigger>
-            </DropdownMenuTrigger>
-            <TooltipContent>Sort Requests</TooltipContent>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => setSort({ sort: "newest" })}>
-                Newest
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setSort({ sort: "oldest" })}>
-                Oldest
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setSort({ sort: "due" })}>
-                Due
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </Tooltip> */}
       </div>
+      <Link href="admin/add">
+        <Button size="sm" className="ml-auto hidden h-8 lg:flex">
+          Add Book
+        </Button>
+      </Link>
+      <DataTableViewOptions table={table} />
     </div>
   );
 }

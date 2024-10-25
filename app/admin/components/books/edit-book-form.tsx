@@ -90,7 +90,7 @@ export default function EditBookForm({
   }, [book.image_directory, book.num_images]);
 
   return (
-    <form className="space-y-2 container mx-auto" ref={formRef}>
+    <form className="space-y-2 " ref={formRef}>
       <div className="space-y-2">
         <h2 className="text-2xl font-bold">Edit Book</h2>
         <p className="text-muted-foreground">
@@ -124,6 +124,19 @@ export default function EditBookForm({
           />
         </div>
         <div className="space-y-2">
+          <Label htmlFor="price">
+            Price ($)<span className="text-destructive">*</span>
+          </Label>
+          <Input
+            type="number"
+            name="price"
+            id="price"
+            step="1"
+            defaultValue={book?.price || ""}
+            required
+          />
+        </div>
+        <div className="space-y-2">
           <Label htmlFor="isbn">ISBN</Label>
           <Input
             type="text"
@@ -132,19 +145,7 @@ export default function EditBookForm({
             defaultValue={book?.isbn || ""}
           />
         </div>
-        <div className="space-y-2">
-          <Label htmlFor="price">
-            Price ($)<span className="text-destructive">*</span>
-          </Label>
-          <Input
-            type="number"
-            name="price"
-            id="price"
-            step="0.01"
-            defaultValue={book?.price || ""}
-            required
-          />
-        </div>
+
         <div className="space-y-2">
           <Label htmlFor="genre">Genre</Label>
           <div className="flex items-center space-x-2">

@@ -77,6 +77,19 @@ export default function AddBookForm({
           />
         </div>
         <div className="space-y-2">
+          <Label htmlFor="price">
+            Price ($)<span className="text-destructive">*</span>
+          </Label>
+          <Input
+            type="number"
+            name="price"
+            id="price"
+            placeholder="10"
+            step="1"
+            required
+          />
+        </div>
+        <div className="space-y-2">
           <Label htmlFor="author">
             Author<span className="text-destructive">*</span>
           </Label>
@@ -86,19 +99,6 @@ export default function AddBookForm({
             id="author"
             required
             placeholder="Alexandre Dumas"
-          />
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="price">
-            Price ($)<span className="text-destructive">*</span>
-          </Label>
-          <Input
-            type="number"
-            name="price"
-            id="price"
-            step="0.01"
-            placeholder="10"
-            required
           />
         </div>
         <div className="space-y-2">
