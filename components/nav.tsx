@@ -71,7 +71,7 @@ export const Nav = ({ headerAuth }: { headerAuth: ReactNode }) => {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b w-full bg-background py-2 ">
-      <nav className="hidden lg:flex items-center w-full container mx-auto gap-10 justify-start ">
+      <nav className="hidden lg:flex items-center w-full container mx-auto justify-between gap-10">
         <Link href="/" className="flex items-center gap-4 ">
           <div className="w-6 h-6 relative">
             <Image
@@ -87,14 +87,18 @@ export const Nav = ({ headerAuth }: { headerAuth: ReactNode }) => {
         </Link>
 
         <Suspense fallback={<Loading />}>
-          <Searchbar />
+          <div className="container mx-auto">
+            <Searchbar />
+          </div>
         </Suspense>
 
-        {navItems.map((item) => (
-          <NavLink key={item.href} href={item.href}>
-            {item.label}
-          </NavLink>
-        ))}
+        <div className="flex items-center justify-start gap-4">
+          {navItems.map((item) => (
+            <NavLink key={item.href} href={item.href}>
+              {item.label}
+            </NavLink>
+          ))}
+        </div>
 
         <div className="flex items-center justify-start gap-4">
           {headerAuth}

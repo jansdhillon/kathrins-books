@@ -1,16 +1,12 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getAllBooks } from "../actions/get-all-books";
-import { redirect } from "next/navigation";
 
 import { createClient } from "@/utils/supabase/server";
-import { getErrorRedirect } from "@/utils/helpers";
-import {
-  getOrdersWithOrderItems,
-  getUserDataById,
-} from "@/utils/supabase/queries";
+import { getUserDataById } from "@/utils/supabase/queries";
 import { encodedRedirect } from "@/utils/utils";
 import { ClientWrapper as BookClientWrapper } from "./components/books/client-wrapper";
 import { ClientWrapper as OrderClientWrapper } from "./components/orders/client-wrapper";
+import { getAllOrders } from "../actions/get-all-orders";
 
 export default async function AdminDashboard() {
   const supabase = createClient();
@@ -33,22 +29,14 @@ export default async function AdminDashboard() {
     );
   }
 
-  const books = await getAllBooks();
+  const books = await getAllBooks(supabase);
 
-  const { data: orders, error } = await getOrdersWithOrderItems(
-    supabase,
-    userData.id
-  );
+  const orders = await getAllOrders(supabase);
 
-  if (error) {
-    console.error("Error fetching orders:", error.message);
-    redirect(
-      getErrorRedirect("/admin", "Error fetching orders", error.message)
-    );
-  }
+  console.log(orders.length);
 
   return (
-    <div className="space-y-6" >
+    <div className="space-y-6">
       <h1 className="text-2xl font-bold">Dashboard</h1>
 
       <Tabs defaultValue="books" className="space-y-4">

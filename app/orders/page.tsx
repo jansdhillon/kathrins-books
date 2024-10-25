@@ -1,10 +1,10 @@
 import { Separator } from "@/components/ui/separator";
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
-import { getOrdersWithOrderItems } from "@/utils/supabase/queries";
 import { getUserDataAction } from "../actions/get-user";
 import { DataTable } from "@/app/orders/components/data-table";
 import { orderColumns } from "@/app/orders/components/order-columns";
+import { getAllOrders } from "../actions/get-all-orders";
 
 export default async function OrdersPage() {
 
@@ -15,14 +15,9 @@ export default async function OrdersPage() {
     redirect("/sign-in");
   }
 
-  const { data: orders, error } = await getOrdersWithOrderItems(
-    supabase,
-    userData.id
-  );
+  const orders = await getAllOrders(supabase);
 
-  if (error) {
-    console.error("Error fetching orders:", error.message);
-  }
+
 
   return (
     <div className="flex flex-1 flex-col space-y-6 mx-auto container">

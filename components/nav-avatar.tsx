@@ -47,7 +47,7 @@ export const NavAvatar = ({ userData }: { userData: UserType }) => {
               </div>
               <DropdownMenuSeparator />
 
-              {userData.is_admin && (
+              {userData?.is_admin && (
                 <Link href="/admin" className="font-medium">
                   <DropdownMenuItem>Admin</DropdownMenuItem>
                 </Link>

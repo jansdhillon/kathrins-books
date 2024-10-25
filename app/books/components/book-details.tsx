@@ -13,7 +13,7 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "../../../components/ui/carousel";
+} from "@/components/ui/carousel";
 import Loading from "@/app/loading";
 import Link from "next/link";
 import { Badge } from "../../../components/ui/badge";
@@ -21,7 +21,6 @@ import { BookType, UserType } from "@/lib/types/types";
 import { getUserDataAction } from "@/app/actions/get-user";
 import { Skeleton } from "../../../components/ui/skeleton";
 import { imageLoader } from "./book";
-import { createClient } from "@/utils/supabase/client";
 
 type BookDetailsProps = {
   book: BookType;

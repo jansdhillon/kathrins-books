@@ -18,7 +18,6 @@ import { Separator } from "@/components/ui/separator";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { getOrderAction } from "@/app/actions/get-order-by-id";
 import Loading from "@/app/loading";
-// import { updateOrderStatus } from "@/app/actions/update-order-status"; //
 
 export default function AdminOrderDetailsPage({ params }: { params: { id: string } }) {
   const router = useRouter();

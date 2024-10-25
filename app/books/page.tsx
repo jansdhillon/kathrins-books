@@ -1,9 +1,10 @@
-
 import { BookPage } from "@/app/books/components/book-page";
 import { getAllBooks } from "../actions/get-all-books";
+import { createClient } from "@/utils/supabase/server";
 
 export default async function AllBooksPage() {
-  const allBooks = await getAllBooks();
+  const supabase = createClient();
+  const allBooks = await getAllBooks(supabase);
   return (
     <BookPage
       books={allBooks}

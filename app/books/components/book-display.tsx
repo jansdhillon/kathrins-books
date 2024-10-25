@@ -1,15 +1,13 @@
-"use client";
-import { Database } from "@/utils/database.types";
+"use client";;
 import { Book } from "./book";
-import { Suspense, useEffect } from "react";
-import { Card, CardContent } from "../../../components/ui/card";
+import { Suspense } from "react";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "../../../components/ui/carousel";
+} from "@/components/ui/carousel";
 import Loading from "@/app/loading";
 import { BookType } from "@/lib/types/types";
 

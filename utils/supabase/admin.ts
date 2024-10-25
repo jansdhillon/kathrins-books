@@ -244,12 +244,10 @@ const copyBillingAndShippingDetailsToCustomer = async (
     throw new Error(`Customer update failed: ${updateError.message}`);
 };
 
-const placeOrder = async (session: Stripe.Checkout.Session) => {
+const placeOrder = async (session: Stripe.Checkout.Session, itemsTotal: number, shippingCost: number ) => {
   const sessionId = session.id;
   const userId = session?.metadata?.userId;
 
-  const shippingCost = session.shipping_cost;
-  const itemsTotal = session.line_items?.object === "list" ? session.line_items.data.reduce((acc, item) => acc + item.amount_total, 0) : 0;
 
   if (!userId) {
     throw new Error("User ID not found in session metadata");
@@ -260,7 +258,7 @@ const placeOrder = async (session: Stripe.Checkout.Session) => {
     userId,
     sessionId,
     itemsTotal,
-    shippingCost?.amount_total ?? 0,
+    shippingCost
   );
 
   if (orderError) {
@@ -314,16 +312,21 @@ const placeOrder = async (session: Stripe.Checkout.Session) => {
 
 async function handleCheckoutSucceeded(session: Stripe.Checkout.Session) {
   try {
+    const itemsTotal = session.amount_total ?? 0;
+    const shippingCost = session.shipping_cost?.amount_total ?? 0;
+    console.log("itemsTotal", itemsTotal);
+    console.log("shippingCost", shippingCost);
     const { userData, orderItemsData, order, userId } =
-      await placeOrder(session);
+      await placeOrder(session, itemsTotal, shippingCost);
 
     const email = userData.email;
     const orderId = order.id;
-    const orderItems = orderItemsData;
-    const totalAmount = ((session.amount_total ?? 0) / 100).toFixed(2);
+
+    const orderItems = orderItemsData
+
 
     await sendEmail(
-      { name: userData.name, email, orderId, orderItems, totalAmount },
+      { name: userData.name, email, orderId, orderItems, itemsTotal },
       "order-confirmation"
     );
 

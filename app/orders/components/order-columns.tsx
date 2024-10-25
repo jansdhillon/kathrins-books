@@ -51,6 +51,13 @@ export const orderColumns: ColumnDef<OrderWithItemsType>[] = [
     enableColumnFilter: true,
   },
   {
+    accessorKey: "total",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Total" />
+    ),
+    cell: ({ row }) => <div>${((row?.original?.items_total || 0) + (row?.original?.shipping_cost && row?.original?.shipping_cost / 100 || 0)).toFixed(2)}</div>,
+  },
+  {
     id: "actions",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Actions" />

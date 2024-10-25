@@ -11,10 +11,11 @@ import BgGlowContainer from "@/components/bg-glow-container";
 import { getAllBooks } from "./actions/get-all-books";
 import { Book } from "@/app/books/components/book";
 import { BookType } from "@/lib/types/types";
+import { createClient } from "@/utils/supabase/server";
 
 const FeaturedBooks = ({ featuredBooks }: { featuredBooks: BookType[] }) => {
   return (
-    <section className="space-y-6 p-8 flex flex-col md:flex-row items-center gap-8 max-w-5xl">
+    <section className="space-y-6 p-8 flex flex-col md:flex-row items-center gap-8">
       <div className="flex flex-col space-y-4 container mx-auto">
         <h2 className="text-xl font-bold" id="featured">
           Featured
@@ -24,7 +25,7 @@ const FeaturedBooks = ({ featuredBooks }: { featuredBooks: BookType[] }) => {
           Handpicked by Kathrin.
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-4 justify-center max-w-5xl">
+        <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-4 justify-center ">
           {featuredBooks.map((book) => (
             <Book key={book.id} book={book} />
           ))}
@@ -35,13 +36,14 @@ const FeaturedBooks = ({ featuredBooks }: { featuredBooks: BookType[] }) => {
 };
 
 export default async function HomePage() {
-  const allBooks = await getAllBooks();
-  const featuredBooks = await getFeaturedBooks();
+  const supabase = await createClient();
+  const allBooks = await getAllBooks(supabase);
+  const featuredBooks = await getFeaturedBooks(supabase);
 
   return (
     <div className="flex flex-col justify-center h-full gap-16 -mt-14">
       <BgGlowContainer>
-        <div className="flex flex-col gap-6 container mx-auto justify-between items-start text-left text-primary w-full py-36 ">
+        <div className="flex flex-col gap-6 container mx-auto justify-between items-start text-left text-primary w-full pt-24 pb-10 ">
           <div className="text-4xl md:text-5xl font-extrabold text-left ">
             Find Your Next
             <br /> Great Read.
@@ -63,7 +65,7 @@ export default async function HomePage() {
 
       <FeaturedBooks featuredBooks={featuredBooks} />
 
-      <section className="space-y-6 p-8 flex flex-col md:flex-row items-center gap-8 max-w-5xl">
+      <section className="space-y-6 p-8 flex flex-col md:flex-row items-center gap-8 ">
         <div className="flex flex-col space-y-4 container mx-auto">
           <h2 className="text-xl font-bold">Latest Books</h2>
 
@@ -74,7 +76,7 @@ export default async function HomePage() {
 
           <Link
             href="/books"
-            className="flex items-center justify-center w-full py-6 md:py-12 max-w-5xl"
+            className="flex items-center justify-center w-full py-6 md:py-12 "
           >
             <Button className="flex items-center justify-center space-x-2 font-medium">
               <span>View All Books</span>
@@ -84,7 +86,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="space-y-6 p-8 rounded-xl bg-accent flex flex-col md:flex-row items-center gap-8 dark:bg-accent/60 -mb-7">
+      <section className="space-y-6 p-8 rounded-xl bg-accent flex flex-col md:flex-row items-center gap-8 dark:bg-accent/40 -mb-7">
 
         <div className="flex flex-col space-y-4 container mx-auto ">
           <h2 className="text-xl font-bold">About</h2>

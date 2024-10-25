@@ -62,10 +62,10 @@ export const sendEmail = async (data: EmailData, type: EmailType) => {
       }
 
       case "order-confirmation": {
-        const { email, orderId, orderItems, totalAmount } =
+        const { email, orderId, orderItems, itemsTotal, shippingCost } =
           data as OrderConfirmationEmailData;
 
-        if (!email || !orderId || !orderItems || !totalAmount) {
+        if (!email || !orderId || !orderItems || !itemsTotal) {
           console.error("Missing required fields for order confirmation email");
           throw new Error("Missing required fields for order confirmation email");
         }
@@ -74,7 +74,8 @@ export const sendEmail = async (data: EmailData, type: EmailType) => {
           <OrderConfirmationTemplate
             orderId={orderId}
             orderItems={orderItems}
-            totalAmount={totalAmount}
+            itemsTotal={itemsTotal}
+            shippingCost={shippingCost}
           />
         );
         subject = "Your Order Confirmation";

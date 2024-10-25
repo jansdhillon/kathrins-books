@@ -54,7 +54,8 @@ export interface NewsletterEmailData extends BaseEmailData {
 export interface OrderConfirmationEmailData extends BaseEmailData {
   orderId: string;
   orderItems: OrderItemInsertType[];
-  totalAmount: string;
+  itemsTotal: number;
+  shippingCost: number;
 }
 
 export interface ShippingConfirmationEmailData extends BaseEmailData {

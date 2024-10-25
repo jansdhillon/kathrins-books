@@ -74,12 +74,18 @@ export const getOrderItemsByOrderId = cache(
   }
 );
 
-export const getOrdersWithOrderItems = cache(
-  async (supabase: SupabaseClient, userId: string) => {
+export const getAllOrdersWithOrderItems = cache(
+  async (supabase: SupabaseClient) => {
     const { data: orders, error } = await supabase
       .from("orders")
       .select("*")
-      .eq("user_id", userId);
+      .range(0, 99);
+    console.log(`Fetched from db ${orders?.length} orders`);
+
+
+
+
+    console.log(orders?.length);
 
     if (error) {
       return { data: null, error };
@@ -89,7 +95,14 @@ export const getOrdersWithOrderItems = cache(
       orders.map(async (order) => {
         const { data: orderItems, error: orderItemsError } =
           await getOrderItemsByOrderId(supabase, order.id);
-        return { ...order, items: orderItems, error: orderItemsError };
+
+        if (orderItemsError) {
+          console.error(
+            `Error fetching order items for order ${order.id}:`,
+            orderItemsError
+          );
+        }
+        return { ...order, items: orderItems || [], error: orderItemsError };
       })
     );
 
