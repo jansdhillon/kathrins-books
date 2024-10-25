@@ -17,16 +17,18 @@ import { Badge } from "../../../components/ui/badge";
 import { BookType } from "@/lib/types/types";
 import { useRouter } from "next/navigation";
 import { Textarea } from "@/components/ui/textarea";
+import { cn } from "@/lib/utils";
 
 type BookProps = {
   book: BookType;
+  className?: string;
 };
 
 export const imageLoader = ({ src, width, quality }: any) => {
   return `${src}?w=${width}&q=${quality || 75}`;
 };
 
-export function Book({ book }: BookProps) {
+export function Book({ book, className }: BookProps) {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
 
@@ -39,12 +41,18 @@ export function Book({ book }: BookProps) {
     });
   };
 
-  const coverImage = book.image_directory
-    ? `${book.image_directory}image-1.png`
-    : "/placeholder.png";
+  const coverImage =
+    book.image_directory !== null && book.num_images && book.num_images > 0
+      ? `${book.image_directory}image-1.png`
+      : "/placeholder.png";
 
   return (
-    <Card className=" rounded-xl  flex flex-col justify-between h-full max-w-[350px] ">
+    <Card
+      className={cn(
+        "rounded-xl flex flex-col justify-between h-full max-w-[350px] ",
+        className
+      )}
+    >
       <CardHeader className="text-muted-foreground ">
         <Link
           href={`/books/${book.id}`}
@@ -69,15 +77,13 @@ export function Book({ book }: BookProps) {
         <Separator />
         <p> by {book.author}</p>
         {book.genre && (
-         <div className="flex gap-1 flex-wrap">
+          <div className="flex gap-1 flex-wrap">
             {book.genre.map((g) =>
               g
                 .split(",")
                 .filter((g) => g.length > 0)
                 .map((g) => (
-                  <div
-                    key={g}
-                  >
+                  <div key={g}>
                     <Badge className="mr-0.5">
                       <p className="line-clamp-1 max-w-[200px]">{g}</p>
                     </Badge>
@@ -88,8 +94,8 @@ export function Book({ book }: BookProps) {
         )}
       </CardHeader>
       {book.description && (
-        <CardContent className="flex flex-1 flex-grow line-clamp-[16] " >
-          <CardDescription className="line-clamp-[7] text-ellipsis leading-relaxed font-medium">
+        <CardContent className=" ">
+          <CardDescription className="line-clamp-[12] text-ellipsis leading-relaxed font-medium">
             {book.description || "No description available."}
           </CardDescription>
         </CardContent>

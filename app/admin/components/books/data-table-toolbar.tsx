@@ -5,18 +5,20 @@ import { Table } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-import { Search } from "lucide-react";
+import { BookIcon, Search, User2Icon } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { DataTableFacetedFilter } from "../data-table-faceted-filter";
 import Link from "next/link";
 import { DataTableViewOptions } from "../data-table-view-options";
+import { BookType } from "@/lib/schemas/schemas";
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
   globalFilter?: string;
   setGlobalFilter: (value: string) => void;
   genreOptions: { label: string; value: string }[];
+  books: BookType[];
 }
 
 export function DataTableToolbar<TData>({
@@ -24,6 +26,7 @@ export function DataTableToolbar<TData>({
   globalFilter,
   setGlobalFilter,
   genreOptions,
+  books,
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0;
   const router = useRouter();
@@ -36,10 +39,20 @@ export function DataTableToolbar<TData>({
 
   useEffect(() => {
     if (query) {
-      console.log("query", query);
       setGlobalFilter(decodeURIComponent(query));
     }
   }, [query]);
+
+  const authorOptions = useMemo(() => {
+    const authors = new Set<string>();
+    books.forEach((book: BookType) => {
+      authors.add(book.author);
+    });
+    return Array.from(authors).map((author) => ({
+      label: author,
+      value: author,
+    }));
+  }, [books]);
 
   return (
     <div className="flex items-center justify-between gap-4">
@@ -58,9 +71,10 @@ export function DataTableToolbar<TData>({
         </div>
 
         <DataTableFacetedFilter
-          column={table.getColumn("genre")}
-          title="Genre"
-          options={genreOptions}
+          column={table.getColumn("author")}
+          title="Author"
+          icon={<User2Icon />}
+          options={authorOptions}
         />
 
         {isFiltered && (

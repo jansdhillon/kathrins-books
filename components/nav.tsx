@@ -44,13 +44,12 @@ const Searchbar = ({
 
   useEffect(() => {
     if (query) {
-      console.log("query", query);
       setSearchTerm(decodeURIComponent(query));
     }
   }, [query]);
 
   return (
-    <div className="relative">
+    <div className="relative min-w-[400px]">
       <Input
         placeholder="Search books..."
         value={searchTerm}
@@ -73,23 +72,21 @@ export const Nav = ({ headerAuth }: { headerAuth: ReactNode }) => {
     <header className="fixed top-0 left-0 right-0 z-50 border-b w-full bg-background py-2 ">
       <nav className="hidden lg:flex items-center w-full container mx-auto justify-between gap-10">
         <Link href="/" className="flex items-center gap-4 ">
-          <div className="w-6 h-6 relative">
-            <Image
-              src="/logo.png"
-              alt="Kathrin's Books"
-              className="object-contain"
-              fill
-            />
-          </div>
+          <Image
+            src="/logo.png"
+            alt="Kathrin's Books"
+            className="object-contain"
+            height={20}
+            width={20}
+          />
+
           <div className=" text-primary text-base font-bold  tracking-wider hover:text-muted-foreground min-w-max">
             Kathrin's Books
           </div>
         </Link>
 
         <Suspense fallback={<Loading />}>
-          <div className="container mx-auto">
-            <Searchbar />
-          </div>
+          <Searchbar />
         </Suspense>
 
         <div className="flex items-center justify-start gap-4">

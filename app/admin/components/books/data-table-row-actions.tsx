@@ -67,16 +67,17 @@ export function DataTableRowActions<TData>({
           </Tooltip>
         </Link>
         <AlertDialog>
-          <AlertDialogTrigger className="text-destructive hover:text-destructive/90 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button variant="ghost" size={"sm"}>
+          <Tooltip>
+            <AlertDialogTrigger asChild  className="text-destructive hover:text-destructive/90 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
+              <TooltipTrigger asChild >
+                <Button  variant="ghost" size={"sm"}>
                   <Trash className="h-4 w-4" />
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>Delete Book</TooltipContent>
-            </Tooltip>
-          </AlertDialogTrigger>
+            </AlertDialogTrigger>
+            <TooltipContent>Delete Book</TooltipContent>
+          </Tooltip>
+
           <AlertDialogContent className="max-w-xs">
             <AlertDialogHeader>
               <AlertDialogTitle>Are you sure?</AlertDialogTitle>

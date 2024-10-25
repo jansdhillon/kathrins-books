@@ -3,8 +3,8 @@
 import { BookType } from "@/lib/types/types";
 import { ResponsiveContainer } from "recharts";
 
-import { bookColumns } from "./book-columns";
 import { DataTable } from "../data-table";
+import { bookColumns } from "./book-columns";
 
 export const ClientWrapper = ({ data }: { data: BookType[] }) => {
   return (

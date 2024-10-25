@@ -27,6 +27,7 @@ import {
 
 import { DataTablePagination } from "../../books/components/data-table-pagination";
 import { DataTableToolbar } from "./books/data-table-toolbar";
+import { BookType } from "@/lib/schemas/schemas";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -92,6 +93,7 @@ export function DataTable<TData, TValue>({
         globalFilter={globalFilter}
         setGlobalFilter={setGlobalFilter}
         genreOptions={genreOptions}
+        books={data as BookType[]}
       />
       <div className="rounded-md border overflow-y-scroll max-h-[500px]">
         <Table>

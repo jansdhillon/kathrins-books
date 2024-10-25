@@ -33,7 +33,6 @@ export default async function AdminDashboard() {
 
   const orders = await getAllOrders(supabase);
 
-  console.log(orders.length);
 
   return (
     <div className="space-y-6">

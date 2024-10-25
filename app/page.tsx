@@ -43,7 +43,7 @@ export default async function HomePage() {
   return (
     <div className="flex flex-col justify-center h-full gap-8 -mt-14">
       <BgGlowContainer>
-        <div className="flex flex-col gap-6 container mx-auto justify-between items-start text-left text-primary w-full py-24 md:py-36  leading-loose">
+        <div className="flex flex-col gap-6 container mx-auto justify-between items-start text-left text-primary py-32  leading-loose">
           <div className="text-4xl md:text-5xl font-extrabold text-left ">
             Find Your Next
             <br /> Great Read.

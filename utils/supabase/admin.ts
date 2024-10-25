@@ -314,8 +314,6 @@ async function handleCheckoutSucceeded(session: Stripe.Checkout.Session) {
   try {
     const itemsTotal = session.amount_total ?? 0;
     const shippingCost = session.shipping_cost?.amount_total ?? 0;
-    console.log("itemsTotal", itemsTotal);
-    console.log("shippingCost", shippingCost);
     const { userData, orderItemsData, order, userId } =
       await placeOrder(session, itemsTotal, shippingCost);
 

@@ -10,7 +10,7 @@ export async function POST(req: Request) {
 
   const images = (book: BookType) => {
     if (!book.num_images || book.num_images < 1) {
-      return ['/placeholder.png'];
+      return ['https://storage.googleapis.com/kathrins-books-images/placeholder.png'];
     } else {
       return Array.from(
         { length: book.num_images },

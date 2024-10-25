@@ -5,13 +5,14 @@ import { Table } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DataTableFacetedFilter } from "./data-table-faceted-filter";
-import { Search } from "lucide-react";
+import { BookIcon, Search, User2Icon } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
-
+import { useEffect, useMemo } from "react";
+import { BookType } from "@/lib/schemas/schemas";
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
+  books: BookType[];
   globalFilter?: string;
   setGlobalFilter: (value: string) => void;
   genreOptions: { label: string; value: string }[];
@@ -19,6 +20,7 @@ interface DataTableToolbarProps<TData> {
 
 export function DataTableToolbar<TData>({
   table,
+  books,
   globalFilter,
   setGlobalFilter,
   genreOptions,
@@ -31,15 +33,24 @@ export function DataTableToolbar<TData>({
     const searchTerm = e.target.value;
     router.push(`/search?query=${encodeURIComponent(searchTerm.trim())}`);
     setGlobalFilter(searchTerm);
-  }
+  };
 
   useEffect(() => {
     if (query) {
-      console.log("query", query);
       setGlobalFilter(decodeURIComponent(query));
-
     }
   }, [query]);
+
+  const authorOptions = useMemo(() => {
+    const authors = new Set<string>();
+    books.forEach((book: BookType) => {
+      authors.add(book.author);
+    });
+    return Array.from(authors).map((author) => ({
+      label: author,
+      value: author,
+    }));
+  }, [books]);
 
   return (
     <div className="flex items-center justify-between gap-4">
@@ -58,8 +69,16 @@ export function DataTableToolbar<TData>({
         </div>
 
         <DataTableFacetedFilter
+          column={table.getColumn("author")}
+          title="Author"
+          icon={<User2Icon />}
+          options={authorOptions}
+        />
+
+        <DataTableFacetedFilter
           column={table.getColumn("genre")}
           title="Genre"
+          icon={<BookIcon />}
           options={genreOptions}
         />
 

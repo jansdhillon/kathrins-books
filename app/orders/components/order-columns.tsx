@@ -6,7 +6,11 @@ import { format } from "date-fns";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { Eye } from "lucide-react";
 
 export const orderColumns: ColumnDef<OrderWithItemsType>[] = [
@@ -15,7 +19,13 @@ export const orderColumns: ColumnDef<OrderWithItemsType>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Order ID" />
     ),
-    cell: ({ row }) => <div>{row.original.id}</div>,
+    cell: ({ row }) => (
+      <div className="flex space-x-2">
+        <span className="max-w-[100px] md:max-w-[200px] lg:max-w-[300px] truncate font-medium text-ellipsis">
+          {row.original.id || "-"}
+        </span>
+      </div>
+    ),
   },
   {
     accessorKey: "ordered_at",
@@ -32,7 +42,7 @@ export const orderColumns: ColumnDef<OrderWithItemsType>[] = [
       <DataTableColumnHeader column={column} title="Items" />
     ),
     cell: ({ row }) => (
-      <div className="flex gap-1 flex-wrap">
+      <div className="flex gap-1 flex-wrap truncate">
         {row.original.items.length > 0 ? (
           row.original.items.map((item) => (
             <div key={item.id}>{item.book_title}</div>

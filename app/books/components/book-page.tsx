@@ -38,8 +38,17 @@ export const BookPage = ({ books, title, subtitle, query }: BookPageProps) => {
     {
       header: "Author",
       accessorKey: "author",
+      accessorFn: (row) => row.author,
       cell: ({ row }) => null,
       enableSorting: true,
+      enableHiding: true,
+      enableGlobalFilter: true,
+      enableColumnFilter: true,
+      filterFn: (row, columnId, filterValue) => {
+        return filterValue.every((filter: any) =>
+          row.original.author.includes(filter)
+        );
+      },
     },
     {
       header: "Genre",
@@ -84,7 +93,7 @@ export const BookPage = ({ books, title, subtitle, query }: BookPageProps) => {
       if (item.genre) {
         item.genre.forEach((genre: string) => {
           genres.add(genre);
-        })
+        });
       }
     });
     return Array.from(genres).map((genre) => ({
@@ -100,6 +109,7 @@ export const BookPage = ({ books, title, subtitle, query }: BookPageProps) => {
 
       <DataTableToolbar
         table={table}
+        books={books}
         globalFilter={globalFilter}
         setGlobalFilter={setGlobalFilter}
         genreOptions={genreOptions}
@@ -115,7 +125,6 @@ export const BookPage = ({ books, title, subtitle, query }: BookPageProps) => {
             ))}
           </div>
         ))}
-
       </div>
 
       <DataTablePagination table={table} />

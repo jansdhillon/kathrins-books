@@ -142,7 +142,9 @@ export default function CartPage() {
                         >
                           <Image
                             src={
-                              item.book.image_directory !== null
+                              item.book.image_directory !== null &&
+                              item.book.num_images &&
+                              item.book.num_images > 0
                                 ? `${item.book.image_directory}image-1.png`
                                 : "/placeholder.png"
                             }
@@ -195,7 +197,7 @@ export default function CartPage() {
                 )}
               </TableBody>
 
-              <TableFooter>
+              <TableFooter className="bg-accent dark:bg-secondary">
                 <TableRow>
                   <TableCell colSpan={4} className="text-right">
                     Shipping:
@@ -259,9 +261,11 @@ export default function CartPage() {
                     >
                       <Image
                         src={
-                          item.book.image_directory !== null
-                            ? `${item.book.image_directory}image-1.png`
-                            : "/placeholder.png"
+                          item.book.image_directory !== null &&
+                              item.book.num_images &&
+                              item.book.num_images > 0
+                                ? `${item.book.image_directory}image-1.png`
+                                : "/placeholder.png"
                         }
                         alt={item.book.title}
                         width={75}

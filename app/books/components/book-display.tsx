@@ -19,10 +19,10 @@ const BookDisplay = ({ books }: { books: BookType[] }) => {
   return (
     <Suspense fallback={<Loading />}>
       <Carousel className="">
-        <CarouselContent>
+        <CarouselContent >
           {books.map((book: BookType) => (
-            <CarouselItem className="md:basis-1/3 lg:basis-1/4 mr-2 lg:mr-0 mx-auto flex justify-center" key={book.id}>
-              <Book key={book.id} book={book} />
+            <CarouselItem className="flex items-center md:basis-1/2 lg:basis-1/4" key={book.id}>
+              <Book key={book.id} book={book}  className="h-fit" />
             </CarouselItem>
           ))}
         </CarouselContent>

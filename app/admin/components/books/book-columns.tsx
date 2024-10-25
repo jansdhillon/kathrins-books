@@ -9,30 +9,35 @@ import { format } from "date-fns";
 import Link from "next/link";
 
 export const bookColumns: ColumnDef<BookType>[] = [
-  // {
-  //   accessorKey: "cover",
-  //   header: ({ column }) => (
-  //     <DataTableColumnHeader column={column} title="Cover" />
-  //   ),
-  //   cell: ({ row }) => {
-  //     return (
-  //       <div className="flex space-x-2">
-  //         <span className="max-w-[50px] md:max-w-[200px] truncate font-medium">
-  //           {row?.original.image_directory && (
-  //             <Image
-  //               src={`${row?.original?.image_directory}image-1.png`}
-  //               alt={row?.original.title}
-  //               width={50}
-  //               height={50}
-  //             />
-  //           )}
-  //         </span>
-  //       </div>
-  //     );
-  //   },
-  //   enableSorting: false,
-  //   enableHiding: true,
-  // },
+  {
+    accessorKey: "cover",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Book" />
+    ),
+    cell: ({ row }) => {
+      return (
+        <Link className="flex space-x-2" href={`/books/${row?.original.id}`}>
+          <span className="max-w-[50px] md:max-w-[200px] truncate font-medium rounded-xl">
+            <Image
+              src={
+                row?.original.image_directory !== null &&
+                row?.original.num_images &&
+                row?.original.num_images > 0
+                  ? `${row?.original.image_directory}image-1.png`
+                  : "/placeholder.png"
+              }
+              alt={row?.original.title}
+              className="object-contain rounded-md"
+              width={50}
+              height={50}
+            />
+          </span>
+        </Link>
+      );
+    },
+    enableSorting: false,
+    enableHiding: true,
+  },
   {
     accessorKey: "title",
     header: ({ column }) => (
@@ -47,6 +52,7 @@ export const bookColumns: ColumnDef<BookType>[] = [
         </div>
       );
     },
+    enableGlobalFilter: true,
   },
   {
     accessorKey: "author",
@@ -65,37 +71,13 @@ export const bookColumns: ColumnDef<BookType>[] = [
     },
     enableSorting: true,
     enableHiding: true,
-  },
-  {
-    accessorKey: "genre",
-    accessorFn: (row) => row.genre,
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Genre(s)" />
-    ),
-    cell: ({ row }) => {
-      const genres = ((row.getValue("genre") as string) || "")
-        .toString()
-        .split(",") || ["-"];
-      return (
-        <div className="flex gap-1 flex-wrap">
-          {genres
-            .filter((g) => g.length > 0)
-            .map((g) => (
-              <div key={g}>
-                <Badge className="mr-0.5">
-                  <p className="line-clamp-1 max-w-[200px]">{g}</p>
-                </Badge>
-              </div>
-            ))}
-        </div>
+    enableGlobalFilter: true,
+    enableColumnFilter: true,
+    filterFn: (row, columnId, filterValue) => {
+      return filterValue.every((filter: any) =>
+        row.original.author.includes(filter)
       );
     },
-    filterFn: (row, columnId, filterValue) => {
-      const genres = row.getValue(columnId) as string;
-      return filterValue.every((filter: any) => genres.includes(filter));
-    },
-    enableSorting: true,
-    enableHiding: true,
   },
   {
     accessorKey: "price",
@@ -115,25 +97,17 @@ export const bookColumns: ColumnDef<BookType>[] = [
     enableSorting: true,
     enableHiding: true,
   },
-  {
-    accessorKey: "created_at",
-    accessorFn: (row) => row.created_at,
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Posted On" />
-    ),
-    cell: ({ row }) => {
-      return (
-        <div className="flex space-x-2">
-          <span className="max-w-[100px] md:max-w-[200px] truncate font-medium">
-            {format(new Date(row.getValue("created_at")), "PP")}
-          </span>
-        </div>
-      );
-    },
-    enableSorting: true,
-    enableHiding: true,
-  },
-
+  // {
+  //   accessorKey: "genre",
+  //   accessorFn: (row) => (row?.genre),
+  //   cell: ({ row }) => null,
+  //   filterFn: (row, columnId, filterValue) => {
+  //     const genres = row.getValue(columnId) as string;
+  //     return filterValue.every((filter: any) => genres.includes(filter));
+  //   },
+  //   enableSorting: true,
+  //   enableHiding: true,
+  // },
   {
     id: "actions",
     header: ({ column }) => (
