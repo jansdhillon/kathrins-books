@@ -86,7 +86,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="space-y-6 p-8 rounded-xl bg-accent flex flex-col md:flex-row items-center gap-8 dark:bg-accent/40 -mb-7">
+      <section className="space-y-6 p-4  bg-accent flex flex-col md:flex-row items-center gap-8 dark:bg-accent/40 -mb-7">
 
         <div className="flex flex-col space-y-4 container mx-auto ">
           <h2 className="text-xl font-bold">About</h2>

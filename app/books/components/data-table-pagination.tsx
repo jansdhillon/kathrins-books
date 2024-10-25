@@ -23,7 +23,7 @@ export function DataTablePagination<TData>({
   table,
 }: DataTablePaginationProps<TData>) {
   return (
-    <div className="flex items-center justify-between px-2 space-x-6 lg:space-x-8">
+    <div className="flex items-center justify-between  space-x-6 lg:space-x-8 py-10 container mx-auto -ml-4 ">
       <div className="flex w-[100px] items-center justify-center text-sm font-medium">
         Page {table.getState().pagination.pageIndex + 1} of{" "}
         {table.getPageCount() || 1}
