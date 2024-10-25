@@ -64,7 +64,7 @@ export function BookDetails({ book }: BookDetailsProps) {
   }, []);
 
   return (
-    <div className="space-y-6 mx-auto container">
+    <div className="flex flex-col space-y-6 container mx-auto ">
       <div>
         <Button variant="ghost" onClick={() => router.back()}>
           <ArrowLeft className="mr-2 h-4 w-4" /> Back
@@ -205,7 +205,13 @@ export function BookDetails({ book }: BookDetailsProps) {
             </div>
             <div className="flex flex-col justify-between items-end">
               <p className="text-xl font-semibold text-primary mb-4">
-                ${book.price.toFixed(2)} CAD
+              <>
+              {book.stock > 0 ? (
+                <>${book.price.toFixed(2)} CAD</>
+              ) : (
+                `Sold for $${book.price.toFixed(2)}`
+              )}
+            </>
               </p>
 
               <Button onClick={handleAddToCart} disabled={isPending}>

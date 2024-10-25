@@ -15,8 +15,8 @@ import { createClient } from "@/utils/supabase/server";
 
 const FeaturedBooks = ({ featuredBooks }: { featuredBooks: BookType[] }) => {
   return (
-    <section className="space-y-6 p-8 flex flex-col md:flex-row items-center gap-8">
-      <div className="flex flex-col space-y-4 container mx-auto">
+    <section className="space-y-6 p-8 flex flex-col md:flex-row items-center gap-8 -mt-8 ">
+      <div className="flex flex-col space-y-6 container mx-auto">
         <h2 className="text-xl font-bold" id="featured">
           Featured
         </h2>
@@ -43,12 +43,12 @@ export default async function HomePage() {
   return (
     <div className="flex flex-col justify-center h-full gap-16 -mt-14">
       <BgGlowContainer>
-        <div className="flex flex-col gap-6 container mx-auto justify-between items-start text-left text-primary w-full pt-24 pb-10 ">
+        <div className="flex flex-col gap-6 container mx-auto justify-between items-start text-left text-primary w-full pt-24 pb-10 leading-loose">
           <div className="text-4xl md:text-5xl font-extrabold text-left ">
             Find Your Next
             <br /> Great Read.
           </div>
-          <p className="text-base md:text-xl md:max-w-[50%] font-medium ">
+          <p className="text-base md:text-xl md:max-w-[50%] font-medium  leading-loose">
             Discover a curated selection of rare books. From classics to
             lifestyle books and modern novels,{" "}
             <span className="font-bold">Kathrin&apos;s Books</span> has
@@ -65,8 +65,8 @@ export default async function HomePage() {
 
       <FeaturedBooks featuredBooks={featuredBooks} />
 
-      <section className="space-y-6 p-8 flex flex-col md:flex-row items-center gap-8 ">
-        <div className="flex flex-col space-y-4 container mx-auto">
+      <section className="space-y-6 p-8 flex flex-col md:flex-row items-center gap-8  bg-accent dark:bg-accent/40 -mt-8  ">
+        <div className="flex flex-col space-y-6 container mx-auto">
           <h2 className="text-xl font-bold">Latest Books</h2>
 
           <p className="text-base mb-6 text-muted-foreground font-medium">
@@ -78,7 +78,7 @@ export default async function HomePage() {
             href="/books"
             className="flex items-center justify-center w-full py-6 md:py-12 "
           >
-            <Button className="flex items-center justify-center space-x-2 font-medium">
+            <Button className="flex items-center justify-center space-x-2 font-bold">
               <span>View All Books</span>
               <ArrowRightIcon />
             </Button>
@@ -86,9 +86,9 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="space-y-6 p-4  bg-accent flex flex-col md:flex-row items-center gap-8 dark:bg-accent/40 -mb-7">
+      <section className="px-8 flex flex-col md:flex-row items-center gap-8 -mt-8 ">
 
-        <div className="flex flex-col space-y-4 container mx-auto ">
+        <div className="flex flex-col space-y-6 container mx-auto ">
           <h2 className="text-xl font-bold">About</h2>
           <p className="font-medium text-muted-foreground md:max-w-[50%]">
             Kathrin is a passionate book lover and curator who believes in the

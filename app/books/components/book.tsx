@@ -44,7 +44,7 @@ export function Book({ book }: BookProps) {
     : "/placeholder.png";
 
   return (
-    <Card className=" rounded-xl  flex flex-col justify-between h-full max-w-[350px]  ">
+    <Card className=" rounded-xl  flex flex-col justify-between h-full max-w-[350px] ">
       <CardHeader className="text-muted-foreground ">
         <Link
           href={`/books/${book.id}`}
@@ -102,6 +102,7 @@ export function Book({ book }: BookProps) {
           size="sm"
           variant="default"
           disabled={isPending || book.stock === 0}
+          className="font-bold"
         >
           {isPending ? (
             "Adding..."
