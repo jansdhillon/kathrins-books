@@ -16,11 +16,11 @@ const FeaturedBooks = ({ featuredBooks }: { featuredBooks: BookType[] }) => {
   return (
     <section className="space-y-6 p-8 flex flex-col md:flex-row items-center gap-8 max-w-5xl">
       <div className="flex flex-col space-y-4 container mx-auto">
-        <h2 className="text-xl font-semibold" id="featured">
+        <h2 className="text-xl font-bold" id="featured">
           Featured
         </h2>
 
-        <p className="text-lg mb-6 text-muted-foreground font-medium">
+        <p className="text-base mb-6 text-muted-foreground font-medium">
           Handpicked by Kathrin.
         </p>
 
@@ -65,9 +65,9 @@ export default async function HomePage() {
 
       <section className="space-y-6 p-8 flex flex-col md:flex-row items-center gap-8 max-w-5xl">
         <div className="flex flex-col space-y-4 container mx-auto">
-          <h2 className="text-xl font-semibold">Latest Books</h2>
+          <h2 className="text-xl font-bold">Latest Books</h2>
 
-          <p className="text-lg mb-6 text-muted-foreground font-medium">
+          <p className="text-base mb-6 text-muted-foreground font-medium">
             Just listed.
           </p>
           <BookDisplay books={allBooks} />
@@ -84,9 +84,9 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="space-y-6 p-8 rounded-xl bg-accent flex flex-col md:flex-row items-center gap-8">
+      <section className="space-y-6 p-8 rounded-xl bg-accent flex flex-col md:flex-row items-center gap-8 dark:bg-accent/60">
         <div className="flex flex-col space-y-4 container mx-auto ">
-          <h2 className="text-xl font-semibold">About</h2>
+          <h2 className="text-xl font-bold">About</h2>
           <p className="font-medium text-muted-foreground md:max-w-[50%]">
             Kathrin is a passionate book lover and curator who believes in the
             transformative power of literature. With over a decade of experience
