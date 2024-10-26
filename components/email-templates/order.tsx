@@ -88,15 +88,15 @@ export const OrderConfirmationTemplate: React.FC<
         <tfoot>
           <tr>
             <td colSpan={2} style={{ padding: "8px", fontWeight: "bold" }}>Items Total</td>
-            <td style={{ padding: "8px" }}>${itemsTotal.toFixed(2)}</td>
+            <td style={{ padding: "8px" }}>${(itemsTotal as number || 0)?.toFixed(2)}</td>
           </tr>
           <tr>
             <td colSpan={2} style={{ padding: "8px", fontWeight: "bold" }}>Shipping Cost</td>
-            <td style={{ padding: "8px" }}>${shippingCost.toFixed(2)}</td>
+            <td style={{ padding: "8px" }}>${(shippingCost as number || 0)?.toFixed(2)}</td>
           </tr>
           <tr>
             <td colSpan={2} style={{ padding: "8px", fontWeight: "bold" }}>Total</td>
-            <td style={{ padding: "8px" }}>${(itemsTotal + shippingCost).toFixed(2)}</td>
+            <td style={{ padding: "8px" }}>${(itemsTotal as number + shippingCost as number || 0.00)?.toFixed(2) }</td>
           </tr>
         </tfoot>
       </table>
