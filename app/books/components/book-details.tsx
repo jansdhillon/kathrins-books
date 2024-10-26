@@ -18,9 +18,10 @@ import Loading from "@/app/loading";
 import Link from "next/link";
 import { Badge } from "../../../components/ui/badge";
 import { BookType, UserType } from "@/lib/types/types";
-import { getUserDataAction } from "@/app/actions/get-user";
+import { getUserDataAction } from "@/app/actions/get-user-data";
 import { Skeleton } from "../../../components/ui/skeleton";
 import { imageLoader } from "./book";
+import { createClient } from "@/utils/supabase/client";
 
 type BookDetailsProps = {
   book: BookType;
@@ -52,12 +53,22 @@ export function BookDetails({ book }: BookDetailsProps) {
     });
   };
 
-  const [userData, setUserData] = useState<UserType | null>(null);
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
+
 
   useEffect(() => {
     const fetchUserData = async () => {
-      const { data: userData } = await getUserDataAction();
-      setUserData(userData);
+      const supabase = createClient();
+      const { data: user, error } = await supabase.auth.getUser();
+      if (error || !user?.user) {
+        return;
+      }
+      const { data: userData } = await getUserDataAction(user?.user!.id!);
+
+      if (userData) {
+        setIsAdmin(userData.is_admin);
+      }
+
     };
 
     fetchUserData();
@@ -142,9 +153,9 @@ export function BookDetails({ book }: BookDetailsProps) {
                 <CardTitle className="text-2xl font-semibold text-primary mb-4">
                   {book.title}
                 </CardTitle>
-                {userData && userData?.is_admin && (
-                  <Link className="mx-5" href={`/admin/edit/${book.id}`}>
-                    <Pen size={20} width={20} height={20} />
+                {isAdmin && (
+                  <Link href={`/admin/books/${book.id}`}>
+                    <Pen className="ml-2 h-5 w-5 cursor-pointer" />
                   </Link>
                 )}
               </div>

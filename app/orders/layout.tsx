@@ -16,5 +16,5 @@ export default async function Layout({
 
 
 
-  return <div>{children}</div>;
+  return <>{children}</>;
 }

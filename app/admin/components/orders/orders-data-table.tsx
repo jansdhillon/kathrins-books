@@ -25,16 +25,16 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { DataTablePagination } from "../../books/components/data-table-pagination";
-import { DataTableToolbar } from "./books/data-table-toolbar";
-import { BookType } from "@/lib/schemas/schemas";
+import { DataTableToolbar } from "./data-table-toolbar";
+import { DataTablePagination } from "@/app/books/components/data-table-pagination";
+import { useRouter } from "next/navigation";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export function DataTable<TData, TValue>({
+export function AdminOrdersDataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -46,6 +46,8 @@ export function DataTable<TData, TValue>({
   );
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = React.useState<string>("");
+
+  const router = useRouter();
 
   const table = useReactTable({
     data,
@@ -71,29 +73,12 @@ export function DataTable<TData, TValue>({
     getFacetedUniqueValues: getFacetedUniqueValues(),
   });
 
-  const genreOptions = React.useMemo(() => {
-    const genres = new Set<string>();
-    data.forEach((item: any) => {
-      if (item.genre) {
-        item.genre.forEach((genre: string) => {
-          genres.add(genre);
-        })
-      }
-    });
-    return Array.from(genres).map((genre) => ({
-      label: genre,
-      value: genre,
-    }));
-  }, [data]);
-
   return (
     <div className="space-y-4 w-full">
       <DataTableToolbar
         table={table}
         globalFilter={globalFilter}
         setGlobalFilter={setGlobalFilter}
-        genreOptions={genreOptions}
-        books={data as BookType[]}
       />
       <div className="rounded-md border overflow-y-scroll max-h-[500px]">
         <Table>
@@ -121,7 +106,12 @@ export function DataTable<TData, TValue>({
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell key={cell.id}
+                    className="cursor-pointer"
+                      onClick={() => {
+                        router.push(`/admin/orders/${row.getValue("id")}`);
+                      }}
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()

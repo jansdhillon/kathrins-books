@@ -24,17 +24,18 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
-import { DataTableToolbar } from "./data-table-toolbar";
-import { DataTablePagination } from "@/app/books/components/data-table-pagination";
 import { useRouter } from "next/navigation";
+import { OrderItemSchema } from "@/lib/schemas/schemas";
+
+
+
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export function UserOrdersDataTable<TData, TValue>({
+export function OrderItemsDataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -45,9 +46,6 @@ export function UserOrdersDataTable<TData, TValue>({
     []
   );
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [globalFilter, setGlobalFilter] = React.useState<string>("");
-
-  const router = useRouter();
 
   const table = useReactTable({
     data,
@@ -57,9 +55,7 @@ export function UserOrdersDataTable<TData, TValue>({
       columnVisibility,
       rowSelection,
       columnFilters,
-      globalFilter,
     },
-    onGlobalFilterChange: setGlobalFilter,
     enableRowSelection: false,
     onRowSelectionChange: setRowSelection,
     onSortingChange: setSorting,
@@ -73,28 +69,27 @@ export function UserOrdersDataTable<TData, TValue>({
     getFacetedUniqueValues: getFacetedUniqueValues(),
   });
 
+  const router = useRouter();
+
   return (
-    <div className="space-y-4 w-full">
-      <DataTableToolbar
-        table={table}
-        globalFilter={globalFilter}
-        setGlobalFilter={setGlobalFilter}
-      />
+    <div className="space-y-4  w-full">
       <div className="rounded-md border overflow-y-scroll max-h-[500px]">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id} colSpan={header.colSpan}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </TableHead>
-                ))}
+                {headerGroup.headers.map((header) => {
+                  return (
+                    <TableHead key={header.id} colSpan={header.colSpan}>
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </TableHead>
+                  );
+                })}
               </TableRow>
             ))}
           </TableHeader>
@@ -106,12 +101,11 @@ export function UserOrdersDataTable<TData, TValue>({
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell
-                      key={cell.id}
-                      className="cursor-pointer"
-                      onClick={() => {
-                        router.push(`/orders/${row.getValue("id")}`);
-                      }}
+                    <TableCell key={cell.id}
+                     onClick={() => {
+                      const item = OrderItemSchema.parse(row.original);
+                      router.push(`/books/${item.book_id}`);
+                    }}
                     >
                       {flexRender(
                         cell.column.columnDef.cell,
@@ -134,7 +128,6 @@ export function UserOrdersDataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <DataTablePagination table={table} />
     </div>
   );
 }

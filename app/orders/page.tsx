@@ -1,12 +1,18 @@
 import { Separator } from "@/components/ui/separator";
 import { redirect } from "next/navigation";
-import { getUserDataAction } from "../actions/get-user";
-import { DataTable } from "@/app/orders/components/data-table";
+import { getUserDataAction } from "../actions/get-user-data";
 import { orderColumns } from "@/app/orders/components/order-columns";
 import { getAllOrders } from "../actions/get-all-orders";
+import { UserOrdersDataTable } from "./components/data-table";
+import { createClient } from "@/utils/supabase/server";
 
 export default async function OrdersPage() {
-  const { data: userData, error: authError } = await getUserDataAction();
+  const supabase = createClient();
+  const {data: user, error: authError} = await supabase.auth.getUser();
+  if (!user?.user) {
+    redirect("/sign-in");
+  }
+  const { data: userData, error } = await getUserDataAction(user.user.id);
   if (!userData || authError) {
     redirect("/sign-in");
   }
@@ -21,7 +27,7 @@ export default async function OrdersPage() {
         View and track your book orders.
       </p>
       {orders && orders?.length > 0 ? (
-        <DataTable columns={orderColumns} data={orders} />
+        <UserOrdersDataTable columns={orderColumns} data={orders} />
       ) : (
         <p className="text-center text-muted-foreground">
           You haven't placed any orders yet.

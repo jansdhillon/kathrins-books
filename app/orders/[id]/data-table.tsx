@@ -24,6 +24,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useRouter } from "next/navigation";
+import { OrderItemSchema } from "@/lib/schemas/schemas";
 
 
 
@@ -33,7 +35,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
 }
 
-export function DataTable<TData, TValue>({
+export function OrderItemsDataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -67,6 +69,8 @@ export function DataTable<TData, TValue>({
     getFacetedUniqueValues: getFacetedUniqueValues(),
   });
 
+  const router = useRouter();
+
   return (
     <div className="space-y-4  w-full">
       <div className="rounded-md border overflow-y-scroll max-h-[500px]">
@@ -97,7 +101,13 @@ export function DataTable<TData, TValue>({
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} >
+                    <TableCell key={cell.id}
+                    className="cursor-pointer"
+                    onClick={() => {
+                      const item = OrderItemSchema.parse(row.original);
+                      router.push(`/books/${item.book_id}`);
+                    }}
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()

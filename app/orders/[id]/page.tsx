@@ -5,7 +5,7 @@ import { ArrowLeft } from "lucide-react";
 import { getOrderAction } from "@/app/actions/get-order-by-id";
 import Link from "next/link";
 import { orderItemColumns } from "@/app/orders/components/order-items-columns";
-import { DataTable } from "./data-table";
+import { OrderItemsDataTable } from "./data-table";
 
 
 export default async function OrderDetailsPage({
@@ -75,7 +75,7 @@ export default async function OrderDetailsPage({
           </CardHeader>
 
           <CardContent>
-            <DataTable columns={orderItemColumns} data={orderItems} />
+            <OrderItemsDataTable columns={orderItemColumns} data={orderItems} />
           </CardContent>
         </Card>
       </div>

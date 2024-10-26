@@ -1,13 +1,11 @@
-"use client";
+"use client";;
 import { Badge } from "@/components/ui/badge";
-import { DataTableColumnHeader } from "../data-table-column-header";
+import { DataTableColumnHeader } from "../books/data-table-column-header";
 import { OrderWithItemsType } from "@/lib/schemas/schemas";
 import { format } from "date-fns";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { Eye } from "lucide-react";
+import { OrderItemsDataTable } from "./order-items-data-table";
+import { orderItemColumns } from "./order-items-columns";
 
 export const orderColumns: ColumnDef<OrderWithItemsType>[] = [
   {
@@ -23,7 +21,7 @@ export const orderColumns: ColumnDef<OrderWithItemsType>[] = [
       <DataTableColumnHeader column={column} title="Ordered On" />
     ),
     cell: ({ row }) => (
-      <div>{format(new Date(row.original.ordered_at), "yyyy-MM-dd")}</div>
+      <div>{row.original?.ordered_at && format(new Date(row.original?.ordered_at), "yyyy-MM-dd")}</div>
     ),
   },
   {
@@ -32,15 +30,7 @@ export const orderColumns: ColumnDef<OrderWithItemsType>[] = [
       <DataTableColumnHeader column={column} title="Items" />
     ),
     cell: ({ row }) => (
-      <div>
-        {row.original.items.length > 0 ? (
-          row.original.items.map((item) => (
-            <div key={item.id}>{item.book_title}</div>
-          ))
-        ) : (
-          <div>No items</div>
-        )}
-      </div>
+      <OrderItemsDataTable columns={orderItemColumns} data={row.original.items} />
     ),
   },
   {
@@ -67,24 +57,6 @@ export const orderColumns: ColumnDef<OrderWithItemsType>[] = [
             0)
         ).toFixed(2)}
       </div>
-    ),
-  },
-  {
-    id: "actions",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Actions" />
-    ),
-    cell: ({ row }) => (
-      <Link href={`/admin/orders/${row.original.id}`}>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button variant="ghost" size={"sm"}>
-              <Eye size={16} />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>View Order</TooltipContent>
-        </Tooltip>
-      </Link>
     ),
   },
 ];

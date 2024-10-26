@@ -4,8 +4,8 @@ import { getAllBooks } from "../actions/get-all-books";
 import { createClient } from "@/utils/supabase/server";
 import { getUserDataById } from "@/utils/supabase/queries";
 import { encodedRedirect } from "@/utils/utils";
-import { ClientWrapper as BookClientWrapper } from "./components/books/client-wrapper";
-import { ClientWrapper as OrderClientWrapper } from "./components/orders/client-wrapper";
+import { BooksClientWrapper } from "./components/books/client-wrapper";
+import { OrdersClientWrapper } from "./components/orders/client-wrapper";
 import { getAllOrders } from "../actions/get-all-orders";
 
 export default async function AdminDashboard() {
@@ -47,10 +47,10 @@ export default async function AdminDashboard() {
           </TabsList>
         </div>
         <TabsContent value="orders" className="space-y-4">
-          <OrderClientWrapper data={orders} />
+          <OrdersClientWrapper data={orders} />
         </TabsContent>
         <TabsContent value="books" className="space-y-4 ">
-          <BookClientWrapper data={books} />
+          <BooksClientWrapper data={books} />
         </TabsContent>
       </Tabs>
     </div>

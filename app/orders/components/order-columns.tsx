@@ -12,6 +12,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Eye } from "lucide-react";
+import { orderItemColumns } from "./order-items-columns";
+import { OrderItemsDataTable } from "../[id]/data-table";
 
 export const orderColumns: ColumnDef<OrderWithItemsType>[] = [
   {
@@ -20,8 +22,8 @@ export const orderColumns: ColumnDef<OrderWithItemsType>[] = [
       <DataTableColumnHeader column={column} title="Order ID" />
     ),
     cell: ({ row }) => (
-      <div className="flex space-x-2">
-        <span className="max-w-[100px] md:max-w-[200px] lg:max-w-[300px] truncate font-medium text-ellipsis">
+      <div className="flex space-x-2  max-w-[100px] md:max-w-[200px] ">
+        <span className="font-medium overflow-x-scroll">
           {row.original.id || "-"}
         </span>
       </div>
@@ -33,7 +35,7 @@ export const orderColumns: ColumnDef<OrderWithItemsType>[] = [
       <DataTableColumnHeader column={column} title="Ordered On" />
     ),
     cell: ({ row }) => (
-      <div>{format(new Date(row.original.ordered_at), "yyyy-MM-dd")}</div>
+      <div >{format(new Date(row.original.ordered_at), "yyyy-MM-dd")}</div>
     ),
   },
   {
@@ -42,15 +44,10 @@ export const orderColumns: ColumnDef<OrderWithItemsType>[] = [
       <DataTableColumnHeader column={column} title="Items" />
     ),
     cell: ({ row }) => (
-      <div className="flex gap-1 flex-wrap truncate">
-        {row.original.items.length > 0 ? (
-          row.original.items.map((item) => (
-            <div key={item.id}>{item.book_title}</div>
-          ))
-        ) : (
-          <div>No items</div>
-        )}
-      </div>
+      <OrderItemsDataTable
+        columns={orderItemColumns}
+        data={row.original.items}
+      />
     ),
     filterFn: (row, columnId, filterValue) => {
       return row.original.items.some((item) =>
@@ -84,24 +81,6 @@ export const orderColumns: ColumnDef<OrderWithItemsType>[] = [
             0)
         ).toFixed(2)}
       </div>
-    ),
-  },
-  {
-    id: "actions",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="View" />
-    ),
-    cell: ({ row }) => (
-      <Link href={`/orders/${row.original.id}`}>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button variant="ghost" size={"sm"}>
-              <Eye size={16} />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>View Order</TooltipContent>
-        </Tooltip>
-      </Link>
     ),
   },
 ];

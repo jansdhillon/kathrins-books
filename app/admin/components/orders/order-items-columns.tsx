@@ -1,7 +1,16 @@
-"use client";;
+"use client";
 import { ColumnDef } from "@tanstack/react-table";
 import { OrderItemType } from "@/lib/types/types";
 import Image from "next/image";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Button } from "@/components/ui/button";
+import { Eye } from "lucide-react";
+import { DataTableColumnHeader } from "./data-table-column-header";
+import Link from "next/link";
 
 export const orderItemColumns: ColumnDef<OrderItemType>[] = [
   {
@@ -26,10 +35,5 @@ export const orderItemColumns: ColumnDef<OrderItemType>[] = [
     accessorKey: "book_author",
     header: "Author(s)",
     cell: ({ row }) => row.original.book_author,
-  },
-  {
-    accessorKey: "price",
-    header: "Price",
-    cell: ({ row }) => `$${row.original.price.toFixed(2)}`,
   },
 ];

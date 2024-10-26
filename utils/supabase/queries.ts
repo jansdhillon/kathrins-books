@@ -76,7 +76,7 @@ export const getOrderItemsByOrderId = cache(
 
 export const getAllOrdersWithOrderItems = cache(
   async (supabase: SupabaseClient) => {
-    const { data: orders, error } = await supabase.from("orders").select("*");
+    const { data: orders, error } = await supabase.from("orders").select("*").order("ordered_at", { ascending: false });;
 
     if (error) {
       return { data: null, error };

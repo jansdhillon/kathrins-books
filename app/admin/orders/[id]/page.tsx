@@ -1,35 +1,25 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { ArrowLeft } from "lucide-react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import { getOrderAction } from "@/app/actions/get-order-by-id";
 import Loading from "@/app/loading";
-import { DataTable } from "@/app/orders/components/data-table";
-import { orderColumns } from "../../components/orders/order-columns";
+import { updateOrderStatus } from "@/app/actions/update-order-status";
+import { OrderItemsDataTable } from "@/app/orders/[id]/data-table";
+import { orderItemColumns } from "@/app/orders/components/order-items-columns";
+import { useToast } from "@/hooks/use-toast";
+import { OrderItemType, OrderType } from "@/lib/schemas/schemas";
+import { createClient } from "@/utils/supabase/client";
+import { getUserDataAction } from "@/app/actions/get-user-data";
 
 export default function AdminOrderDetailsPage({
   params,
@@ -38,14 +28,19 @@ export default function AdminOrderDetailsPage({
 }) {
   const router = useRouter();
   const orderId = params.id;
-  const [order, setOrder] = useState<any>(null);
-  const [orderItems, setOrderItems] = useState<any[]>([]);
+  const [order, setOrder] = useState<OrderType | null>(null);
+  const [orderItems, setOrderItems] = useState<OrderItemType[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [shippingAddress, setShippingAddress] = useState<string | null>(null);
+  const [email, setEmail] = useState<string | null>(null);
+
+  const { toast } = useToast();
 
   useEffect(() => {
     const fetchOrderDetails = async () => {
       try {
+        const supabase = createClient();
         setIsLoading(true);
         const { order, orderItems, error } = await getOrderAction(orderId);
         if (error) {
@@ -54,6 +49,19 @@ export default function AdminOrderDetailsPage({
         }
         setOrder(order);
         setOrderItems(orderItems);
+        const { data: user, error: authError } = await supabase.auth.getUser();
+        if (authError || !user?.user) {
+          router.push("/sign-in");
+        }
+
+        const { data: userData } = await getUserDataAction(user.user!.id);
+        if (!userData) return router.push("/sign-in");
+        if (!userData.is_admin) {
+          router.push("/");
+        }
+
+        setEmail(userData.email);
+        setShippingAddress(userData.shipping_address);
       } catch (error) {
         console.error("Error fetching order details:", error);
         setError("Failed to load order details.");
@@ -84,7 +92,15 @@ export default function AdminOrderDetailsPage({
 
   const handleUpdateOrderStatus = async (newStatus: string) => {
     try {
-      // await updateOrderStatus(order.id, newStatus);
+      if (!order) {
+        return;
+      }
+      await updateOrderStatus(order.id, newStatus);
+      toast({
+        variant: "default",
+        title: "Order status updated",
+        description: `Order status has been updated to ${newStatus}`,
+      });
       router.refresh();
     } catch (error) {
       console.error("Error updating order status:", error);
@@ -96,18 +112,18 @@ export default function AdminOrderDetailsPage({
     return <Loading />;
   }
 
-  const statusMessage = getOrderStatusMessage(order?.status);
+  const statusMessage = order ? getOrderStatusMessage(order?.status) : "";
 
   return (
-    <div className="container mx-auto w-full space-y-8">
-      <div>
-        <Button variant="ghost" onClick={() => router.push("/admin")}>
-          <ArrowLeft className="mr-2 h-4 w-4" /> Back
-        </Button>
-      </div>
+    order && (
+      <div className="mx-auto w-full space-y-8">
+        <div>
+          <Button variant="ghost" onClick={() => router.back()}>
+            <ArrowLeft className="mr-2 h-4 w-4" /> Back
+          </Button>
+        </div>
 
-      <div className="space-y-6">
-        <Card>
+        <Card className="mx-auto">
           <CardHeader>
             <CardTitle>Order Summary</CardTitle>
             <div className="text-sm space-y-4 pt-4">
@@ -116,36 +132,46 @@ export default function AdminOrderDetailsPage({
               </p>
               <p>
                 <span className="font-semibold">Order Date:</span>{" "}
-                {new Date(order.ordered_at).toLocaleDateString()}
+                {new Date(order?.ordered_at).toLocaleDateString()}
               </p>
               <p>
-                <span className="font-semibold">Status:</span> {order.status}
+                <span className="font-semibold">Total:</span> $
+                {order.items_total}
+              </p>
+              <p>
+                <span className="font-semibold">Shipping:</span> $
+                {order.shipping_cost}
+              </p>
+              <p>
+                <span className="font-semibold">Ordered By:</span> {email}
+              </p>
+              <p>
+                <span className="font-semibold">Shipping Address:</span>{" "}
+                {shippingAddress}
               </p>
               <p className="text-base">{statusMessage}</p>
             </div>
           </CardHeader>
 
           <CardContent>
-            <DataTable columns={orderColumns} data={orderItems} />
-            <Separator className="my-4" />
-
-            {/* Admin Actions */}
-            <div className="space-y-4">
-              <h4 className="font-semibold">Manage Order Status</h4>
-              <div className="flex space-x-4">
-                <Button
-                  onClick={() => handleUpdateOrderStatus("Shipped")}
-                  variant="outline"
-                >
-                  Mark as Shipped
-                </Button>
-                <Button
-                  onClick={() => handleUpdateOrderStatus("Delivered")}
-                  variant="outline"
-                >
-                  Mark as Delivered
-                </Button>
-                <AlertDialog>
+            <OrderItemsDataTable columns={orderItemColumns} data={orderItems} />
+          </CardContent>
+          <CardFooter className="flex flex-col items-start space-y-4">
+            <h4 className="font-semibold">Manage Order Status</h4>
+            <div className="flex space-x-4">
+              <Button
+                onClick={() => handleUpdateOrderStatus("Shipped")}
+                variant="outline"
+              >
+                Mark as Shipped
+              </Button>
+              <Button
+                onClick={() => handleUpdateOrderStatus("Delivered")}
+                variant="outline"
+              >
+                Mark as Delivered
+              </Button>
+              {/* <AlertDialog>
                   <AlertDialogTrigger asChild>
                     <Button variant="destructive">Cancel Order</Button>
                   </AlertDialogTrigger>
@@ -153,8 +179,7 @@ export default function AdminOrderDetailsPage({
                     <AlertDialogHeader>
                       <AlertDialogTitle>Cancel Order</AlertDialogTitle>
                       <AlertDialogDescription>
-                        Are you sure you want to cancel this order? This action
-                        cannot be undone.
+                        Are you sure you want to cancel this order?
                       </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
@@ -166,12 +191,11 @@ export default function AdminOrderDetailsPage({
                       </AlertDialogAction>
                     </AlertDialogFooter>
                   </AlertDialogContent>
-                </AlertDialog>
-              </div>
+                </AlertDialog> */}
             </div>
-          </CardContent>
+          </CardFooter>
         </Card>
       </div>
-    </div>
+    )
   );
 }
