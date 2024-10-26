@@ -115,19 +115,20 @@ export const BookPage = ({ books, title, subtitle, query }: BookPageProps) => {
         genreOptions={genreOptions}
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 overflow-hidden">
-        {table.getRowModel().rows.map((row) => (
-          <div key={row.id} className="h-full">
-            {row.getVisibleCells().map((cell) => (
-              <div key={cell.id} className="h-full">
-                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-              </div>
-            ))}
-          </div>
-        ))}
+      <div className="max-w-5xl">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 overflow-hidden">
+          {table.getRowModel().rows.map((row) => (
+            <div key={row.id} className="h-full">
+              {row.getVisibleCells().map((cell) => (
+                <div key={cell.id} className="h-full">
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+        <DataTablePagination table={table} />
       </div>
-
-      <DataTablePagination table={table} />
     </div>
   );
 };
