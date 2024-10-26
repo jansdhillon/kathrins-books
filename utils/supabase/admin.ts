@@ -2,11 +2,7 @@ import { stripe } from "@/utils/stripe/config";
 import { createClient } from "@supabase/supabase-js";
 import Stripe from "stripe";
 import type { Database } from "../database.types";
-import {
-  createOrder,
-  getOrCreateCart,
-  getUserDataById,
-} from "./queries";
+import { createOrder, getOrCreateCart, getUserDataById } from "./queries";
 import { OrderItemInsertType, PriceType, ProductType } from "@/lib/types/types";
 import { sendEmail } from "@/app/actions/send-email";
 
@@ -244,10 +240,13 @@ const copyBillingAndShippingDetailsToCustomer = async (
     throw new Error(`Customer update failed: ${updateError.message}`);
 };
 
-const placeOrder = async (session: Stripe.Checkout.Session, itemsTotal: number, shippingCost: number ) => {
+const placeOrder = async (
+  session: Stripe.Checkout.Session,
+  itemsTotal: number,
+  shippingCost: number
+) => {
   const sessionId = session.id;
   const userId = session?.metadata?.userId;
-
 
   if (!userId) {
     throw new Error("User ID not found in session metadata");
@@ -314,17 +313,25 @@ async function handleCheckoutSucceeded(session: Stripe.Checkout.Session) {
   try {
     const itemsTotal = session.amount_total ?? 0;
     const shippingCost = session.shipping_cost?.amount_total ?? 0;
-    const { userData, orderItemsData, order, userId } =
-      await placeOrder(session, itemsTotal, shippingCost);
+    const { userData, orderItemsData, order, userId } = await placeOrder(
+      session,
+      itemsTotal,
+      shippingCost
+    );
 
     const email = userData.email;
     const orderId = order.id;
 
-    const orderItems = orderItemsData
-
+    const orderItems = orderItemsData;
 
     await sendEmail(
-      { name: userData.name, email, orderId, orderItems, itemsTotal },
+      {
+        email,
+        orderId,
+        orderItems,
+        itemsTotal,
+        shippingCost,
+      },
       "order-confirmation"
     );
 
