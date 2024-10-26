@@ -226,7 +226,7 @@ export function BookDetails({ book }: BookDetailsProps) {
                     <>
                       {book.stock > 0
                         ? "Add to Cart"
-                        : `Sold for $${book.price.toFixed(2)}`}
+                        : `Sold`}
                     </>
                   </>
                 )}

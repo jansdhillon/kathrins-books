@@ -116,7 +116,7 @@ export function Book({ book, className }: BookProps) {
               {book.stock > 0 ? (
                 <>${book.price.toFixed(2)}</>
               ) : (
-                `Sold for $${book.price.toFixed(2)}`
+                `Sold`
               )}
             </>
           )}

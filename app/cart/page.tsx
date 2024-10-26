@@ -151,6 +151,7 @@ export default function CartPage() {
                             alt={item.book.title}
                             width={50}
                             height={75}
+                            className="object-contain rounded-sm"
                           />
                         </Suspense>
                       </TableCell>
@@ -197,7 +198,7 @@ export default function CartPage() {
                 )}
               </TableBody>
 
-              <TableFooter className="bg-accent dark:bg-secondary">
+              <TableFooter className="bg-card">
                 <TableRow>
                   <TableCell colSpan={4} className="text-right">
                     Shipping:
@@ -217,7 +218,7 @@ export default function CartPage() {
           </Card>
 
           {cartItems && cartItems.length > 0 && (
-            <div className="hidden md:flex items-center justify-end space-x-2 mt-4">
+            <div className="hidden md:flex items-center justify-end space-x-2 mt-4 text-xs">
               <Checkbox
                 id="terms"
                 checked={agreedToTerms}
@@ -225,7 +226,7 @@ export default function CartPage() {
                   setAgreedToTerms(checked === true)
                 }
               />
-              <Label htmlFor="terms" className="text-sm leading-none">
+              <Label htmlFor="terms" className="leading-none">
                 I agree to the{" "}
                 <Link href="/terms-of-service" className="underline">
                   Terms of Service
@@ -338,14 +339,14 @@ export default function CartPage() {
                   />
                   <label
                     htmlFor="terms-mobile"
-                    className="text-sm leading-none"
+                    className="text-xs leading-none"
                   >
                     I agree to the{" "}
-                    <Link href="/terms" className="underline">
+                    <Link href="/terms" className="underline text-xs">
                       Terms of Service
                     </Link>{" "}
                     and{" "}
-                    <Link href="/privacy" className="underline">
+                    <Link href="/privacy" className="underline text-xs">
                       Privacy Policy
                     </Link>
                     .

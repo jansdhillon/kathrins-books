@@ -17,7 +17,7 @@ export const bookColumns: ColumnDef<BookType>[] = [
     cell: ({ row }) => {
       return (
         <Link className="flex space-x-2" href={`/books/${row?.original.id}`}>
-          <span className="max-w-[50px] md:max-w-[200px] truncate font-medium rounded-xl">
+          <span className="max-w-[50px] md:max-w-[200px] truncate font-medium rounded-sm">
             <Image
               src={
                 row?.original.image_directory !== null &&
@@ -27,7 +27,7 @@ export const bookColumns: ColumnDef<BookType>[] = [
                   : "/placeholder.png"
               }
               alt={row?.original.title}
-              className="object-contain rounded-md"
+              className="object-contain "
               width={50}
               height={50}
             />
