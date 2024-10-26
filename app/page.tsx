@@ -15,15 +15,16 @@ import { createClient } from "@/utils/supabase/server";
 
 const FeaturedBooks = ({ featuredBooks }: { featuredBooks: BookType[] }) => {
   return (
-    <section className="space-y-6 p-8 flex flex-col md:flex-row items-center gap-8 -mt-8 ">
-      <div className="flex flex-col space-y-6 lg:container lg:justify-center ">
-        <h2 className="text-xl font-bold" id="featured">
-          Featured
-        </h2>
-
-        <p className="text-base mb-6 text-muted-foreground font-medium">
-          Handpicked by Kathrin.
-        </p>
+    <section className=" flex flex-col md:flex-row items-center  p-8 ">
+      <div className="flex flex-col space-y-6 w-full justify-center ">
+        <div className="space-y-6 ">
+          <h2 className="text-xl font-bold" id="featured">
+            Featured
+          </h2>
+          <p className="text-base mb-6 text-muted-foreground font-medium">
+            Handpicked by Kathrin.
+          </p>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-4 justify-center ">
           {featuredBooks.map((book) => (
@@ -41,9 +42,9 @@ export default async function HomePage() {
   const featuredBooks = await getFeaturedBooks(supabase);
 
   return (
-    <div className="flex flex-col justify-center h-full gap-8 -mt-14">
+    <div className="flex flex-col justify-center h-full -mt-5">
       <BgGlowContainer>
-        <div className="flex flex-col gap-6 container lg:m-0 lg:px-16  items-start text-left text-primary py-32 mx-auto leading-loose">
+        <div className="flex flex-col gap-4 container lg:m-0   items-start text-left text-primary  mx-auto leading-loose -pt-8">
           <div className="text-4xl md:text-5xl font-extrabold text-left ">
             Find Your Next
             <br /> Great Read.
@@ -65,9 +66,9 @@ export default async function HomePage() {
 
       <FeaturedBooks featuredBooks={featuredBooks} />
 
-      <section className="space-y-6 py-8 flex flex-col md:flex-row items-center gap-8  bg-secondary dark:bg-accent/40  ">
+      <section className="space-y-6 py-8 flex flex-col md:flex-row items-center gap-4  bg-secondary dark:bg-accent/40  ">
         <div className="flex flex-col space-y-6 w-full justify-center  ">
-          <div className="space-y-6 pl-8 lg:pl-16">
+          <div className="space-y-6 pl-8">
             <h2 className="text-xl font-bold">Latest Books</h2>
             <p className="text-base mb-6 text-muted-foreground font-medium ">
               Just listed.
@@ -88,8 +89,8 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="px-8 flex flex-col md:flex-row items-center gap-8 py-6">
-        <div className="flex flex-col space-y-6 lg:pl-8 justify-center ">
+      <section className="p-8 flex flex-col md:flex-row items-center gap-4 ">
+        <div className="flex flex-col space-y-6 justify-center ">
           <h2 className="text-xl font-bold">About</h2>
           <p className="font-medium text-muted-foreground md:max-w-[50%]">
             Kathrin is a passionate book lover and curator who believes in the

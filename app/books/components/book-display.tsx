@@ -22,7 +22,7 @@ const BookDisplay = ({ books }: { books: BookType[] }) => {
       <CarouselContent className="container overflow-visible">
           {books.map((book: BookType) => (
             <CarouselItem className="flex items-center md:basis-1/2 lg:basis-1/4" key={book.id}>
-              <Book key={book.id} book={book}  className="h-fit" />
+              <Book key={book.id} book={book}  />
             </CarouselItem>
           ))}
         </CarouselContent>

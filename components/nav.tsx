@@ -69,8 +69,8 @@ export const Nav = ({ headerAuth }: { headerAuth: ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 border-b w-full bg-background py-2 ">
-      <nav className="hidden lg:flex items-center w-full container px-10 justify-between gap-10">
+    <header className="fixed top-0 left-0 right-0 z-50 border-b w-full bg-primary-foreground">
+      <nav className="hidden lg:flex items-center w-full px-8  justify-between gap-10 h-[60px]">
         <Link href="/" className="flex items-center gap-4 ">
           <Image
             src="/logo.png"
@@ -89,7 +89,7 @@ export const Nav = ({ headerAuth }: { headerAuth: ReactNode }) => {
           <Searchbar />
         </Suspense>
 
-        <div className="flex items-center justify-start gap-4">
+        <div className="flex items-center justify-start gap-8">
           {navItems.map((item) => (
             <NavLink key={item.href} href={item.href}>
               {item.label}
@@ -101,23 +101,17 @@ export const Nav = ({ headerAuth }: { headerAuth: ReactNode }) => {
           {headerAuth}
           <ThemeSwitcher />
         </div>
-
-        {/* Search Button */}
-        {/* <Button onClick={handleSearch} variant="outline" size={"sm"}>
-            Search
-          </Button> */}
       </nav>
 
-      <div className="flex items-center w-full justify-between lg:hidden  container mx-auto">
+      <div className="flex items-center w-full justify-between lg:hidden  px-8  h-[60px]">
         <Link href="/" className="flex items-center gap-4 ">
-          <div className="w-6 h-6 relative ">
-            <Image
-              src="/logo.png"
-              alt="Kathrin's Books"
-              className="object-contain"
-              fill
-            />
-          </div>
+        <Image
+            src="/logo.png"
+            alt="Kathrin's Books"
+            className="object-contain"
+            height={20}
+            width={20}
+          />
           <div className=" text-primary text-base font-bold  tracking-wider hover:text-muted-foreground ">
             Kathrin's Books
           </div>

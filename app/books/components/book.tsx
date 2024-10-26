@@ -95,7 +95,7 @@ export function Book({ book, className }: BookProps) {
       </CardHeader>
       {book.description && (
         <CardContent className=" ">
-          <CardDescription className="line-clamp-[12] text-ellipsis leading-relaxed font-medium">
+          <CardDescription className="line-clamp-6 text-ellipsis leading-relaxed font-medium">
             {book.description || "No description available."}
           </CardDescription>
         </CardContent>

@@ -42,12 +42,14 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <TooltipProvider delayDuration={0}>
-            <div className="flex flex-col justify-between h-full">
+            <div className="flex flex-col justify-between gap-10  min-h-[100dvh]">
               <Nav headerAuth={<HeaderAuth />} />
-              <main className="mt-20 w-full overflow-x-clip ">
+
+              <main className="w-full overflow-x-clip flex flex-1 flex-col justify-center mt-20">
                 <Feedback>{children}</Feedback>
               </main>
-              <Footer  />
+
+              <Footer />
             </div>
 
             <Toaster />
