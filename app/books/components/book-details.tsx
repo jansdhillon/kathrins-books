@@ -127,8 +127,8 @@ export function BookDetails({ book }: BookDetailsProps) {
           </CarouselContent>
           {book && (book.num_images ?? 0) > 1 && (
             <>
-              <CarouselPrevious />
-              <CarouselNext />
+               <CarouselPrevious className="ml-2 lg:ml-0" />
+               <CarouselNext className="mr-2 lg:mr-0"/>
             </>
           )}
         </Carousel>

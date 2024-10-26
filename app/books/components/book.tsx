@@ -48,9 +48,9 @@ export function Book({ book, className }: BookProps) {
 
   return (
     <Card
-      className={cn(
-        "rounded-xl flex flex-col justify-between h-full max-w-[350px] ",
-        className
+      className={cn( "rounded-xl flex flex-col justify-between h-full max-w-[350px] ",
+        className,
+
       )}
     >
       <CardHeader className="text-muted-foreground ">
@@ -95,7 +95,7 @@ export function Book({ book, className }: BookProps) {
       </CardHeader>
       {book.description && (
         <CardContent className=" ">
-          <CardDescription className="line-clamp-[12] text-ellipsis leading-relaxed font-medium">
+          <CardDescription className="line-clamp-[8] text-ellipsis leading-relaxed font-medium">
             {book.description || "No description available."}
           </CardDescription>
         </CardContent>
