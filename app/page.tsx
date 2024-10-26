@@ -10,7 +10,7 @@ import { BookType } from "@/lib/types/types";
 
 const FeaturedBooks = ({ featuredBooks }: { featuredBooks: BookType[] }) => {
   return (
-    <section className=" flex flex-col md:flex-row items-center  p-8 ">
+    <section className=" flex flex-col md:flex-row items-center  p-8 max-w-5xl ">
       <div className="flex flex-col space-y-6 w-full justify-center ">
         <div className="space-y-6 ">
           <h2 className="text-xl font-bold" id="featured">

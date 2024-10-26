@@ -49,57 +49,57 @@ export function Book({ book, className }: BookProps) {
   return (
     <Card
       className={cn(
-        "rounded-xl flex flex-col justify-between h-full max-w-[350px] ",
+        "rounded-xl flex flex-col justify-between h-full max-w-[350px]   ",
         className
       )}
     >
-      <CardHeader className="text-muted-foreground ">
-        <Link
-          href={`/books/${book.id}`}
-          className="relative cursor-pointer space-y-4   "
-        >
-          <div className="w-full flex justify-center">
-            <Image
-              src={coverImage}
-              alt={book.title}
-              width={300}
-              height={400}
-              className="object-contain rounded-xl border  "
-              loader={imageLoader}
-            />
-          </div>
-
-          <CardTitle className="text-xl font-semibold text-primary line-clamp-2 text-ellipsis ">
-            {book.title}
-          </CardTitle>
-        </Link>
-
-        <Separator />
-        <p> by {book.author}</p>
-        {book.genre && (
-          <div className="flex gap-1 flex-wrap">
-            {book.genre.map((g) =>
-              g
-                .split(",")
-                .filter((g) => g.length > 0)
-                .map((g) => (
-                  <div key={g}>
-                    <Badge className="mr-0.5">
-                      <p className="line-clamp-1 max-w-[200px]">{g}</p>
-                    </Badge>
-                  </div>
-                ))
-            )}
-          </div>
+      <div className="flex flex-col justify-start h-full">
+        <CardHeader className="text-muted-foreground ">
+          <Link
+            href={`/books/${book.id}`}
+            className="relative cursor-pointer space-y-4   "
+          >
+            <div className="w-full flex justify-center container max-h-[400px]">
+              <Image
+                src={coverImage}
+                alt={book.title}
+                width={300}
+                height={400}
+                className="object-contain rounded-xl border  aspect-auto "
+                loader={imageLoader}
+              />
+            </div>
+            <CardTitle className="text-xl font-semibold text-primary line-clamp-2 text-ellipsis ">
+              {book.title}
+            </CardTitle>
+          </Link>
+          <Separator />
+          <p> by {book.author}</p>
+          {book.genre && (
+            <div className="flex gap-1 flex-wrap">
+              {book.genre.map((g) =>
+                g
+                  .split(",")
+                  .filter((g) => g.length > 0)
+                  .map((g) => (
+                    <div key={g}>
+                      <Badge className="mr-0.5">
+                        <p className="line-clamp-1 max-w-[200px]">{g}</p>
+                      </Badge>
+                    </div>
+                  ))
+              )}
+            </div>
+          )}
+        </CardHeader>
+        {book.description && (
+          <CardContent className=" ">
+            <CardDescription className="line-clamp-6 text-ellipsis leading-relaxed font-medium">
+              {book.description || "No description available."}
+            </CardDescription>
+          </CardContent>
         )}
-      </CardHeader>
-      {book.description && (
-        <CardContent className=" ">
-          <CardDescription className="line-clamp-6 text-ellipsis leading-relaxed font-medium">
-            {book.description || "No description available."}
-          </CardDescription>
-        </CardContent>
-      )}
+      </div>
 
       <CardFooter className=" flex justify-end gap-4">
         <Button
