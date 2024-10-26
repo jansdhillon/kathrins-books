@@ -75,7 +75,7 @@ export const orderColumns: ColumnDef<OrderWithItemsType>[] = [
       <DataTableColumnHeader column={column} title="Actions" />
     ),
     cell: ({ row }) => (
-      <Link href={`/orders/${row.original.id}`}>
+      <Link href={`/admin/orders/${row.original.id}`}>
         <Tooltip>
           <TooltipTrigger asChild>
             <Button variant="ghost" size={"sm"}>

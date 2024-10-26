@@ -1,9 +1,10 @@
 "use server";
 import { getAllOrdersWithOrderItems } from "@/utils/supabase/queries";
-import { SupabaseClient } from "@supabase/supabase-js";
+import { createClient } from "@/utils/supabase/server";
 import { cache } from "react";
 
-const getAllOrders = cache(async (supabase: SupabaseClient) => {
+const getAllOrders = cache(async () => {
+  const supabase = createClient();
   const { data: orders, error } = await getAllOrdersWithOrderItems(supabase);
 
   if (error) {

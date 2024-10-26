@@ -254,12 +254,12 @@ export const updateOrderStatus = async (
   orderId: string,
   status: string
 ) => {
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("orders")
     .update({ status })
     .eq("id", orderId)
     .single();
-  return { data, error };
+  return { error };
 };
 
 export const getStripeCustomerId = cache(

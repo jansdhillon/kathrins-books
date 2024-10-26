@@ -1,23 +1,17 @@
 import { Separator } from "@/components/ui/separator";
 import { redirect } from "next/navigation";
-import { createClient } from "@/utils/supabase/server";
 import { getUserDataAction } from "../actions/get-user";
 import { DataTable } from "@/app/orders/components/data-table";
 import { orderColumns } from "@/app/orders/components/order-columns";
 import { getAllOrders } from "../actions/get-all-orders";
 
 export default async function OrdersPage() {
-
-  const supabase = createClient();
-
   const { data: userData, error: authError } = await getUserDataAction();
-  if (authError) {
+  if (!userData || authError) {
     redirect("/sign-in");
   }
 
-  const orders = await getAllOrders(supabase);
-
-
+  const orders = await getAllOrders();
 
   return (
     <div className="flex flex-1 flex-col space-y-6 mx-auto container">

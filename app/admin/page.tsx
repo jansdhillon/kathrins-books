@@ -29,9 +29,9 @@ export default async function AdminDashboard() {
     );
   }
 
-  const books = await getAllBooks(supabase);
+  const books = await getAllBooks();
 
-  const orders = await getAllOrders(supabase);
+  const orders = await getAllOrders();
 
 
   return (

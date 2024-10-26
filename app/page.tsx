@@ -1,17 +1,12 @@
 import { getFeaturedBooks } from "./actions/get-featured-books";
 import BookDisplay from "@/app/books/components/book-display";
-import { Separator } from "@/components/ui/separator";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowRightIcon } from "lucide-react";
-import { Skeleton } from "@/components/ui/skeleton";
 import BgGlowContainer from "@/components/bg-glow-container";
 import { getAllBooks } from "./actions/get-all-books";
 import { Book } from "@/app/books/components/book";
 import { BookType } from "@/lib/types/types";
-import { createClient } from "@/utils/supabase/server";
 
 const FeaturedBooks = ({ featuredBooks }: { featuredBooks: BookType[] }) => {
   return (
@@ -37,9 +32,8 @@ const FeaturedBooks = ({ featuredBooks }: { featuredBooks: BookType[] }) => {
 };
 
 export default async function HomePage() {
-  const supabase = await createClient();
-  const allBooks = await getAllBooks(supabase);
-  const featuredBooks = await getFeaturedBooks(supabase);
+  const allBooks = await getAllBooks();
+  const featuredBooks = await getFeaturedBooks();
 
   return (
     <div className="flex flex-col justify-center h-full -mt-5">

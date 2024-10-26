@@ -1,10 +1,11 @@
 "use server";
 import { cache } from "react";
 import { getFeaturedBooks as fetchFeaturedBooks } from "@/utils/supabase/queries";
-import { SupabaseClient } from "@supabase/supabase-js";
+import { createClient } from "@/utils/supabase/server";
 
-const getFeaturedBooks = cache(async (supabase: SupabaseClient) => {
+const getFeaturedBooks = cache(async () => {
 
+  const supabase = createClient();
 
   const { data: books, error } = await fetchFeaturedBooks(supabase);
 

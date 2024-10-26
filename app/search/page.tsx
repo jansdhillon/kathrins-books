@@ -1,8 +1,5 @@
-import { Suspense } from "react";
 import { getAllBooks } from "../actions/get-all-books";
 import { BookPage } from "../books/components/book-page";
-import Loading from "../loading";
-import { createClient } from "@/utils/supabase/server";
 
 export default async function SearchPage({
   searchParams,
@@ -11,16 +8,13 @@ export default async function SearchPage({
 }) {
   const query = searchParams.query || "";
 
-  const supabase = createClient();
-
-  const allBooks = await getAllBooks(supabase);
+  const allBooks = await getAllBooks();
   return (
-
-      <BookPage
-        books={allBooks}
-        title="Search Results"
-        subtitle={query ? `Showing results for "${query}"` : "Showing all books"}
-        query={query}
-      />
+    <BookPage
+      books={allBooks}
+      title="Search Results"
+      subtitle={query ? `Showing results for "${query}"` : "Showing all books"}
+      query={query}
+    />
   );
 }
