@@ -15,8 +15,8 @@ import { createClient } from "@/utils/supabase/server";
 
 const FeaturedBooks = ({ featuredBooks }: { featuredBooks: BookType[] }) => {
   return (
-    <section className="space-y-6 p-8 flex flex-col md:flex-row items-center gap-8 -mt-8  ">
-      <div className="flex flex-col space-y-6 lg:container lg:justify-center ">
+    <section className="space-y-6 p-8 flex flex-col md:flex-row items-center gap-8 -mt-8 ">
+    <div className="flex flex-col space-y-6 lg:container lg:justify-center ">
         <h2 className="text-xl font-bold" id="featured">
           Featured
         </h2>
@@ -25,7 +25,7 @@ const FeaturedBooks = ({ featuredBooks }: { featuredBooks: BookType[] }) => {
           Handpicked by Kathrin.
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-4 lg:w-3/4 justify-center ">
+        <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-4 justify-center ">
           {featuredBooks.map((book) => (
             <Book key={book.id} book={book} />
           ))}
@@ -65,23 +65,20 @@ export default async function HomePage() {
 
       <FeaturedBooks featuredBooks={featuredBooks} />
 
-      <section className="space-y-6 py-12 flex flex-col md:flex-row items-center gap-8  bg-secondary dark:bg-accent/40  ">
-        <div className="flex flex-col space-y-6 w-full justify-center  ">
-          <div className="space-y-6 p-8">
-            <h2 className="text-xl font-bold">Latest Books</h2>
-            <p className="text-base mb-6 text-muted-foreground font-medium ">
-              Just listed.
-            </p>
-          </div>
-          <div className=" w-full ">
-            <BookDisplay books={allBooks} />
-          </div>
+      <section className="space-y-6 p-8 flex flex-col md:flex-row items-center gap-8  bg-secondary dark:bg-accent/40  ">
+        <div className="flex flex-col space-y-6 container justify-center ">
+          <h2 className="text-xl font-bold">Latest Books</h2>
+
+          <p className="text-base mb-6 text-muted-foreground font-medium">
+            Just listed.
+          </p>
+          <BookDisplay books={allBooks} />
 
           <Link
             href="/books"
             className="flex items-center justify-center w-full  "
           >
-            <Button className="flex items-center justify-center space-x-2 font-bold my-6">
+            <Button className="flex items-center justify-center space-x-2 font-bold">
               <span>View All Books</span>
               <ArrowRightIcon />
             </Button>
@@ -89,8 +86,9 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="p-8 flex flex-col md:flex-row items-center gap-8 ">
-        <div className="flex flex-col space-y-6  justify-center ">
+      <section className="px-8 flex flex-col md:flex-row items-center gap-8 ">
+
+      <div className="flex flex-col space-y-6 container justify-center ">
           <h2 className="text-xl font-bold">About</h2>
           <p className="font-medium text-muted-foreground md:max-w-[50%]">
             Kathrin is a passionate book lover and curator who believes in the
