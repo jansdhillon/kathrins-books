@@ -92,7 +92,7 @@ export default function TermsOfServicePage() {
       <p>If you have any questions about these Terms, please contact us at:</p>
       <Link
         className="font-medium underline"
-        href="mailto:kathrinsbookssupport@gmail.com"
+        href="mailto:kathrinsbookshelp@gmail.com"
       >
         kathrinsbookssupport@gmail.com
       </Link>
