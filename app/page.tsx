@@ -89,7 +89,7 @@ export default async function HomePage() {
       </section>
 
       <section className="px-8 flex flex-col md:flex-row items-center gap-8 py-6">
-        <div className="flex flex-col space-y-6 pl-8 justify-center ">
+        <div className="flex flex-col space-y-6 lg:pl-8 justify-center ">
           <h2 className="text-xl font-bold">About</h2>
           <p className="font-medium text-muted-foreground md:max-w-[50%]">
             Kathrin is a passionate book lover and curator who believes in the
