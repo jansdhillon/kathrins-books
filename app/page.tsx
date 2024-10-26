@@ -16,7 +16,7 @@ import { createClient } from "@/utils/supabase/server";
 const FeaturedBooks = ({ featuredBooks }: { featuredBooks: BookType[] }) => {
   return (
     <section className="space-y-6 p-8 flex flex-col md:flex-row items-center gap-8 -mt-8 ">
-    <div className="flex flex-col space-y-6 lg:container lg:justify-center ">
+      <div className="flex flex-col space-y-6 lg:container lg:justify-center ">
         <h2 className="text-xl font-bold" id="featured">
           Featured
         </h2>
@@ -65,20 +65,22 @@ export default async function HomePage() {
 
       <FeaturedBooks featuredBooks={featuredBooks} />
 
-      <section className="space-y-6 p-8 flex flex-col md:flex-row items-center gap-8  bg-secondary dark:bg-accent/40  ">
-        <div className="flex flex-col space-y-6 container justify-center ">
-          <h2 className="text-xl font-bold">Latest Books</h2>
-
-          <p className="text-base mb-6 text-muted-foreground font-medium">
-            Just listed.
-          </p>
-          <BookDisplay books={allBooks} />
-
+      <section className="space-y-6 py-8 flex flex-col md:flex-row items-center gap-8  bg-secondary dark:bg-accent/40  ">
+        <div className="flex flex-col space-y-6 w-full justify-center  ">
+          <div className="space-y-6 pl-16">
+            <h2 className="text-xl font-bold">Latest Books</h2>
+            <p className="text-base mb-6 text-muted-foreground font-medium ">
+              Just listed.
+            </p>
+          </div>
+          <div className=" w-full ">
+            <BookDisplay books={allBooks} />
+          </div>
           <Link
             href="/books"
             className="flex items-center justify-center w-full  "
           >
-            <Button className="flex items-center justify-center space-x-2 font-bold">
+            <Button className="flex items-center justify-center space-x-2 font-bold my-4">
               <span>View All Books</span>
               <ArrowRightIcon />
             </Button>
@@ -86,9 +88,8 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="px-8 flex flex-col md:flex-row items-center gap-8 ">
-
-      <div className="flex flex-col space-y-6 container justify-center ">
+      <section className="px-8 flex flex-col md:flex-row items-center gap-8 py-6">
+        <div className="flex flex-col space-y-6 pl-8 justify-center ">
           <h2 className="text-xl font-bold">About</h2>
           <p className="font-medium text-muted-foreground md:max-w-[50%]">
             Kathrin is a passionate book lover and curator who believes in the
