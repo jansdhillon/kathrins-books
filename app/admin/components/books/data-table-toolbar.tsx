@@ -89,7 +89,7 @@ export function DataTableToolbar<TData>({
         )}
       </div>
       <Link href="admin/add">
-        <Button size="sm" className="ml-auto hidden h-8 lg:flex">
+        <Button size="sm" className="ml-auto h-8 ">
           Add Book
         </Button>
       </Link>
