@@ -70,7 +70,7 @@ export const Nav = ({ headerAuth }: { headerAuth: ReactNode }) => {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b w-full bg-background py-2 ">
-      <nav className="hidden lg:flex items-center w-full container mx-auto justify-between gap-10">
+      <nav className="hidden lg:flex items-center w-full container px-10 justify-between gap-10">
         <Link href="/" className="flex items-center gap-4 ">
           <Image
             src="/logo.png"
