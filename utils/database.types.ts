@@ -146,15 +146,21 @@ export type Database = {
       }
       customers: {
         Row: {
+          billing_address: Json | null
           id: string
+          shipping_address: Json | null
           stripe_customer_id: string | null
         }
         Insert: {
+          billing_address?: Json | null
           id: string
+          shipping_address?: Json | null
           stripe_customer_id?: string | null
         }
         Update: {
+          billing_address?: Json | null
           id?: string
+          shipping_address?: Json | null
           stripe_customer_id?: string | null
         }
         Relationships: []

@@ -2,7 +2,6 @@
 import { createClient } from "@/utils/supabase/server";
 import {
   getOrCreateCart,
-  getUserDataById,
 } from "@/utils/supabase/queries";
 import { redirect } from "next/navigation";
 import { getErrorRedirect } from "@/utils/helpers";
@@ -18,16 +17,10 @@ export const startCheckoutAction = async () => {
     return encodedRedirect("error", "/sign-in", "You must be signed in to view this page");
   }
 
-  const { data: userData } = await getUserDataById(supabase, user?.user!.id);
-
-
-  if (!userData) {
-    return redirect(getErrorRedirect("/sign-in", "Error fetching user data"));
-  }
 
   const { data: cartDetails, error: cartError } = await getOrCreateCart(
     supabase,
-    userData.id
+    user?.user?.id
   );
 
   if (cartError){
@@ -38,6 +31,5 @@ export const startCheckoutAction = async () => {
   return {
     amount: cartDetails.total,
     cartDetails: cartDetails.cart_items,
-    userData: userData,
   };
 };

@@ -9,28 +9,25 @@ export type OrderType = Database["public"]["Tables"]["orders"]["Row"];
 
 export type OrderItemType = Database["public"]["Tables"]["order_items"]["Row"];
 
-export type UserType = Database["public"]["Tables"]["users"]["Row"];
-
 export type BookType = Database["public"]["Tables"]["books"]["Row"];
 
 export type ProductType = Database["public"]["Tables"]["products"]["Row"];
 
 export type PriceType = Database["public"]["Tables"]["prices"]["Row"];
 
-export type OrderItemInsertType = Database["public"]["Tables"]["order_items"]["Insert"];
+export type OrderItemInsertType =
+  Database["public"]["Tables"]["order_items"]["Insert"];
 
+export type EnhancedCartItemType = {
+  id: string;
+  price: number;
+  quantity: number;
+  book: BookType;
+  product: ProductType;
+  image_directory: string | null;
+};
 
-export type EnhancedCartItemType =  {
-    id: string;
-    price: number;
-    quantity: number;
-    book: BookType;
-    product: ProductType;
-    image_directory: string | null;
-  }
-
-
-  export type EmailType =
+export type EmailType =
   | "contact"
   | "newsletter"
   | "order-confirmation"
@@ -51,7 +48,6 @@ export interface NewsletterEmailData extends BaseEmailData {
   content: string;
 }
 
-
 export interface OrderConfirmationEmailData extends BaseEmailData {
   orderId: string;
   orderItems: OrderItemInsertType[];
@@ -69,10 +65,11 @@ export interface DeliveryConfirmationEmailData extends BaseEmailData {
   orderId: string;
 }
 
-export function isBookTypeArray(data: any[]): data is BookType[] {
-  return data.every(item => 'id' in item && 'title' in item && 'author' in item);
-}
-
-export function isOrderWithItemsTypeArray(data: any[]): data is OrderWithItemsType[] {
-  return data.every(item => 'orderId' in item && 'items' in item);
-}
+export type SanitizedAddress = {
+  line1: string | undefined;
+  line2: string | undefined;
+  city: string | undefined;
+  state: string | undefined;
+  postal_code: string | undefined;
+  country: string | undefined;
+};

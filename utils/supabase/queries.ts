@@ -7,21 +7,6 @@ import { SupabaseClient } from "@supabase/supabase-js";
 import { cache } from "react";
 import { encodedRedirect } from "../utils";
 
-export const getUserDataById = cache(
-  async (supabase: SupabaseClient, userId: string) => {
-    const { data: userData, error } = await supabase
-      .from("users")
-      .select("*")
-      .eq("id", userId)
-      .single();
-
-    if (error) {
-      console.error("Error fetching user data:", error.message);
-      return { data: null, error };
-    }
-    return { data: userData, error: error };
-  }
-);
 
 export const getAllBooks = cache(async (supabase: SupabaseClient) => {
   const { data: books, error } = await supabase

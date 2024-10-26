@@ -1,6 +1,5 @@
 import { Separator } from "@/components/ui/separator";
 import { redirect } from "next/navigation";
-import { getUserDataAction } from "../actions/get-user-data";
 import { orderColumns } from "@/app/orders/components/order-columns";
 import { getAllOrders } from "../actions/get-all-orders";
 import { UserOrdersDataTable } from "./components/data-table";
@@ -10,10 +9,6 @@ export default async function OrdersPage() {
   const supabase = createClient();
   const {data: user, error: authError} = await supabase.auth.getUser();
   if (!user?.user) {
-    redirect("/sign-in");
-  }
-  const { data: userData, error } = await getUserDataAction(user.user.id);
-  if (!userData || authError) {
     redirect("/sign-in");
   }
 

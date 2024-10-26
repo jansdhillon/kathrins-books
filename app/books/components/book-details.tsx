@@ -17,8 +17,7 @@ import {
 import Loading from "@/app/loading";
 import Link from "next/link";
 import { Badge } from "../../../components/ui/badge";
-import { BookType, UserType } from "@/lib/types/types";
-import { getUserDataAction } from "@/app/actions/get-user-data";
+import { BookType } from "@/lib/types/types";
 import { Skeleton } from "../../../components/ui/skeleton";
 import { imageLoader } from "./book";
 import { createClient } from "@/utils/supabase/client";
@@ -63,10 +62,9 @@ export function BookDetails({ book }: BookDetailsProps) {
       if (error || !user?.user) {
         return;
       }
-      const { data: userData } = await getUserDataAction(user?.user!.id!);
 
-      if (userData) {
-        setIsAdmin(userData.is_admin);
+      if (user.user.role === "admin") {
+        setIsAdmin(true);
       }
 
     };

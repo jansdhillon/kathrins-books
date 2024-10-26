@@ -9,8 +9,8 @@ export const NavLink = ({ href, children, onClick = () => {} }: any) => {
     return (
       <Link
         href={href}
-        className={`text-sm font-semibold hover:text-primary/90 hover:underline hover:underline-offset-4  transition-colors ${
-          isActive ? "text-primary underline underline-offset-4" : "text-muted-foreground"
+        className={`text-sm font-semibold hover:text-primary/90 transition-colors ${
+          isActive ? "text-primary" : "text-muted-foreground"
         }`}
         onClick={onClick}
       >

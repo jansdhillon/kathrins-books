@@ -56,8 +56,6 @@ export async function POST(req: Request) {
           const checkoutSession = event.data.object as Stripe.Checkout.Session;
           await handleCheckoutSucceeded(checkoutSession);
           break;
-        case 'account.updated':
-          break
         default:
           console.warn(`Unhandled relevant event type: ${event.type}`);
           break;

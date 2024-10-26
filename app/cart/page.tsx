@@ -1,4 +1,4 @@
-"use client";
+"use client";;
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -9,7 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Suspense, use, useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { EnhancedCartItemType } from "@/lib/types/types";
 import { startCheckoutAction } from "../actions/start-checkout";
@@ -17,26 +17,19 @@ import { removeFromCartAction } from "../actions/remove-from-cart";
 import { getStripe } from "@/utils/stripe/client";
 import Loading from "../loading";
 import Image from "next/image";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardTitle } from "@/components/ui/card";
 import { Eye, Trash } from "lucide-react";
 import { postData } from "@/utils/helpers";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
 import { Checkbox } from "@/components/ui/checkbox";
-import { set } from "date-fns";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Label } from "@/components/ui/label";
+import { createClient } from "@/utils/supabase/client";
 
 export default function CartPage() {
   const router = useRouter();
@@ -46,7 +39,6 @@ export default function CartPage() {
   const [initialAmount, setInitialAmount] = useState<number>(0);
   const [shippingCost, setShippingCost] = useState<number>(0);
   const [totalAmount, setTotalAmount] = useState<number>(0);
-  const [userId, setUserId] = useState<string | undefined>();
   const [isLoading, setIsLoading] = useState(true);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
 
@@ -54,12 +46,8 @@ export default function CartPage() {
     const fetchItems = async () => {
       try {
         setIsLoading(true);
-        const { amount, cartDetails, userData } = await startCheckoutAction();
-        if (!userData) {
-          router.push("/sign-in");
-          return;
-        }
-        setUserId(userData.id);
+        const { amount, cartDetails } = await startCheckoutAction();
+
         setInitialAmount(amount);
         const calculatedShipping = amount > 75 || !amount ? 0.0 : 15.0;
         setShippingCost(calculatedShipping);
@@ -93,12 +81,19 @@ export default function CartPage() {
     if (!agreedToTerms) return;
     if (cartItems == undefined || !cartItems.length) return;
 
+    const { data: user } = await createClient().auth.getUser();
+
+    if (!user?.user) {
+      router.push("/sign-in");
+      return;
+    }
+
     const { sessionId } = await postData({
       url: "/api/create-checkout-session",
       data: {
         cartItems,
         total: initialAmount,
-        userId,
+        userId: user?.user?.id,
       },
     });
     if (sessionId) {

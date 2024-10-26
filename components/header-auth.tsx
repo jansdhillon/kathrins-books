@@ -4,7 +4,6 @@ import { CircleUserRound, ShoppingCart } from "lucide-react";
 import { NavAvatar } from "./nav-avatar";
 
 import { createClient } from "@/utils/supabase/server";
-import { getUserDataById } from "@/utils/supabase/queries";
 import { Avatar } from "./ui/avatar";
 import {
   DropdownMenu,
@@ -44,7 +43,6 @@ export default async function AuthButton() {
       </DropdownMenu>
     );
   } else {
-    const { data: userData } = await getUserDataById(supabase, user?.user!.id);
-    return <NavAvatar userData={userData} />;
+    return <NavAvatar />;
   }
 }

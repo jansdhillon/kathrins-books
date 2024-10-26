@@ -2,9 +2,19 @@ import { stripe } from "@/utils/stripe/config";
 import { createClient } from "@supabase/supabase-js";
 import Stripe from "stripe";
 import type { Database } from "../database.types";
-import { createOrder, getOrCreateCart, getUserDataById } from "./queries";
-import { OrderItemInsertType, PriceType, ProductType } from "@/lib/types/types";
+import { createOrder, getOrCreateCart } from "./queries";
+import {
+  OrderItemInsertType,
+  PriceType,
+  ProductType,
+  SanitizedAddress,
+} from "@/lib/types/types";
 import { sendEmail } from "@/app/actions/send-email";
+import {
+  BillingDetails,
+  ExpressCheckoutAddress,
+  ShippingAddress,
+} from "@stripe/stripe-js";
 
 const supabaseAdmin = createClient<Database>(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -107,10 +117,20 @@ const deleteOrderItemsRecord = async (orderId: string) => {
     throw new Error(`Order Items deletion failed: ${deletionError.message}`);
 };
 
-const upsertCustomerToSupabase = async (uuid: string, customerId: string) => {
-  const { error: upsertError } = await supabaseAdmin
-    .from("customers")
-    .upsert([{ id: uuid, stripe_customer_id: customerId }]);
+const upsertCustomerToSupabase = async (
+  uuid: string,
+  customerId: string,
+  shipping_address?: SanitizedAddress,
+  billing_address?: BillingDetails
+) => {
+  const { error: upsertError } = await supabaseAdmin.from("customers").upsert([
+    {
+      id: uuid,
+      stripe_customer_id: customerId,
+      shipping_address: shipping_address ?? null,
+      billing_address: billing_address ?? null,
+    },
+  ]);
 
   if (upsertError)
     throw new Error(
@@ -196,48 +216,29 @@ const createOrRetrieveCustomer = async ({
   }
 };
 
-const copyBillingAndShippingDetailsToCustomer = async (
+const copyAddressDetailsToUser = async (
   userId: string,
-  payment_method: Stripe.PaymentMethod,
   address_details: Stripe.Address
 ) => {
-  const customer = payment_method.customer as string;
-  const { name, phone, address } =
-    payment_method.billing_details as Stripe.PaymentMethod.BillingDetails;
   const { line1, line2, city, state, postal_code, country } =
     address_details as Stripe.Address;
-  if (!name || !phone || !address) return;
 
   const sanitizedAddress = {
-    line1: line1 || undefined,
-    line2: line2 || undefined,
-    city: city || undefined,
-    state: state || undefined,
-    postal_code: postal_code || undefined,
-    country: country || undefined,
+    line1: line1,
+    line2: line2,
+    city: city,
+    state: state,
+    postal_code: postal_code,
+    country: country,
   };
 
-  //@ts-ignore
-  await stripe.customers.update(customer, {
-    name,
-    phone,
-    address: sanitizedAddress,
-    shipping: {
-      name,
-      phone,
-      address: sanitizedAddress,
-    },
+  const { error } = await supabaseAdmin.auth.admin.updateUserById(userId, {
+    user_metadata: { shipping_address: sanitizedAddress },
   });
-  const { error: updateError } = await supabaseAdmin
-    .from("users")
-    .update({
-      shipping_address: { ...address_details },
-      billing_address: { ...address },
-      payment_method: { ...payment_method[payment_method.type] },
-    })
-    .eq("id", userId);
-  if (updateError)
-    throw new Error(`Customer update failed: ${updateError.message}`);
+
+  if (error) {
+    throw new Error(`Error updating user metadata: ${error.message}`);
+  }
 };
 
 const placeOrder = async (
@@ -252,6 +253,18 @@ const placeOrder = async (
     throw new Error("User ID not found in session metadata");
   }
 
+  const { data: user, error: userError } =
+    await supabaseAdmin.auth.admin.getUserById(userId);
+
+  if (userError) {
+    throw new Error(`Error fetching user data: ${userError.message}`);
+  }
+
+  await createOrRetrieveCustomer({
+    email: user.user?.email!,
+    uuid: userId,
+  });
+
   const { data: order, error: orderError } = await createOrder(
     supabaseAdmin,
     userId,
@@ -262,15 +275,6 @@ const placeOrder = async (
 
   if (orderError) {
     throw new Error(`Error creating order: ${orderError.message}`);
-  }
-
-  const { data: userData, error: userError } = await getUserDataById(
-    supabaseAdmin,
-    userId
-  );
-
-  if (userError) {
-    throw userError;
   }
 
   const { data: cartDetails, error: cartError } = await getOrCreateCart(
@@ -302,40 +306,99 @@ const placeOrder = async (
   }
 
   return {
-    userData,
     orderItemsData,
     order,
     userId,
   };
 };
 
+async function reduceStock(orderItemsData: OrderItemInsertType[]) {
+  for (const item of orderItemsData) {
+    const { data: bookData, error: bookFetchError } = await supabaseAdmin
+      .from("books")
+      .select("stock")
+      .eq("id", item.book_id)
+      .single();
+
+    if (bookFetchError) {
+      console.error(
+        `Error fetching stock for book ID ${item.book_id}:`,
+        bookFetchError.message
+      );
+      continue;
+    }
+
+    const newStock = (bookData?.stock ?? 0) - item.quantity;
+
+    const { error: stockUpdateError } = await supabaseAdmin
+      .from("books")
+      .update({ stock: newStock })
+      .eq("id", item.book_id);
+
+    if (stockUpdateError) {
+      console.error(
+        `Error reducing stock for book ID ${item.book_id}:`,
+        stockUpdateError.message
+      );
+      throw new Error("Error reducing stock for book.");
+    }
+  }
+}
+
+async function clearCart(userId: string) {
+  const { data: cartData, error: cartFetchError } = await supabaseAdmin
+    .from("cart")
+    .select("id")
+    .eq("user_id", userId)
+    .single();
+
+  if (cartFetchError || !cartData) {
+    console.error("Error fetching cart data:", cartFetchError?.message);
+    throw new Error("Error fetching cart data.");
+  }
+
+  const cartId = cartData.id;
+
+  const { error: cartClearError } = await supabaseAdmin
+    .from("cart_items")
+    .delete()
+    .eq("cart_id", cartId);
+
+  if (cartClearError) {
+    console.error("Error clearing cart items:", cartClearError.message);
+    throw new Error("Error clearing cart items.");
+  }
+}
+
 async function handleCheckoutSucceeded(session: Stripe.Checkout.Session) {
   try {
-    const itemsTotal = session.shipping_cost?.amount_total
-      ? (session.amount_total ?? 0 - session.shipping_cost.amount_total) / 100
-      : (session.amount_total ?? 0) / 100;
-    const shippingCost =
-      (session.shipping_cost?.amount_total &&
-        session.shipping_cost?.amount_total / 100) ??
-      0;
-    const { userData, orderItemsData, order, userId } = await placeOrder(
+    let itemsTotal = 0;
+    for (const lineItem of session.line_items?.data ?? []) {
+      itemsTotal += lineItem.amount_total;
+    }
+    const shippingCost = session.total_details?.amount_shipping ?? 0;
+    const userId = session.metadata?.userId;
+
+    if (!userId) throw new Error("User ID not found in session metadata");
+
+    const { data: customerData, error: customerError } =
+      await supabaseAdmin.auth.admin.getUserById(userId);
+
+    if (customerError) {
+      throw new Error(`Error fetching user data: ${customerError.message}`);
+    }
+
+    const { orderItemsData, order } = await placeOrder(
       session,
       itemsTotal,
       shippingCost
     );
 
-    const email = userData.email;
-
-
-    const orderId = order.id;
-
-    const orderItems = orderItemsData;
-
     await sendEmail(
       {
-        email,
-        orderId,
-        orderItems,
+        email: customerData.user?.email!,
+        orderId: order.id,
+        orderItems: orderItemsData,
         itemsTotal,
         shippingCost,
       },
@@ -345,69 +408,18 @@ async function handleCheckoutSucceeded(session: Stripe.Checkout.Session) {
     await sendEmail(
       {
         email: process.env.ADMIN_EMAIL!,
-        orderId,
-        orderItems,
+        orderId: order.id,
+        orderItems: orderItemsData,
         itemsTotal,
         shippingCost,
       },
       "kathrin-notification"
     );
 
-    for (const item of orderItems) {
-      const { data: bookData, error: bookFetchError } = await supabaseAdmin
-        .from("books")
-        .select("stock")
-        .eq("id", item.book_id)
-        .single();
-
-      if (bookFetchError) {
-        console.error(
-          `Error fetching stock for book ID ${item.book_id}:`,
-          bookFetchError.message
-        );
-        continue;
-      }
-
-      const newStock = (bookData?.stock ?? 0) - item.quantity;
-
-      const { error: stockUpdateError } = await supabaseAdmin
-        .from("books")
-        .update({ stock: newStock })
-        .eq("id", item.book_id);
-
-      if (stockUpdateError) {
-        console.error(
-          `Error reducing stock for book ID ${item.book_id}:`,
-          stockUpdateError.message
-        );
-        throw new Error("Error reducing stock for book.");
-      }
-    }
-
-    const { data: cartData, error: cartFetchError } = await supabaseAdmin
-      .from("cart")
-      .select("id")
-      .eq("user_id", userId)
-      .single();
-
-    if (cartFetchError || !cartData) {
-      console.error("Error fetching cart data:", cartFetchError?.message);
-      throw new Error("Error fetching cart data.");
-    }
-
-    const cartId = cartData.id;
-
-    const { error: cartClearError } = await supabaseAdmin
-      .from("cart_items")
-      .delete()
-      .eq("cart_id", cartId);
-
-    if (cartClearError) {
-      console.error("Error clearing cart items:", cartClearError.message);
-      throw new Error("Error clearing cart items.");
-    }
+    await reduceStock(orderItemsData);
+    await clearCart(userId);
   } catch (error: any) {
-    console.error("Error placing order:", error?.message);
+    console.error("Error in handleCheckoutSucceeded:", error?.message);
   }
 }
 
@@ -420,4 +432,5 @@ export {
   deleteOrderRecord,
   deleteOrderItemsRecord,
   handleCheckoutSucceeded,
+  copyAddressDetailsToUser,
 };

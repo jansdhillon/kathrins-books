@@ -2,7 +2,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getAllBooks } from "../actions/get-all-books";
 
 import { createClient } from "@/utils/supabase/server";
-import { getUserDataById } from "@/utils/supabase/queries";
 import { encodedRedirect } from "@/utils/utils";
 import { BooksClientWrapper } from "./components/books/client-wrapper";
 import { OrdersClientWrapper } from "./components/orders/client-wrapper";
@@ -20,14 +19,8 @@ export default async function AdminDashboard() {
     );
   }
 
-  const { data: userData } = await getUserDataById(supabase, user?.user!.id);
-  if (userData.is_admin !== true) {
-    return encodedRedirect(
-      "error",
-      "/",
-      "You must be an admin to view this page"
-    );
-  }
+
+
 
   const books = await getAllBooks();
 
