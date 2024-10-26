@@ -34,6 +34,7 @@ export type EnhancedCartItemType =  {
   | "contact"
   | "newsletter"
   | "order-confirmation"
+  | "kathrin-notification"
   | "shipping-confirmation"
   | "delivery-confirmation";
 

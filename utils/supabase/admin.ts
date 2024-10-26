@@ -325,6 +325,8 @@ async function handleCheckoutSucceeded(session: Stripe.Checkout.Session) {
     );
 
     const email = userData.email;
+
+
     const orderId = order.id;
 
     const orderItems = orderItemsData;
@@ -338,6 +340,17 @@ async function handleCheckoutSucceeded(session: Stripe.Checkout.Session) {
         shippingCost,
       },
       "order-confirmation"
+    );
+
+    await sendEmail(
+      {
+        email: process.env.ADMIN_EMAIL!,
+        orderId,
+        orderItems,
+        itemsTotal,
+        shippingCost,
+      },
+      "kathrin-notification"
     );
 
     for (const item of orderItems) {

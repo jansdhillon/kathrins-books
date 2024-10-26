@@ -4,7 +4,7 @@ import { Resend } from "resend";
 
 import { ContactEmailTemplate } from "@/components/email-templates/contact";
 import { NewsletterTemplate } from "@/components/email-templates/newsletter";
-import { OrderConfirmationTemplate } from "@/components/email-templates/order";
+import { KathrinOrderNotificationTemplate, OrderConfirmationTemplate } from "@/components/email-templates/order";
 import { ShippingConfirmationTemplate } from "@/components/email-templates/shipping";
 import { DeliveryConfirmationTemplate } from "@/components/email-templates/delivery";
 import {
@@ -80,6 +80,28 @@ export const sendEmail = async (data: EmailData, type: EmailType) => {
         );
         subject = "Your Order Confirmation";
         toEmail = email;
+        break;
+      }
+
+      case "kathrin-notification": {
+        const { orderId, orderItems, itemsTotal, shippingCost } =
+          data as OrderConfirmationEmailData;
+
+        if (!orderId || !orderItems || !itemsTotal) {
+          console.error("Missing required fields for Kathrin's notification email");
+          throw new Error("Missing required fields for Kathrin's notification email");
+        }
+
+        emailTemplate = (
+          <KathrinOrderNotificationTemplate
+            orderId={orderId}
+            orderItems={orderItems}
+            itemsTotal={itemsTotal}
+            shippingCost={shippingCost}
+          />
+        );
+        subject = "New Order Placed";
+        toEmail = "kathrindhillon@gmail.com";
         break;
       }
 
