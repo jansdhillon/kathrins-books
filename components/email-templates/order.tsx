@@ -2,7 +2,7 @@ import { OrderItemInsertType, Address } from "@/lib/types/types";
 import * as React from "react";
 
 interface OrderConfirmationTemplateProps {
-  name: string;
+  name: string | null;
   orderId: string;
   orderItems: OrderItemInsertType[];
   itemsTotal: number;

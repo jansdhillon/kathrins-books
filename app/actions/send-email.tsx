@@ -80,7 +80,7 @@ export const sendEmail = async (data: EmailData, type: EmailType) => {
         }
 
         if (
-          !name ||
+
           !email ||
           !orderId ||
           !orderItems ||
@@ -95,7 +95,7 @@ export const sendEmail = async (data: EmailData, type: EmailType) => {
 
         emailTemplate = (
           <OrderConfirmationTemplate
-            name={name}
+            name={name || null}
             orderId={orderId}
             orderItems={orderItems}
             itemsTotal={itemsTotal}

@@ -293,8 +293,8 @@ async function handleCheckoutSucceeded(session: Stripe.Checkout.Session) {
         email: customerData.user?.email!,
         orderId: order.id,
         orderItems: orderItemsData,
-        itemsTotal,
-        shippingCost,
+        itemsTotal: itemsTotal,
+        shippingCost: shippingCost,
         address: formattedAddress,
       },
       "order-confirmation"
