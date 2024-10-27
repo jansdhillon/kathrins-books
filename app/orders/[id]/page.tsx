@@ -136,7 +136,7 @@ export default function OrderDetailsPage({
                 </p>
               )}
 
-              <p className="text-base font-semibold">
+              <p className="text-base font-semibold text-card-foreground">
                 {statusMessage}
               </p>
             </div>
