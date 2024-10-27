@@ -13,6 +13,10 @@ import {
 import Loading from "../loading";
 import { postData } from "@/utils/helpers";
 import Image from "next/image";
+import { OrderItemsDataTable } from "../orders/[id]/data-table";
+import { orderItemColumns } from "../orders/components/order-items-columns";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function SuccessPage() {
   const [order, setOrder] = useState<any>(null);
@@ -47,49 +51,24 @@ export default function SuccessPage() {
     <div className="container mx-auto space-y-6">
       <h1 className="text-2xl font-bold">Thank you for your purchase!</h1>
       <p>Your order has been successfully processed.</p>
+      {!isLoading ? (
+        <div className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>Order Summary</CardTitle>
+            </CardHeader>
 
-      <div className="space-y-6">
-        <Card>
-          <CardHeader>
-            <CardTitle>Order Summary</CardTitle>
-          </CardHeader>
-          {!isLoading ? (
             <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Book</TableHead>
-                    <TableHead>Title</TableHead>
-                    <TableHead>Author (s) </TableHead>
-                    <TableHead>Price</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {order?.map((item: any) => (
-                    <TableRow key={item.id}>
-                      <TableCell>
-                        {item?.image_directory && (
-                          <Image
-                            src={`${item?.image_directory}image-1.png`}
-                            alt={item.book_title}
-                            width={50}
-                            height={50}
-                          />
-                        )}
-                      </TableCell>
-                      <TableCell>{item?.book_title}</TableCell>
-                      <TableCell>{item?.book_author}</TableCell>
-                      <TableCell>${item?.price.toFixed(2)}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+              <OrderItemsDataTable columns={orderItemColumns} data={order} />
             </CardContent>
-          ) : (
-            <Loading />
-          )}
-        </Card>
-      </div>
+          </Card>
+          <Link href="/orders" className="flex justify-center">
+            <Button className="font-semibold">My Orders</Button>
+          </Link>
+        </div>
+      ) : (
+        <Loading />
+      )}
     </div>
   );
 }

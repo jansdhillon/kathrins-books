@@ -67,11 +67,11 @@ const ThemeSwitcher = () => {
             value={theme}
             onValueChange={(e) => setTheme(e)}
           >
-            <DropdownMenuRadioItem className="flex gap-2" value="light">
+            <DropdownMenuRadioItem className="flex gap-2 cursor-pointer" value="light">
               <Sun size={ICON_SIZE} className="text-muted-foreground" />{" "}
               <span>Light</span>
             </DropdownMenuRadioItem>
-            <DropdownMenuRadioItem className="flex gap-2" value="dark">
+            <DropdownMenuRadioItem className="flex gap-2 cursor-pointer" value="dark">
               <Moon size={ICON_SIZE} className="text-muted-foreground" />{" "}
               <span>Dark</span>
             </DropdownMenuRadioItem>

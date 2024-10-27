@@ -60,18 +60,18 @@ export const NavAvatar = () => {
 
               {user?.user_metadata?.is_admin === true && (
                 <Link href="/admin" className="font-medium">
-                  <DropdownMenuItem>Admin</DropdownMenuItem>
+                  <DropdownMenuItem className="cursor-pointer">Admin</DropdownMenuItem>
                 </Link>
               )}
 
               <Link href="/orders" className="cursor-pointer font-medium">
-                <DropdownMenuItem>Your Orders</DropdownMenuItem>
+                <DropdownMenuItem className="cursor-pointer">Your Orders</DropdownMenuItem>
               </Link>
               <DropdownMenuSeparator />
 
               <form action={signOutAction}>
                 <button type="submit" className="block w-full cursor-pointer font-medium">
-                  <DropdownMenuItem>Sign Out</DropdownMenuItem>
+                  <DropdownMenuItem className="cursor-pointer">Sign Out</DropdownMenuItem>
                 </button>
               </form>
             </DropdownMenuGroup>

@@ -240,11 +240,9 @@ const copyAddressDetailsToUser = async (
 const placeOrder = async (session: Stripe.Checkout.Session) => {
   const sessionId = session.id;
   const userId = session?.metadata?.userId;
-  let itemsTotal = 0;
-  for (const lineItem of session.line_items?.data ?? []) {
-    itemsTotal += lineItem.amount_total;
-  }
+  const total = session.amount_total ?? 0;
   const shippingCost = session.total_details?.amount_shipping ?? 0;
+  const itemsTotal = total - shippingCost;
 
   if (!userId) {
     throw new Error("User ID not found in session metadata");

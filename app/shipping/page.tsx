@@ -55,9 +55,9 @@ export default function ShippingAndDeliveryPage() {
         </p>
       </div>
       <Separator />
-      <h1 className="text-2xl font-bold text-left">Returns & Refunds</h1>
+      <h1 className="text-xl font-bold text-left">Returns & Refunds</h1>
 
-      <p className="text-muted-foreground">
+      <p className="text-md">
         Unfortunately we are unable to offer returns or refunds at this time.
         Please refer to our terms of service for more information.
       </p>

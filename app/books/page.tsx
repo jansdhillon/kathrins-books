@@ -6,7 +6,7 @@ export default async function AllBooksPage() {
   return (
     <BookPage
       books={allBooks}
-      title="All Books"
+      title="Books"
       subtitle="Explore the entire collection of books."
     />
   );

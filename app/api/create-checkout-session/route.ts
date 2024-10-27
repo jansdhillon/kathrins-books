@@ -63,6 +63,7 @@ export async function POST(req: Request) {
         },
         ],
       success_url: `${getURL("success")}?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: getURL("error"),
       metadata: {
         userId: userId,
       },
