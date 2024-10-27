@@ -10,7 +10,6 @@ import {
   Address,
 } from "@/lib/types/types";
 import { sendEmail } from "@/app/actions/send-email";
-import { BillingDetails } from "@stripe/stripe-js";
 
 const supabaseAdmin = createClient<Database>(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -115,11 +114,11 @@ const deleteOrderItemsRecord = async (orderId: string) => {
 
 const addBillingDetailsToOrder = async (
   orderId: string,
-  billingDetails: BillingDetails
+  address: Address
 ) => {
   const { error } = await supabaseAdmin
     .from("orders")
-    .update({ billing_details: billingDetails })
+    .update({ address: address })
     .eq("id", orderId);
 
   if (error) {
@@ -257,9 +256,11 @@ async function handleCheckoutSucceeded(session: Stripe.Checkout.Session) {
       throw new Error(`Error fetching user data: ${customerError.message}`);
     }
 
+    const { name, email, line1, line2, city, state, postal_code, country } = session.shipping_details as Address;
+
     await addBillingDetailsToOrder(
       userId,
-      session.shipping_details as BillingDetails
+      { name, email, line1, line2, city, state, postal_code, country }
     );
 
     const { order, orderItemsData, itemsTotal, shippingCost } =
@@ -275,7 +276,7 @@ async function handleCheckoutSucceeded(session: Stripe.Checkout.Session) {
         orderItems: orderItemsData,
         itemsTotal,
         shippingCost,
-        billingDetails: session.shipping_details as BillingDetails,
+        address: { name, email, line1, line2, city, state, postal_code, country },
       },
       "order-confirmation"
     );

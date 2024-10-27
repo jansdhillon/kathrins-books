@@ -225,7 +225,7 @@ export type Database = {
       }
       orders: {
         Row: {
-          billing_details: Json | null
+          address: Json | null
           id: string
           items_total: number | null
           ordered_at: string
@@ -235,7 +235,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
-          billing_details?: Json | null
+          address?: Json | null
           id?: string
           items_total?: number | null
           ordered_at?: string
@@ -245,7 +245,7 @@ export type Database = {
           user_id: string
         }
         Update: {
-          billing_details?: Json | null
+          address?: Json | null
           id?: string
           items_total?: number | null
           ordered_at?: string

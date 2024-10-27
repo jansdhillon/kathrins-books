@@ -5,7 +5,7 @@ import { BookType } from '@/lib/types/types';
 
 export async function POST(req: Request) {
   const body = await req.json();
-  const { cartItems, total, userId } = body;
+  const { cartItems, total, userId, userEmail } = body;
 
 
   const images = (book: BookType) => {
@@ -67,6 +67,7 @@ export async function POST(req: Request) {
       metadata: {
         userId: userId,
       },
+      customer_email: userEmail,
 
     });
 

@@ -94,6 +94,7 @@ export default function CartPage() {
         cartItems,
         total: initialAmount,
         userId: user?.user?.id,
+        userEmail: user?.user?.email,
       },
     });
     if (sessionId) {

@@ -8,19 +8,12 @@ interface OrderConfirmationTemplateProps {
   orderItems: OrderItemInsertType[];
   itemsTotal: number;
   shippingCost: number;
-  billingDetails: BillingDetails;
+  address: Address;
 }
 
 export const OrderConfirmationTemplate: React.FC<
   OrderConfirmationTemplateProps
-> = ({
-  name,
-  orderId,
-  orderItems,
-  itemsTotal,
-  shippingCost,
-  billingDetails,
-}) => (
+> = ({ name, orderId, orderItems, itemsTotal, shippingCost, address }) => (
   <div
     style={{
       fontFamily: "'Arial', sans-serif",
@@ -105,13 +98,13 @@ export const OrderConfirmationTemplate: React.FC<
           </tr>
           <tr>
             <td colSpan={3} style={{ padding: "8px" }}>
-              <p>{billingDetails?.name}</p>
-              <p>{billingDetails?.address.line1}</p>
-              {billingDetails?.address.line2 && <p>{billingDetails?.address.line2}</p>}
+              <p>{address?.name}</p>
+              <p>{address.line1}</p>
+              {address.line2 && <p>{address.line2}</p>}
               <p>
-                {billingDetails?.address?.city}, {billingDetails?.address?.postal_code}
+                {address?.city}, {address?.postal_code}
               </p>
-              <p>{billingDetails?.address?.country}</p>
+              <p>{address?.country}</p>
             </td>
           </tr>
         </tbody>
@@ -121,7 +114,7 @@ export const OrderConfirmationTemplate: React.FC<
               Items Total
             </td>
             <td style={{ padding: "8px" }}>
-              ${((itemsTotal as number) || 0)?.toFixed(2)}
+              ${((itemsTotal || (0 as number)) / 100)?.toFixed(2)}
             </td>
           </tr>
           <tr>
@@ -129,7 +122,7 @@ export const OrderConfirmationTemplate: React.FC<
               Shipping Cost
             </td>
             <td style={{ padding: "8px" }}>
-              ${((shippingCost as number) || 0)?.toFixed(2)}
+              ${((shippingCost || (0 as number)) / 100)?.toFixed(2)}
             </td>
           </tr>
           <tr>
@@ -139,7 +132,8 @@ export const OrderConfirmationTemplate: React.FC<
             <td style={{ padding: "8px" }}>
               $
               {(
-                (((itemsTotal as number / 100) + shippingCost) as number / 100) || 0.0
+                (itemsTotal || (0 as number) + shippingCost || (0 as number)) /
+                100
               )?.toFixed(2)}
             </td>
           </tr>
@@ -185,7 +179,7 @@ export const OrderConfirmationTemplate: React.FC<
 
 export const KathrinOrderNotificationTemplate: React.FC<
   OrderConfirmationTemplateProps
-> = ({ name, orderId, orderItems, itemsTotal, shippingCost, billingDetails  }) => (
+> = ({ orderId, orderItems, itemsTotal, shippingCost, address }) => (
   <div
     style={{
       fontFamily: "'Arial', sans-serif",
@@ -225,21 +219,19 @@ export const KathrinOrderNotificationTemplate: React.FC<
       </p>
 
       <div>
-            <h2  style={{ padding: "8px", fontWeight: "bold" }}>
-              Shipping Address
-            </h2>
-          </div>
-          <div>
-            <div style={{ padding: "8px" }}>
-              <p>{billingDetails?.name}</p>
-              <p>{billingDetails?.address?.line1}</p>
-              <p>{billingDetails?.address?.line2}</p>
-              <p>
-                {billingDetails?.address?.city}, {billingDetails?.address?.postal_code}
-              </p>
-              <p>{billingDetails?.address?.country}</p>
-            </div>
-          </div>
+        <h2 style={{ padding: "8px", fontWeight: "bold" }}>Shipping Address</h2>
+      </div>
+      <div>
+        <div style={{ padding: "8px" }}>
+          <p>{address?.name}</p>
+          <p>{address?.line1}</p>
+          <p>{address?.line2}</p>
+          <p>
+            {address?.city}, {address?.postal_code}
+          </p>
+          <p>{address?.country}</p>
+        </div>
+      </div>
 
       <table
         style={{
@@ -284,13 +276,17 @@ export const KathrinOrderNotificationTemplate: React.FC<
             <td colSpan={2} style={{ padding: "8px", fontWeight: "bold" }}>
               Items Total
             </td>
-            <td style={{ padding: "8px" }}>${itemsTotal.toFixed(2)}</td>
+            <td style={{ padding: "8px" }}>
+              ${((itemsTotal || (0 as number)) / 100)?.toFixed(2)}
+            </td>
           </tr>
           <tr>
             <td colSpan={2} style={{ padding: "8px", fontWeight: "bold" }}>
               Shipping Cost
             </td>
-            <td style={{ padding: "8px" }}>${shippingCost.toFixed(2)}</td>
+            <td style={{ padding: "8px" }}>
+              ${((shippingCost || (0 as number)) / 100)?.toFixed(2)}
+            </td>
           </tr>
           <tr>
             <td colSpan={2} style={{ padding: "8px", fontWeight: "bold" }}>
@@ -299,7 +295,8 @@ export const KathrinOrderNotificationTemplate: React.FC<
             <td style={{ padding: "8px" }}>
               $
               {(
-                (((itemsTotal as number / 100) + shippingCost) as number / 100) || 0.0
+                (itemsTotal || (0 as number) + shippingCost || (0 as number)) /
+                100
               )?.toFixed(2)}
             </td>
           </tr>

@@ -6,7 +6,7 @@ import { getOrderAction } from "@/app/actions/get-order-by-id";
 import Link from "next/link";
 import { orderItemColumns } from "@/app/orders/components/order-items-columns";
 import { OrderItemsDataTable } from "./data-table";
-
+import { Address } from "@/lib/types/types";
 
 export default async function OrderDetailsPage({
   params,
@@ -45,6 +45,9 @@ export default async function OrderDetailsPage({
 
   const statusMessage = getOrderStatusMessage(order?.status);
 
+  const { name, email, line1, line2, city, state, postal_code, country } =
+    order.address as Address;
+
   return (
     <div className="container mx-auto w-full space-y-6">
       <div>
@@ -65,11 +68,36 @@ export default async function OrderDetailsPage({
               </p>
               <p>
                 <span className="font-semibold">Order Date:</span>{" "}
-                {new Date(order.ordered_at).toLocaleDateString()}
+                {new Date(order?.ordered_at).toLocaleDateString()}
               </p>
               <p>
-                <span className="font-semibold">Status:</span> {order.status}
+                <span className="font-semibold">Total:</span> $
+                {order?.items_total}
               </p>
+              <p>
+                <span className="font-semibold">Shipping:</span> $
+                {order?.shipping_cost}
+              </p>
+              {order && (
+                <p>
+                  <span className="font-semibold">Email: </span> {email}
+                </p>
+              )}
+              {name && (
+                <p>
+                  <span className="font-semibold">Name: </span>
+                  {name}
+                </p>
+              )}
+
+              <p>
+                <span className="font-semibold">Shipping Address:</span>{" "}
+                {name && `${name}, `}
+                {`${line1}, `}
+                {line2 && `${line2}, `}
+                {`${city}, ${state}, ${postal_code}, ${country}`}
+              </p>
+
               <p className="text-base">{statusMessage}</p>
             </div>
           </CardHeader>
