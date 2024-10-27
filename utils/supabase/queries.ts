@@ -103,6 +103,7 @@ export const getProductAndPriceByBookId = cache(
       .from("products")
       .select("*, prices(*)")
       .eq("book_id", bookId)
+      .limit(1)
       .single();
 
     return { data: product, error: productsError };
