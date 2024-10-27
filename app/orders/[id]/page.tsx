@@ -1,20 +1,13 @@
-"use client";
+"use client";;
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft } from "lucide-react";
 import { getOrderAction } from "@/app/actions/get-order-by-id";
 import Loading from "@/app/loading";
 import { OrderItemsDataTable } from "@/app/orders/[id]/data-table";
 import { orderItemColumns } from "@/app/orders/components/order-items-columns";
-import { useToast } from "@/utils/hooks/use-toast";
 import { OrderItemType, OrderType } from "@/lib/schemas/schemas";
 import { createClient } from "@/utils/supabase/client";
 import { Address } from "@/lib/types/types";
@@ -117,7 +110,7 @@ export default function OrderDetailsPage({
         <Card className="mx-auto">
           <CardHeader>
             <CardTitle>Order Summary</CardTitle>
-            <div className="text-sm space-y-4 pt-4">
+            <div className="text-sm space-y-4 pt-4 text-muted-foreground">
               <p>
                 <span className="font-semibold">Order ID:</span> {order.id}
               </p>
@@ -143,7 +136,7 @@ export default function OrderDetailsPage({
                 </p>
               )}
 
-              <p className="text-base text-muted-foreground font-semibold">
+              <p className="text-base font-semibold">
                 {statusMessage}
               </p>
             </div>

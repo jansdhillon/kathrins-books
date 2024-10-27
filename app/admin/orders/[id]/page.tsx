@@ -139,7 +139,7 @@ export default function AdminOrderDetailsPage({
         <Card className="mx-auto">
           <CardHeader>
             <CardTitle>Order Summary</CardTitle>
-            <div className="text-sm space-y-4 pt-4">
+            <div className="text-sm space-y-4 pt-4 text-muted-foreground">
               <p>
                 <span className="font-semibold">Order ID:</span> {order.id}
               </p>
@@ -165,7 +165,7 @@ export default function AdminOrderDetailsPage({
                 </p>
               )}
 
-              <p className="text-base text-muted-foreground font-semibold">{statusMessage}</p>
+              <p className="text-base font-semibold">{statusMessage}</p>
             </div>
           </CardHeader>
 
