@@ -38,7 +38,9 @@ export const NavAvatar = ({ user }: { user: User }) => {
                 Hello,{" "}
                 <span className="ml-1 font-semibold">
                   {user?.user_metadata?.full_name?.split(" ")[0] ||
-                    user?.user_metadata?.display_name?.split(" ")[0]}
+                    user?.user_metadata?.display_name?.split(" ")[0] ||
+                    user?.user_metadata?.fullName?.split(" ")[0]
+                  }
                 </span>
                 !
               </div>

@@ -10,7 +10,6 @@ import {
   Address,
 } from "@/lib/types/types";
 import { sendEmail } from "@/app/actions/send-email";
-import { ShippingAddress } from "@stripe/stripe-js";
 
 const supabaseAdmin = createClient<Database>(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -289,7 +288,8 @@ async function handleCheckoutSucceeded(session: Stripe.Checkout.Session) {
       {
         name:
           customerData.user?.user_metadata?.full_name ||
-          customerData.user?.user_metadata?.display_name,
+          customerData.user?.user_metadata?.display_name ||
+          customerData.user?.user_metadata?.fullName,
         email: customerData.user?.email!,
         orderId: order.id,
         orderItems: orderItemsData,
