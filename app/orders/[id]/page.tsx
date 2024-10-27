@@ -78,17 +78,6 @@ export default async function OrderDetailsPage({
                 <span className="font-semibold">Shipping:</span> $
                 {order?.shipping_cost}
               </p>
-              {order && (
-                <p>
-                  <span className="font-semibold">Email: </span> {email}
-                </p>
-              )}
-              {name && (
-                <p>
-                  <span className="font-semibold">Name: </span>
-                  {name}
-                </p>
-              )}
 
               <p>
                 <span className="font-semibold">Shipping Address:</span>{" "}
@@ -98,7 +87,7 @@ export default async function OrderDetailsPage({
                 {`${city}, ${state}, ${postal_code}, ${country}`}
               </p>
 
-              <p className="text-base">{statusMessage}</p>
+              <p className="text-base text-muted-foreground font-semibold">{statusMessage}</p>
             </div>
           </CardHeader>
 

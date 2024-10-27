@@ -14,23 +14,8 @@ import { CircleUserRound, ShoppingCart } from "lucide-react";
 import { Button } from "./ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { User } from "@supabase/supabase-js";
-import { createClient } from "@/utils/supabase/client";
-import { useState, useEffect } from "react";
 
-export const NavAvatar = () => {
-  const [user, setUser] = useState<User | null>(null);
-  useEffect(() => {
-    const fetchUser = async () => {
-      const supabase = createClient();
-      const { data: user, error } = await supabase.auth.getUser();
-      if (error) {
-        console.error(error);
-        return;
-      }
-      setUser(user.user);
-    };
-    fetchUser();
-  })
+export const NavAvatar = ({ user }: { user: User }) => {
   return (
     <div className="flex items-center gap-4">
       <Tooltip>
@@ -52,7 +37,8 @@ export const NavAvatar = () => {
               <div className="line-clamp-1 relative flex select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none font-medium">
                 Hello,{" "}
                 <span className="ml-1 font-semibold">
-                  {user?.user_metadata?.full_name?.split(" ")[0] || user?.user_metadata?.display_name?.split(" ")[0]}
+                  {user?.user_metadata?.full_name?.split(" ")[0] ||
+                    user?.user_metadata?.display_name?.split(" ")[0]}
                 </span>
                 !
               </div>
@@ -60,18 +46,27 @@ export const NavAvatar = () => {
 
               {user?.user_metadata?.is_admin === true && (
                 <Link href="/admin" className="font-medium">
-                  <DropdownMenuItem className="cursor-pointer">Admin</DropdownMenuItem>
+                  <DropdownMenuItem className="cursor-pointer">
+                    Admin
+                  </DropdownMenuItem>
                 </Link>
               )}
 
               <Link href="/orders" className="cursor-pointer font-medium">
-                <DropdownMenuItem className="cursor-pointer">Your Orders</DropdownMenuItem>
+                <DropdownMenuItem className="cursor-pointer">
+                  Your Orders
+                </DropdownMenuItem>
               </Link>
               <DropdownMenuSeparator />
 
               <form action={signOutAction}>
-                <button type="submit" className="block w-full cursor-pointer font-medium">
-                  <DropdownMenuItem className="cursor-pointer">Sign Out</DropdownMenuItem>
+                <button
+                  type="submit"
+                  className="block w-full cursor-pointer font-medium"
+                >
+                  <DropdownMenuItem className="cursor-pointer">
+                    Sign Out
+                  </DropdownMenuItem>
                 </button>
               </form>
             </DropdownMenuGroup>
@@ -85,9 +80,7 @@ export const NavAvatar = () => {
               <ShoppingCart className="h-4 text-muted-foreground fill-muted-foreground" />
             </Button>
           </TooltipTrigger>
-          <TooltipContent>
-            Your Cart
-          </TooltipContent>
+          <TooltipContent>Your Cart</TooltipContent>
         </Tooltip>
       </Link>
     </div>

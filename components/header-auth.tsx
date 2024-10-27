@@ -43,6 +43,6 @@ export default async function AuthButton() {
       </DropdownMenu>
     );
   } else {
-    return <NavAvatar />;
+    return <NavAvatar user={user.user} />;
   }
 }

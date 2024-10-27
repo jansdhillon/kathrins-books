@@ -19,7 +19,7 @@ import { orderItemColumns } from "@/app/orders/components/order-items-columns";
 import { useToast } from "@/utils/hooks/use-toast";
 import { OrderItemType, OrderType } from "@/lib/schemas/schemas";
 import { createClient } from "@/utils/supabase/client";
-import { BillingDetails } from "@stripe/stripe-js";
+import { Address } from "@/lib/types/types";
 
 export default function AdminOrderDetailsPage({
   params,
@@ -32,11 +32,7 @@ export default function AdminOrderDetailsPage({
   const [orderItems, setOrderItems] = useState<OrderItemType[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [billingDetails, setBillingDetails] = useState<BillingDetails | null>(
-    null
-  );
-  const [email, setEmail] = useState<string | null>(null);
-  const [name, setName] = useState<string | null>(null);
+  const [address, setAddress] = useState<Address | null>(null);
 
   const { toast } = useToast();
 
@@ -46,23 +42,39 @@ export default function AdminOrderDetailsPage({
         const supabase = createClient();
         setIsLoading(true);
         const { order, orderItems, error } = await getOrderAction(orderId);
+
         if (error) {
           setError(error.message);
           return;
         }
+
         setOrder(order);
         setOrderItems(orderItems);
+        if (!order) {
+          setError("Order not found.");
+          return;
+        }
+        if (!order.address) {
+          setError("Address not found.");
+          return;
+        }
+        const { name, email, line1, line2, city, state, postal_code, country } =
+          order.address as Address;
+        console.log(order.address);
+        setAddress({
+          name,
+          email,
+          line1,
+          line2,
+          city,
+          state,
+          postal_code,
+          country,
+        });
         const { data: user, error: authError } = await supabase.auth.getUser();
         if (authError || !user?.user) {
           router.push("/sign-in");
         }
-
-        setEmail(user.user!.email!);
-        setName(
-          user.user?.user_metadata.full_name ||
-            user.user?.user_metadata.display_name
-        );
-        setBillingDetails(user.user?.user_metadata.billing_details);
       } catch (error) {
         console.error("Error fetching order details:", error);
         setError("Failed to load order details.");
@@ -137,39 +149,23 @@ export default function AdminOrderDetailsPage({
               </p>
               <p>
                 <span className="font-semibold">Total:</span> $
-                {order?.items_total}
+                {((order?.items_total || (0 as number)) / 100).toFixed(2)}
               </p>
               <p>
                 <span className="font-semibold">Shipping:</span> $
-                {order?.shipping_cost}
+                {((order?.shipping_cost || (0 as number)) / 100).toFixed(2)}
               </p>
-              <p>
-                <span className="font-semibold">Email: </span> {email}
-              </p>
-              <p>
-                <span className="font-semibold">Name: </span>
-                {name}
-              </p>
-              {billingDetails && (
+              {address && (
                 <p>
                   <span className="font-semibold">Shipping Address:</span>{" "}
-                  {billingDetails?.name && `${billingDetails?.name}, `}
-                  {billingDetails?.address.line1 &&
-                    `${billingDetails?.address.line1}, `}
-                  {billingDetails?.address.line2 &&
-                    `${billingDetails?.address.line2}, `}
-                  {billingDetails?.address.city &&
-                    `${billingDetails?.address.city}, `}
-                  {billingDetails?.address.state &&
-                    `${billingDetails?.address.state}, `}
-                  {billingDetails?.address.postal_code &&
-                    `${billingDetails?.address.postal_code}, `}
-                  {billingDetails?.address.country &&
-                    `${billingDetails?.address.country}`}
+                  {`${address?.name!}, `}
+                  {`${address?.line1!}, `}
+                  {address?.line2 && `${address.line2!}, `}
+                  {`${address?.city}, ${address?.state}, ${address?.postal_code}, ${address?.country}`}
                 </p>
               )}
 
-              <p className="text-base">{statusMessage}</p>
+              <p className="text-base text-muted-foreground font-semibold">{statusMessage}</p>
             </div>
           </CardHeader>
 
