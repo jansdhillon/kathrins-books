@@ -102,7 +102,7 @@ export const OrderConfirmationTemplate: React.FC<
               <p>{address.line1}</p>
               {address.line2 && <p>{address.line2}</p>}
               <p>
-                {address?.city}, {address?.postal_code}
+                {address?.city}, {address?.state}, {address?.postal_code}
               </p>
               <p>{address?.country}</p>
             </td>
@@ -132,8 +132,9 @@ export const OrderConfirmationTemplate: React.FC<
             <td style={{ padding: "8px" }}>
               $
               {(
-                ((itemsTotal as number) || 0) +
-                ((shippingCost as number) || 0) / 100
+                (((itemsTotal as number) || 0) +
+                  ((shippingCost as number) || 0)) /
+                100
               )?.toFixed(2)}
             </td>
           </tr>
@@ -227,7 +228,7 @@ export const KathrinOrderNotificationTemplate: React.FC<
           <p>{address?.line1}</p>
           <p>{address?.line2}</p>
           <p>
-            {address?.city}, {address?.postal_code}
+            {address?.city}, {address?.state}, {address?.postal_code}
           </p>
           <p>{address?.country}</p>
         </div>
@@ -295,8 +296,9 @@ export const KathrinOrderNotificationTemplate: React.FC<
             <td style={{ padding: "8px" }}>
               $
               {(
-                ((itemsTotal as number) || 0) +
-                ((shippingCost as number) || 0) / 100
+                (((itemsTotal as number) || 0) +
+                  ((shippingCost as number) || 0)) /
+                100
               )?.toFixed(2)}
             </td>
           </tr>
