@@ -232,6 +232,7 @@ export type Database = {
           session_id: string | null
           shipping_cost: number | null
           status: Database["public"]["Enums"]["order_status"] | null
+          tracking_number: string | null
           user_id: string
         }
         Insert: {
@@ -242,6 +243,7 @@ export type Database = {
           session_id?: string | null
           shipping_cost?: number | null
           status?: Database["public"]["Enums"]["order_status"] | null
+          tracking_number?: string | null
           user_id: string
         }
         Update: {
@@ -252,6 +254,7 @@ export type Database = {
           session_id?: string | null
           shipping_cost?: number | null
           status?: Database["public"]["Enums"]["order_status"] | null
+          tracking_number?: string | null
           user_id?: string
         }
         Relationships: [

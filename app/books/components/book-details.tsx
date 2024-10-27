@@ -152,7 +152,7 @@ export function BookDetails({ book }: BookDetailsProps) {
                   {book.title}
                 </CardTitle>
                 {isAdmin && (
-                  <Link href={`/admin/edit${book.id}`}>
+                  <Link href={`/admin/edit/${book.id}`}>
                     <Pen className="ml-2 h-5 w-5 cursor-pointer" />
                   </Link>
                 )}
