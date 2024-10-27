@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/utils/hooks/use-toast";
 import { ReactNode, useEffect } from "react";
 
 const Feedback = ({ children }: { children: ReactNode | ReactNode[] }) => {

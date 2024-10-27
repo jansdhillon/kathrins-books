@@ -1,11 +1,9 @@
-"use client";
+"use client";;
 import { ColumnDef } from "@tanstack/react-table";
-import { Badge } from "@/components/ui/badge";
 import { DataTableColumnHeader } from "./data-table-column-header";
 import { DataTableRowActions } from "./data-table-row-actions";
 import { BookType } from "@/lib/types/types";
 import Image from "next/image";
-import { format } from "date-fns";
 import Link from "next/link";
 
 export const bookColumns: ColumnDef<BookType>[] = [

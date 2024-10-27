@@ -54,7 +54,7 @@ export interface OrderConfirmationEmailData extends BaseEmailData {
   orderItems: OrderItemInsertType[];
   itemsTotal: number;
   shippingCost: number;
-  shippingAddress: SanitizedAddress;
+  shippingAddress: Address;
 }
 
 export interface ShippingConfirmationEmailData extends BaseEmailData {
@@ -67,11 +67,12 @@ export interface DeliveryConfirmationEmailData extends BaseEmailData {
   orderId: string;
 }
 
-export type SanitizedAddress = {
-  line1: string | undefined;
+export type Address = {
+  name: string;
+  line1: string;
   line2: string | undefined;
-  city: string | undefined;
-  state: string | undefined;
-  postal_code: string | undefined;
-  country: string | undefined;
+  city: string;
+  state: string;
+  postal_code: string;
+  country: string;
 };

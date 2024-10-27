@@ -16,7 +16,7 @@ import Loading from "@/app/loading";
 import { updateOrderStatus } from "@/app/actions/update-order-status";
 import { OrderItemsDataTable } from "@/app/orders/[id]/data-table";
 import { orderItemColumns } from "@/app/orders/components/order-items-columns";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/utils/hooks/use-toast";
 import { OrderItemType, OrderType } from "@/lib/schemas/schemas";
 import { createClient } from "@/utils/supabase/client";
 

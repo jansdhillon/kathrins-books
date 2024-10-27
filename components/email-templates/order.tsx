@@ -1,4 +1,4 @@
-import { OrderItemInsertType, SanitizedAddress } from "@/lib/types/types";
+import { OrderItemInsertType, Address } from "@/lib/types/types";
 import * as React from "react";
 
 interface OrderConfirmationTemplateProps {
@@ -7,12 +7,19 @@ interface OrderConfirmationTemplateProps {
   orderItems: OrderItemInsertType[];
   itemsTotal: number;
   shippingCost: number;
-  shippingAddress: SanitizedAddress;
+  shippingAddress: Address;
 }
 
 export const OrderConfirmationTemplate: React.FC<
   OrderConfirmationTemplateProps
-> = ({ name, orderId, orderItems, itemsTotal, shippingCost, shippingAddress }) => (
+> = ({
+  name,
+  orderId,
+  orderItems,
+  itemsTotal,
+  shippingCost,
+  shippingAddress,
+}) => (
   <div
     style={{
       fontFamily: "'Arial', sans-serif",
@@ -134,11 +141,31 @@ export const OrderConfirmationTemplate: React.FC<
               )?.toFixed(2)}
             </td>
           </tr>
+          <tr>
+            <td colSpan={3} style={{ padding: "8px" }}>
+              <button>
+                <a href={`https://kathrinsbooks/orders/${orderId}`}>
+                  View Order
+                </a>
+              </button>
+            </td>
+          </tr>
         </tfoot>
       </table>
     </div>
 
     <p>You will receive another email when your items have been shipped.</p>
+
+    <div>
+      <p>
+        If you have any questions or concerns, please don't hesitate to contact
+        us via email at{" "}
+        <a href="mailto:kathrinsbookshelp@gmail.com">
+          kathrinsbookshelp@gmail.com
+        </a>
+        .
+      </p>
+    </div>
 
     <div
       style={{
@@ -156,7 +183,7 @@ export const OrderConfirmationTemplate: React.FC<
 
 export const KathrinOrderNotificationTemplate: React.FC<
   OrderConfirmationTemplateProps
-> = ({ orderId, orderItems, itemsTotal, shippingCost }) => (
+> = ({ name, orderId, orderItems, itemsTotal, shippingCost, shippingAddress  }) => (
   <div
     style={{
       fontFamily: "'Arial', sans-serif",
@@ -194,6 +221,22 @@ export const KathrinOrderNotificationTemplate: React.FC<
       <p>
         <strong>Order ID:</strong> {orderId}
       </p>
+
+      <div>
+            <h2  style={{ padding: "8px", fontWeight: "bold" }}>
+              Shipping Address
+            </h2>
+          </div>
+          <div>
+            <div style={{ padding: "8px" }}>
+              <p>{shippingAddress?.line1}</p>
+              <p>{shippingAddress?.line2}</p>
+              <p>
+                {shippingAddress?.city}, {shippingAddress?.postal_code}
+              </p>
+              <p>{shippingAddress?.country}</p>
+            </div>
+          </div>
 
       <table
         style={{
@@ -254,11 +297,20 @@ export const KathrinOrderNotificationTemplate: React.FC<
               ${(itemsTotal + shippingCost).toFixed(2)}
             </td>
           </tr>
+          <tr>
+            <td colSpan={3} style={{ padding: "8px" }}>
+              <button>
+                <a href={`https://kathrinsbooks/admin/orders/${orderId}`}>
+                  View Order
+                </a>
+              </button>
+            </td>
+          </tr>
         </tfoot>
       </table>
     </div>
 
-    <p>Please prepare for the fulfillment of this order.</p>
+    <p>Please prepare to ship of the books in this order.</p>
 
     <div
       style={{

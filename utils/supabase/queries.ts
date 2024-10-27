@@ -7,7 +7,6 @@ import { SupabaseClient } from "@supabase/supabase-js";
 import { cache } from "react";
 import { encodedRedirect } from "../utils";
 
-
 export const getAllBooks = cache(async (supabase: SupabaseClient) => {
   const { data: books, error } = await supabase
     .from("books")
@@ -61,7 +60,10 @@ export const getOrderItemsByOrderId = cache(
 
 export const getAllOrdersWithOrderItems = cache(
   async (supabase: SupabaseClient) => {
-    const { data: orders, error } = await supabase.from("orders").select("*").order("ordered_at", { ascending: false });;
+    const { data: orders, error } = await supabase
+      .from("orders")
+      .select("*")
+      .order("ordered_at", { ascending: false });
 
     if (error) {
       return { data: null, error };

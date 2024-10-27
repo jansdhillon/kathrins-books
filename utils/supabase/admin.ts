@@ -7,7 +7,7 @@ import {
   OrderItemInsertType,
   PriceType,
   ProductType,
-  SanitizedAddress,
+  Address,
 } from "@/lib/types/types";
 import { sendEmail } from "@/app/actions/send-email";
 import { BillingDetails } from "@stripe/stripe-js";
@@ -113,124 +113,16 @@ const deleteOrderItemsRecord = async (orderId: string) => {
     throw new Error(`Order Items deletion failed: ${deletionError.message}`);
 };
 
-const upsertCustomerToSupabase = async (
-  uuid: string,
-  customerId: string,
-  shipping_address?: SanitizedAddress,
-  billing_address?: BillingDetails
+const addBillingDetailsToOrder = async (
+  orderId: string,
+  billingDetails: BillingDetails
 ) => {
-  const { error: upsertError } = await supabaseAdmin.from("customers").upsert([
-    {
-      id: uuid,
-      stripe_customer_id: customerId,
-      shipping_address: shipping_address ?? null,
-      billing_address: billing_address ?? null,
-    },
-  ]);
-
-  if (upsertError)
-    throw new Error(
-      `Supabase customer record creation failed: ${upsertError.message}`
-    );
-
-  return customerId;
-};
-
-const createCustomerInStripe = async (uuid: string, email: string) => {
-  const customerData = { metadata: { supabaseUUID: uuid }, email: email };
-  const newCustomer = await stripe.customers.create(customerData);
-  if (!newCustomer) throw new Error("Stripe customer creation failed.");
-
-  return newCustomer.id;
-};
-
-const createOrRetrieveCustomer = async ({
-  email,
-  uuid,
-}: {
-  email: string;
-  uuid: string;
-}) => {
-  const { data: existingSupabaseCustomer, error: queryError } =
-    await supabaseAdmin
-      .from("customers")
-      .select("*")
-      .eq("id", uuid)
-      .maybeSingle();
-
-  if (queryError) {
-    throw new Error(`Supabase customer lookup failed: ${queryError.message}`);
-  }
-
-  let stripeCustomerId: string | undefined;
-  if (existingSupabaseCustomer?.stripe_customer_id) {
-    const existingStripeCustomer = await stripe.customers.retrieve(
-      existingSupabaseCustomer.stripe_customer_id
-    );
-    stripeCustomerId = existingStripeCustomer.id;
-  } else {
-    const stripeCustomers = await stripe.customers.list({ email: email });
-    stripeCustomerId =
-      stripeCustomers.data.length > 0 ? stripeCustomers.data[0].id : undefined;
-  }
-
-  const stripeIdToInsert = stripeCustomerId
-    ? stripeCustomerId
-    : await createCustomerInStripe(uuid, email);
-  if (!stripeIdToInsert) throw new Error("Stripe customer creation failed.");
-
-  if (existingSupabaseCustomer && stripeCustomerId) {
-    // If Supabase has a record but doesn't match Stripe, update Supabase record
-    if (existingSupabaseCustomer.stripe_customer_id !== stripeCustomerId) {
-      const { error: updateError } = await supabaseAdmin
-        .from("customers")
-        .update({ stripe_customer_id: stripeCustomerId })
-        .eq("id", uuid);
-
-      if (updateError)
-        throw new Error(
-          `Supabase customer record update failed: ${updateError.message}`
-        );
-      console.warn(
-        `Supabase customer record mismatched Stripe ID. Supabase record updated.`
-      );
-    }
-    return stripeCustomerId;
-  } else {
-    console.warn(
-      `Supabase customer record was missing. A new record was created.`
-    );
-
-    const upsertedStripeCustomer = await upsertCustomerToSupabase(
-      uuid,
-      stripeIdToInsert
-    );
-    if (!upsertedStripeCustomer)
-      throw new Error("Supabase customer record creation failed.");
-
-    return upsertedStripeCustomer;
-  }
-};
-
-const copyAddressDetailsToUser = async (
-  userId: string,
-  address_details: Stripe.Address
-) => {
-  const { line1, line2, city, state, postal_code, country } =
-    address_details as Stripe.Address;
-
-  const sanitizedAddress = {
-    line1: line1,
-    line2: line2,
-    city: city,
-    state: state,
-    postal_code: postal_code,
-    country: country,
-  };
-
-  const { error } = await supabaseAdmin.auth.admin.updateUserById(userId, {
-    user_metadata: { shipping_address: sanitizedAddress },
-  });
+  const { error } = await supabaseAdmin
+    .from("orders")
+    .update({
+      shipping_address: billingDetails,
+    })
+    .eq("id", orderId);
 
   if (error) {
     throw new Error(`Error updating user metadata: ${error.message}`);
@@ -367,9 +259,9 @@ async function handleCheckoutSucceeded(session: Stripe.Checkout.Session) {
       throw new Error(`Error fetching user data: ${customerError.message}`);
     }
 
-    await copyAddressDetailsToUser(
+    await addBillingDetailsToOrder(
       userId,
-      session.shipping_details?.address as Stripe.Address
+      session.shipping_details as BillingDetails
     );
 
     const { order, orderItemsData, itemsTotal, shippingCost } =
@@ -409,9 +301,7 @@ export {
   upsertPriceRecord,
   deleteProductRecord,
   deletePriceRecord,
-  createOrRetrieveCustomer,
   deleteOrderRecord,
   deleteOrderItemsRecord,
   handleCheckoutSucceeded,
-  copyAddressDetailsToUser,
 };

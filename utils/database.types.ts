@@ -229,6 +229,7 @@ export type Database = {
           items_total: number | null
           ordered_at: string
           session_id: string | null
+          shipping_address: Json | null
           shipping_cost: number | null
           status: Database["public"]["Enums"]["order_status"] | null
           user_id: string
@@ -238,6 +239,7 @@ export type Database = {
           items_total?: number | null
           ordered_at?: string
           session_id?: string | null
+          shipping_address?: Json | null
           shipping_cost?: number | null
           status?: Database["public"]["Enums"]["order_status"] | null
           user_id: string
@@ -247,6 +249,7 @@ export type Database = {
           items_total?: number | null
           ordered_at?: string
           session_id?: string | null
+          shipping_address?: Json | null
           shipping_cost?: number | null
           status?: Database["public"]["Enums"]["order_status"] | null
           user_id?: string
@@ -257,60 +260,6 @@ export type Database = {
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      payments: {
-        Row: {
-          amount: number
-          created_at: string | null
-          currency: string
-          id: string
-          order_id: string | null
-          payment_intent_id: string
-          price_id: string | null
-          status: Database["public"]["Enums"]["payment_status"]
-          updated_at: string | null
-          user_id: string | null
-        }
-        Insert: {
-          amount: number
-          created_at?: string | null
-          currency: string
-          id?: string
-          order_id?: string | null
-          payment_intent_id: string
-          price_id?: string | null
-          status: Database["public"]["Enums"]["payment_status"]
-          updated_at?: string | null
-          user_id?: string | null
-        }
-        Update: {
-          amount?: number
-          created_at?: string | null
-          currency?: string
-          id?: string
-          order_id?: string | null
-          payment_intent_id?: string
-          price_id?: string | null
-          status?: Database["public"]["Enums"]["payment_status"]
-          updated_at?: string | null
-          user_id?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "payments_order_id_fkey"
-            columns: ["order_id"]
-            isOneToOne: false
-            referencedRelation: "orders"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "payments_price_id_fkey"
-            columns: ["price_id"]
-            isOneToOne: false
-            referencedRelation: "prices"
             referencedColumns: ["id"]
           },
         ]

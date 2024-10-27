@@ -1,9 +1,9 @@
-"use client";
+"use client";;
 import { Row } from "@tanstack/react-table";
 
 import { Button } from "@/components/ui/button";
 import { BookSchema } from "@/lib/schemas/schemas";
-import { Ellipsis, Eye, Pen, Trash } from "lucide-react";
+import { Eye, Pen, Trash } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -24,12 +24,6 @@ import {
 import { deleteBook } from "@/app/actions/delete-book";
 import { getProductByBookId } from "@/app/actions/get-product";
 import { DeleteBookForm } from "./delete-book-form";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Separator } from "@radix-ui/react-dropdown-menu";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
