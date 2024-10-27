@@ -60,7 +60,7 @@ export default async function HomePage() {
 
       <FeaturedBooks featuredBooks={featuredBooks} />
 
-      <section className="space-y-6 py-8 flex flex-col md:flex-row items-center gap-4  bg-secondary dark:bg-accent/40  ">
+      <section className="space-y-6 py-8 flex flex-col md:flex-row items-center gap-4  bg-secondary dark:bg-accent/40 -mb-10  ">
         <div className="flex flex-col space-y-6 w-full justify-center   md:my-0  ">
           <div className="space-y-6  mx-auto container">
             <h2 className="text-xl font-bold">Latest Books</h2>

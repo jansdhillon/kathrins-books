@@ -45,7 +45,7 @@ export default function RootLayout({
             <div className="flex flex-col justify-between min-h-[100dvh]">
               <Nav headerAuth={<HeaderAuth />} />
 
-              <main className="w-full overflow-x-clip flex flex-1 flex-col justify-start mt-20">
+              <main className="w-full overflow-x-clip flex flex-1 flex-col justify-start mt-20 mb-10">
                 <Feedback>{children}</Feedback>
               </main>
 
