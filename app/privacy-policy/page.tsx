@@ -5,8 +5,7 @@ export default function PrivacyPolicy() {
   return (
     <div className="leading-loose flex flex-col gap-3">
       <h1 className="text-2xl font-bold">Privacy Policy</h1>
-      <Separator className="my-4" />
-      <p>Last updated: October 23, 2024</p>
+      <p className="font-semibold text-muted-foreground">Last updated: October 27, 2024</p>
 
       <h2 className="text-lg font-semibold">Introduction</h2>
       <p>

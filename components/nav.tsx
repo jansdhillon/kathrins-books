@@ -16,6 +16,7 @@ import Loading from "@/app/loading";
 const navItems = [
   { href: "/books", label: "Books" },
   { href: "/shipping", label: "Shipping" },
+  { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
 

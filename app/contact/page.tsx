@@ -1,4 +1,4 @@
-"use client";;
+"use client";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -7,13 +7,13 @@ import { Message } from "@/components/form-message";
 import { SubmitButton } from "@/components/submit-button";
 import { useRef } from "react";
 import { contactFormAction } from "../actions/contact-form-action";
+import { Mail } from "lucide-react";
 
 export default function ContactPage({
   searchParams,
 }: {
   searchParams: Message;
 }) {
-
   const formRef = useRef<HTMLFormElement>(null);
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -22,11 +22,10 @@ export default function ContactPage({
     await contactFormAction(formData);
   };
   return (
-    <div className="flex flex-1 flex-col space-y-6 container mx-auto">
-      <h1 className="text-2xl font-bold text-left">Contact</h1>
-      <Separator />
-
-      <p className="text-lg text-muted-foreground">
+    <div className="flex flex-col space-y-6 container mx-auto ">
+      <h1 className="text-2xl font-bold">Contact</h1>
+      <p className="text-lg text-muted-foreground font-medium">
+        {" "}
         Get in touch with Kathrin for any inquiries, requests, and feedback.
       </p>
 
@@ -66,8 +65,18 @@ export default function ContactPage({
             Send Message
           </SubmitButton>
         </div>
-
       </form>
+      <h1 className="text-xl font-bold text-left">Support Email</h1>
+      <div className="flex flex-col gap-4">
+        <div className="flex items-center">
+          <div className="flex items-center gap-2">
+            <Mail className="h-4 w-4  font-medium text-muted-foreground" />
+            <p className="text-muted-foreground font-medium">Email: </p>
+            <p>kathrinsbookshelp@gmail.com</p>
+          </div>
+        </div>{" "}
+        <Separator />
+      </div>
     </div>
   );
 }

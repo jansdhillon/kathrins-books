@@ -7,7 +7,7 @@ import { createClient } from "@/utils/supabase/server";
 
 export default async function OrdersPage() {
   const supabase = createClient();
-  const {data: user, error: authError} = await supabase.auth.getUser();
+  const { data: user, error: authError } = await supabase.auth.getUser();
   if (!user?.user) {
     redirect("/sign-in");
   }
@@ -15,10 +15,10 @@ export default async function OrdersPage() {
   const orders = await getAllOrders();
 
   return (
-    <div className="flex flex-1 flex-col space-y-6 mx-auto container">
-      <h1 className="text-2xl font-bold text-left">Your Orders</h1>
-      <Separator />
-      <p className="text-lg text-muted-foreground">
+    <div className="flex flex-col space-y-6 container mx-auto ">
+      <h1 className="text-2xl font-bold">Orders</h1>
+      <p className="text-lg text-muted-foreground font-medium">
+        {" "}
         View and track your book orders.
       </p>
       {orders && orders?.length > 0 ? (

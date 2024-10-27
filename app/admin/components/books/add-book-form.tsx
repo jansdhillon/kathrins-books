@@ -58,7 +58,6 @@ export default function AddBookForm({
     <form className="space-y-2 " ref={formRef}>
       <div className="space-y-2">
         <h2 className="text-2xl font-bold">Add New Book</h2>
-        <Separator />
         <p className="text-muted-foreground">
           Fill in the details to add a new book to the store.
         </p>

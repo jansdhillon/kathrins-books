@@ -20,11 +20,10 @@ export default function Login() {
   return (
     <>
       <h1 className="text-2xl font-bold text-left">Sign In</h1>
-      <Separator />
 
-      <p className="text-lg text-muted-foreground">
+      <p className="text-lg text-muted-foreground font-medium">
         Don't have an account?{" "}
-        <Link className="text-foreground font-medium underline" href="/sign-up">
+        <Link className="text-foreground font-semibold underline" href="/sign-up">
           Sign Up
         </Link>
       </p>

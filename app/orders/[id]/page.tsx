@@ -1,4 +1,4 @@
-"use client";;
+"use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -10,6 +10,7 @@ import { OrderItemsDataTable } from "@/app/orders/[id]/data-table";
 import { orderItemColumns } from "@/app/orders/components/order-items-columns";
 import { createClient } from "@/utils/supabase/client";
 import { Address, OrderItemType, OrderType } from "@/lib/types/types";
+import { Badge } from "@/components/ui/badge";
 
 export default function OrderDetailsPage({
   params,
@@ -111,23 +112,26 @@ export default function OrderDetailsPage({
             <CardTitle>Order Summary</CardTitle>
             <div className="text-sm space-y-4 pt-4 text-muted-foreground">
               <p>
-                <span className="font-semibold">Order ID:</span> {order.id}
+                <span className="font-semibold text-primary">Order ID:</span>{" "}
+                {order.id}
               </p>
               <p>
-                <span className="font-semibold">Order Date:</span>{" "}
+                <span className="font-semibold text-primary">Order Date:</span>{" "}
                 {new Date(order?.ordered_at).toLocaleDateString()}
               </p>
               <p>
-                <span className="font-semibold">Total:</span> $
+                <span className="font-semibold text-primary">Total:</span> $
                 {((order?.items_total || (0 as number)) / 100).toFixed(2)}
               </p>
               <p>
-                <span className="font-semibold">Shipping:</span> $
+                <span className="font-semibold text-primary">Shipping:</span> $
                 {((order?.shipping_cost || (0 as number)) / 100).toFixed(2)}
               </p>
               {address && (
                 <p>
-                  <span className="font-semibold">Shipping Address:</span>{" "}
+                  <span className="font-semibold text-primary">
+                    Shipping Address:
+                  </span>{" "}
                   {`${address?.name!}, `}
                   {`${address?.line1!}, `}
                   {address?.line2 && `${address.line2!}, `}
@@ -135,7 +139,27 @@ export default function OrderDetailsPage({
                 </p>
               )}
 
-              <p className="text-base font-semibold text-card-foreground">
+              <p>
+                <span className="font-semibold text-primary">Status:</span>{" "}
+                <Badge>{order.status}</Badge>
+              </p>
+              {order.status === "Shipped" && (
+                <>
+                  <p>
+                    <span className="font-semibold text-primary">
+                      Tracking Number:
+                    </span>{" "}
+                    {order.tracking_number}
+                  </p>
+                  <p>
+                    <span className="font-semibold text-primary">
+                      Shipping Provider:
+                    </span>{" "}
+                    {order.shipping_provider}
+                  </p>
+                </>
+              )}
+              <p className=" flex w-full justify-center font-bold text-base text-primary">
                 {statusMessage}
               </p>
             </div>

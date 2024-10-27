@@ -5,8 +5,7 @@ export default function TermsOfServicePage() {
   return (
     <div className="leading-loose flex flex-col gap-3">
       <h1 className="text-2xl font-bold">Terms of Service</h1>
-      <Separator className="my-4" />
-      <p>Last updated: October 23, 2024</p>
+      <p className="font-semibold text-muted-foreground">Last updated: October 27, 2024</p>
 
       <h2 className="text-lg font-semibold">Acceptance of Terms</h2>
       <p>
@@ -45,6 +44,9 @@ export default function TermsOfServicePage() {
         the right to refuse or cancel any order at any time for reasons
         including but not limited to product availability, errors in the
         description or price of the product, or error in your order.
+      </p>
+      <p>
+        All prices are in Canadian dollars and are subject to applicable taxes.
       </p>
       <p>
         Transactions are securely processed through Stripe, a third-party

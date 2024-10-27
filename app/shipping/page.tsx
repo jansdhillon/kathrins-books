@@ -4,9 +4,12 @@ import Link from "next/link";
 
 export default function ShippingAndDeliveryPage() {
   return (
-    <div className="flex flex-1 flex-col space-y-6 container mx-auto">
-      <h1 className="text-2xl font-bold text-left">Shipping</h1>
-      <Separator />
+    <div className="flex flex-col space-y-6 container mx-auto ">
+    <h1 className="text-2xl font-bold">Shipping</h1>
+    <p className="text-lg text-muted-foreground font-medium">
+      {" "}
+      Learn more about our shipping options and return options.
+    </p>
 
       <div className="space-y-8">
         <div className="space-y-2">

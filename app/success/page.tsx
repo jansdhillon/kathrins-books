@@ -39,9 +39,12 @@ export default function SuccessPage() {
   }, [sessionId]);
 
   return (
-    <div className="container mx-auto space-y-6">
+    <div className="flex flex-col space-y-6 container mx-auto ">
       <h1 className="text-2xl font-bold">Thank you for your purchase!</h1>
-      <p className="text-muted-foreground">Your order has been successfully processed.</p>
+      <p className="text-lg text-muted-foreground font-medium">
+        {" "}
+        Your order has been placed successfully.
+      </p>
       {!isLoading ? (
         <div className="space-y-6">
           <Card>

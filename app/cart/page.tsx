@@ -105,7 +105,7 @@ export default function CartPage() {
 
   return (
     <div className="flex flex-1 flex-col container mx-auto space-y-6">
-      <h1 className="text-2xl font-bold text-left">Your Cart</h1>
+      <h1 className="text-2xl font-bold text-left">Cart</h1>
 
       {isLoading ? (
         <Loading />
@@ -222,7 +222,7 @@ export default function CartPage() {
                   setAgreedToTerms(checked === true)
                 }
               />
-              <Label htmlFor="terms" className="leading-none">
+              <Label htmlFor="terms" className="leading-none text-muted-foreground">
                 I agree to the{" "}
                 <Link href="/terms-of-service" className="underline">
                   Terms of Service
@@ -310,7 +310,7 @@ export default function CartPage() {
               ))
             )}
             {cartItems && cartItems.length > 0 && (
-              <Card className="p-4 space-y-4 leading-loose flex flex-col gap-4">
+              <Card className="p-4 space-y-4 leading-loose flex flex-col">
                 <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
                 <div className="flex justify-between">
                   <p>Subtotal:</p>
@@ -335,7 +335,7 @@ export default function CartPage() {
                   />
                   <label
                     htmlFor="terms-mobile"
-                    className="text-xs leading-none"
+                    className="text-xs leading-none text-muted-foreground"
                   >
                     I agree to the{" "}
                     <Link href="/terms" className="underline text-xs">
