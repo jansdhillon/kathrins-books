@@ -17,7 +17,6 @@ const Feedback = ({ children }: { children: ReactNode | ReactNode[] }) => {
   const router = useRouter();
 
   useEffect(() => {
-
     let shouldCleanUrl = false;
 
     if (status) {

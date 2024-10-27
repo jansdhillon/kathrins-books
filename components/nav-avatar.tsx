@@ -52,7 +52,7 @@ export const NavAvatar = () => {
               <div className="line-clamp-1 relative flex select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none font-medium">
                 Hello,{" "}
                 <span className="ml-1 font-semibold">
-                  {user?.user_metadata?.display_name?.split(" ")[0]}
+                  {user?.user_metadata?.full_name?.split(" ")[0] || user?.user_metadata?.display_name?.split(" ")[0]}
                 </span>
                 !
               </div>
