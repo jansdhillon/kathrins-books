@@ -243,7 +243,7 @@ export function BookDetails({ book }: BookDetailsProps) {
             </div>
           </CardHeader>
           <CardContent>
-            <h3 className="text-lg sm:text-xl font-semibold mb-2 text-primary">
+            <h3 className="text-lg font-semibold mb-2 text-primary">
               Description
             </h3>
             <Separator className="my-4" />

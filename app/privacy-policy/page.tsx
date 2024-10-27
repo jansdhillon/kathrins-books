@@ -7,7 +7,7 @@ export default function PrivacyPolicy() {
       <h1 className="text-2xl font-bold">Privacy Policy</h1>
       <p className="font-semibold text-muted-foreground">Last updated: October 27, 2024</p>
 
-      <h2 className="text-lg font-semibold">Introduction</h2>
+      <h2 className="font-semibold">Introduction</h2>
       <p>
         Welcome to Kathrin's Books ("we", "us", or "our"). We are committed to
         protecting your personal information and your right to privacy. This
@@ -17,7 +17,7 @@ export default function PrivacyPolicy() {
         related or connected thereto (collectively, the "Site").
       </p>
 
-      <h2 className="text-lg font-semibold">Collection of Personal Information</h2>
+      <h2 className="font-semibold">Collection of Personal Information</h2>
       <p>
         We may collect personal information that you voluntarily provide to us
         when you register on the Site, express an interest in obtaining
@@ -25,14 +25,14 @@ export default function PrivacyPolicy() {
         activities on the Site, or otherwise when you contact us.
       </p>
 
-      <h2 className="text-lg font-semibold">Use of Personal Information</h2>
+      <h2 className="font-semibold">Use of Personal Information</h2>
       <p>
         We may use your personal information for legitimate business purposes,
         including to provide and improve our services, communicate with you, and
         comply with our legal obligations.
       </p>
 
-      <h2 className="text-lg font-semibold">Disclosure of Personal Information</h2>
+      <h2 className="font-semibold">Disclosure of Personal Information</h2>
       <p>
         We may share your information with third-party service providers that
         perform services on our behalf, such as payment processing, data analysis,
@@ -52,21 +52,21 @@ export default function PrivacyPolicy() {
         .
       </p>
 
-      <h2 className="text-lg font-semibold">Your Rights</h2>
+      <h2 className="font-semibold">Your Rights</h2>
       <p>
         In accordance with Canadian privacy laws, you have the right to access,
         correct, or delete your personal information. To exercise these rights,
         please contact us using the contact information provided below.
       </p>
 
-      <h2 className="text-lg font-semibold">Cookies and Similar Technologies</h2>
+      <h2 className="font-semibold">Cookies and Similar Technologies</h2>
       <p>
         We may use cookies and similar tracking technologies to access or store
         information. You can set your browser to refuse all or some browser
         cookies or to alert you when cookies are being sent.
       </p>
 
-      <h2 className="text-lg font-semibold">Security of Your Information</h2>
+      <h2 className="font-semibold">Security of Your Information</h2>
       <p>
         We use administrative, technical, and physical security measures to
         protect your personal information. While we have taken reasonable steps to
@@ -74,14 +74,14 @@ export default function PrivacyPolicy() {
         security measures are perfect or impenetrable.
       </p>
 
-      <h2 className="text-lg font-semibold">Changes to This Privacy Policy</h2>
+      <h2 className="font-semibold">Changes to This Privacy Policy</h2>
       <p>
         We may update our Privacy Policy from time to time. We will notify you of
         any changes by posting the new Privacy Policy on this page and updating
         the "Last updated" date.
       </p>
 
-      <h2 className="text-lg font-semibold">Contact Us</h2>
+      <h2 className="font-semibold">Contact Us</h2>
       <p>
         If you have questions or comments about this Privacy Policy, please
         contact us at:

@@ -6,14 +6,14 @@ export default function ShippingAndDeliveryPage() {
   return (
     <div className="flex flex-col space-y-6 container mx-auto ">
     <h1 className="text-2xl font-bold">Shipping</h1>
-    <p className="text-lg text-muted-foreground font-medium">
+    <p className=" text-muted-foreground font-medium">
       {" "}
       Learn more about our shipping options and return options.
     </p>
 
       <div className="space-y-8">
         <div className="space-y-2">
-          <h3 className="text-lg font-semibold">1. Standard Shipping</h3>
+          <h3 className="font-semibold">1. Standard Shipping</h3>
           <ul className="list-disc list-inside ml-4 space-y-1">
             <li>
               <span className="font-semibold">Cost:</span> $15 flat rate per
@@ -31,7 +31,7 @@ export default function ShippingAndDeliveryPage() {
           </ul>
         </div>
         <div className="space-y-2">
-          <h3 className="text-lg font-semibold">
+          <h3 className=" font-semibold">
             2. Free Shipping Over Orders of $75
           </h3>
           <ul className="list-disc list-inside ml-4 space-y-1">

@@ -41,7 +41,7 @@ export default function SuccessPage() {
   return (
     <div className="flex flex-col space-y-6 container mx-auto ">
       <h1 className="text-2xl font-bold">Thank you for your purchase!</h1>
-      <p className="text-lg text-muted-foreground font-medium">
+      <p className="text-muted-foreground font-medium">
         {" "}
         Your order has been placed successfully.
       </p>

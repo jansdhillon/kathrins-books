@@ -17,7 +17,7 @@ export default async function OrdersPage() {
   return (
     <div className="flex flex-col space-y-6 container mx-auto ">
       <h1 className="text-2xl font-bold">Orders</h1>
-      <p className="text-lg text-muted-foreground font-medium">
+      <p className="text-muted-foreground font-medium">
         {" "}
         View and track your book orders.
       </p>

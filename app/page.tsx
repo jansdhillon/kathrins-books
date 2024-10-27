@@ -16,7 +16,7 @@ const FeaturedBooks = ({ featuredBooks }: { featuredBooks: BookType[] }) => {
           <h2 className="text-xl font-bold" id="featured">
             Featured
           </h2>
-          <p className="text-base mb-6 text-muted-foreground font-medium">
+          <p className="text-base mb-6 text-muted-foreground font-semibold">
             Handpicked by Kathrin.
           </p>
         </div>
@@ -64,7 +64,7 @@ export default async function HomePage() {
         <div className="flex flex-col space-y-6 w-full justify-center   md:my-0  ">
           <div className="space-y-6  mx-auto container">
             <h2 className="text-xl font-bold">Latest Books</h2>
-            <p className="text-base mb-6 text-muted-foreground font-medium ">
+            <p className="text-base mb-6 text-muted-foreground font-semibold ">
               Just listed.
             </p>
           </div>

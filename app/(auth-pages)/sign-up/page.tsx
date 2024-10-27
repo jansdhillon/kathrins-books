@@ -8,7 +8,7 @@ export default function Signup() {
   return (
     <>
       <h1 className="text-2xl font-bold">Sign Up</h1>
-      <p className="text-lg text-muted-foreground font-medium">
+      <p className=" text-muted-foreground font-medium">
         Already have an account?{" "}
         <Link className="text-primary font-semibold underline" href="/sign-in">
           Sign in

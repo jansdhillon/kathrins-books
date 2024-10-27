@@ -8,6 +8,7 @@ import { SubmitButton } from "@/components/submit-button";
 import { useRef } from "react";
 import { contactFormAction } from "../actions/contact-form-action";
 import { Mail } from "lucide-react";
+import Link from "next/link";
 
 export default function ContactPage({
   searchParams,
@@ -24,9 +25,9 @@ export default function ContactPage({
   return (
     <div className="flex flex-col space-y-6 container mx-auto ">
       <h1 className="text-2xl font-bold">Contact</h1>
-      <p className="text-lg text-muted-foreground font-medium">
+      <p className="text-muted-foreground font-medium">
         {" "}
-        Get in touch with Kathrin for any inquiries, requests, and feedback.
+        Get in touch with us for any inquiries, requests, and feedback.
       </p>
 
       <form className="space-y-4" onSubmit={handleSubmit} ref={formRef}>
@@ -66,16 +67,15 @@ export default function ContactPage({
           </SubmitButton>
         </div>
       </form>
-      <h1 className="text-xl font-bold text-left">Support Email</h1>
+      <h1 className="text-xl font-bold text-left">Support</h1>
       <div className="flex flex-col gap-4">
         <div className="flex items-center">
-          <div className="flex items-center gap-2">
-            <Mail className="h-4 w-4  font-medium text-muted-foreground" />
-            <p className="text-muted-foreground font-medium">Email: </p>
+          <Link href="mailto:kathrinsbookhelp@gmail.com" className="flex items-center gap-2">
+            <Mail className="h-4 w-4  font-semibold text-muted-foreground" />
+            <p className="text-muted-foreground font-semibold">Email: </p>
             <p>kathrinsbookshelp@gmail.com</p>
-          </div>
+          </Link>
         </div>{" "}
-        <Separator />
       </div>
     </div>
   );

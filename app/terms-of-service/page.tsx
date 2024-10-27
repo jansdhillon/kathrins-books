@@ -7,7 +7,7 @@ export default function TermsOfServicePage() {
       <h1 className="text-2xl font-bold">Terms of Service</h1>
       <p className="font-semibold text-muted-foreground">Last updated: October 27, 2024</p>
 
-      <h2 className="text-lg font-semibold">Acceptance of Terms</h2>
+      <h2 className="font-semibold">Acceptance of Terms</h2>
       <p>
         By accessing and using Kathrin's Books ("we", "us", or "our") website
         [www.kathrinsbooks.com] (the "Site"), you accept and agree to be bound
@@ -15,21 +15,21 @@ export default function TermsOfServicePage() {
         should not use the Site.
       </p>
 
-      <h2 className="text-lg font-semibold">Use of the Site</h2>
+      <h2 className="font-semibold">Use of the Site</h2>
       <p>
         You agree to use the Site only for lawful purposes and in a way that
         does not infringe the rights of, restrict, or inhibit anyone else's use
         and enjoyment of the Site.
       </p>
 
-      <h2 className="text-lg font-semibold">Accounts</h2>
+      <h2 className="font-semibold">Accounts</h2>
       <p>
         When you create an account with us, you must provide information that is
         accurate, complete, and current at all times. Failure to do so
         constitutes a breach of the Terms.
       </p>
 
-      <h2 className="text-lg font-semibold">Intellectual Property</h2>
+      <h2 className="font-semibold">Intellectual Property</h2>
       <p>
         The Site and its original content, features, and functionality are and
         will remain the exclusive property of Kathrin's Books and its licensors.
@@ -38,7 +38,7 @@ export default function TermsOfServicePage() {
         identifying the products.
       </p>
 
-      <h2 className="text-lg font-semibold">Purchases and Payment Processing</h2>
+      <h2 className="font-semibold">Purchases and Payment Processing</h2>
       <p>
         All purchases through the Site are subject to our acceptance. We reserve
         the right to refuse or cancel any order at any time for reasons
@@ -61,13 +61,13 @@ export default function TermsOfServicePage() {
         .
       </p>
 
-      <h2 className="text-lg font-semibold">Refund Policy</h2>
+      <h2 className="font-semibold">Refund Policy</h2>
       <p>
         All sales are final. We do not offer refunds or exchanges for any
         products purchased on the Site unless required by law.
       </p>
 
-      <h2 className="text-lg font-semibold">Limitation of Liability</h2>
+      <h2 className="font-semibold">Limitation of Liability</h2>
       <p>
         In no event shall Kathrin's Books, nor its directors, employees,
         partners, agents, suppliers, or affiliates, be liable for any indirect,
@@ -76,21 +76,21 @@ export default function TermsOfServicePage() {
         content on the Site.
       </p>
 
-      <h2 className="text-lg font-semibold">Governing Law</h2>
+      <h2 className="font-semibold">Governing Law</h2>
       <p>
         These Terms shall be governed and construed in accordance with the laws
         of the Province of Alberta and the federal laws of Canada applicable
         therein.
       </p>
 
-      <h2 className="text-lg font-semibold">Changes to Terms</h2>
+      <h2 className="font-semibold">Changes to Terms</h2>
       <p>
         We reserve the right, at our sole discretion, to modify or replace these
         Terms at any time. What constitutes a material change will be determined
         at our sole discretion.
       </p>
 
-      <h2 className="text-lg font-semibold">Contact Us</h2>
+      <h2 className="font-semibold">Contact Us</h2>
       <p>If you have any questions about these Terms, please contact us at:</p>
       <Link
         className="font-medium underline"

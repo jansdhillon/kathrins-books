@@ -9,7 +9,7 @@ export default function ForgotPassword() {
   return (
     <>
       <h1 className="text-2xl font-bold ">Reset Password</h1>
-      <p className="text-lg text-muted-foreground">
+      <p className="text-muted-foreground">
         Already have an account?{" "}
         <Link className=" font-semibold underline font-primary" href="/sign-in">
           Sign In
