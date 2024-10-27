@@ -10,9 +10,9 @@ import { BookType } from "@/lib/types/types";
 
 const FeaturedBooks = ({ featuredBooks }: { featuredBooks: BookType[] }) => {
   return (
-    <section className=" flex flex-col md:flex-row items-center  p-8 max-w-5xl ">
-      <div className="flex flex-col space-y-6 w-full justify-center ">
-        <div className="space-y-6 ">
+    <section className=" flex flex-col md:flex-row items-center  py-8 ">
+      <div className="flex flex-col space-y-6 w-full justify-center container lg:my-0 pr-8 ">
+        <div className="space-y-6  ">
           <h2 className="text-xl font-bold" id="featured">
             Featured
           </h2>
@@ -21,7 +21,7 @@ const FeaturedBooks = ({ featuredBooks }: { featuredBooks: BookType[] }) => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-4 justify-center ">
+        <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-4 justify-center max-w-7xl  ">
           {featuredBooks.map((book) => (
             <Book key={book.id} book={book} />
           ))}
@@ -38,7 +38,7 @@ export default async function HomePage() {
   return (
     <div className="flex flex-col justify-center h-full -mt-5">
       <BgGlowContainer>
-        <div className="flex flex-col gap-4 container lg:m-0   items-start text-left text-primary  mx-auto leading-loose -pt-8">
+        <div className="flex flex-col gap-4 container lg:my-0  items-start text-left text-primary  mx-auto leading-loose -pt-8 ">
           <div className="text-4xl md:text-5xl font-extrabold text-left ">
             Find Your Next
             <br /> Great Read.
@@ -61,8 +61,8 @@ export default async function HomePage() {
       <FeaturedBooks featuredBooks={featuredBooks} />
 
       <section className="space-y-6 py-8 flex flex-col md:flex-row items-center gap-4  bg-secondary dark:bg-accent/40  ">
-        <div className="flex flex-col space-y-6 w-full justify-center  ">
-          <div className="space-y-6 pl-8">
+        <div className="flex flex-col space-y-6 w-full justify-center   md:my-0  -m-1.5">
+          <div className="space-y-6 pl-8 md:pl-14 lg:pl-16">
             <h2 className="text-xl font-bold">Latest Books</h2>
             <p className="text-base mb-6 text-muted-foreground font-medium ">
               Just listed.
@@ -83,8 +83,8 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="p-8 flex flex-col md:flex-row items-center gap-4 ">
-        <div className="flex flex-col space-y-6 justify-center ">
+      <section className="py-8 flex flex-col md:flex-row items-center gap-4 ">
+        <div className="flex flex-col space-y-6 justify-center container lg:my-0 pr-8">
           <h2 className="text-xl font-bold">About</h2>
           <p className="font-medium text-muted-foreground md:max-w-[50%]">
             Kathrin is a passionate book lover and curator who believes in the

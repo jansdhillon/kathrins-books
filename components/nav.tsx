@@ -49,7 +49,7 @@ const Searchbar = ({
   }, [query]);
 
   return (
-    <div className="relative min-w-[400px]">
+    <div className="relative ">
       <Input
         placeholder="Search books..."
         value={searchTerm}
@@ -70,7 +70,7 @@ export const Nav = ({ headerAuth }: { headerAuth: ReactNode }) => {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b w-full bg-primary-foreground">
-      <nav className="hidden lg:flex items-center w-full px-8  justify-between gap-10 h-[60px]">
+      <nav className="hidden lg:flex items-center w-full px-8  justify-between gap-10 h-[60px] container lg:my-0 pr-8">
         <Link href="/" className="flex items-center gap-4 ">
           <Image
             src="/logo.png"
@@ -86,7 +86,9 @@ export const Nav = ({ headerAuth }: { headerAuth: ReactNode }) => {
         </Link>
 
         <Suspense fallback={<Loading />}>
-          <Searchbar />
+          <div className="container">
+            <Searchbar />
+          </div>
         </Suspense>
 
         <div className="flex items-center justify-start gap-8">
@@ -103,7 +105,7 @@ export const Nav = ({ headerAuth }: { headerAuth: ReactNode }) => {
         </div>
       </nav>
 
-      <div className="flex items-center w-full justify-between lg:hidden  px-8  h-[60px]">
+      <div className="flex items-center w-full justify-between lg:hidden  px-8  h-[60px] container lg:my-0 pr-8">
         <Link href="/" className="flex items-center gap-4 ">
           <Image
             src="/logo.png"
@@ -125,8 +127,10 @@ export const Nav = ({ headerAuth }: { headerAuth: ReactNode }) => {
           <SheetContent>
             <div className="flex flex-col gap-4 mt-8">
               <Suspense fallback={<Loading />}>
-                <Searchbar setIsOpen={setIsOpen} />
-              </Suspense>{" "}
+                <div className="container">
+                  <Searchbar />
+                </div>
+              </Suspense>
               <Separator className="my-2" />
               {navItems.map((item, index) => (
                 <div key={item.href}>

@@ -32,11 +32,11 @@ export default async function AuthButton() {
         <DropdownMenuContent>
           <DropdownMenuGroup>
             <Link href="/sign-in">
-              <DropdownMenuItem>Sign In</DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer">Sign In</DropdownMenuItem>
             </Link>
             <DropdownMenuSeparator />
             <Link href="/sign-up">
-              <DropdownMenuItem>Sign Up</DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer">Sign Up</DropdownMenuItem>
             </Link>
           </DropdownMenuGroup>
         </DropdownMenuContent>
