@@ -105,6 +105,7 @@ export const OrderConfirmationTemplate: React.FC<
           </tr>
           <tr>
             <td colSpan={3} style={{ padding: "8px" }}>
+              <p>{billingDetails?.name}</p>
               <p>{billingDetails?.address.line1}</p>
               {billingDetails?.address.line2 && <p>{billingDetails?.address.line2}</p>}
               <p>
@@ -138,14 +139,14 @@ export const OrderConfirmationTemplate: React.FC<
             <td style={{ padding: "8px" }}>
               $
               {(
-                (((itemsTotal as number) + shippingCost) as number) || 0.0
+                (((itemsTotal as number / 100) + shippingCost) as number / 100) || 0.0
               )?.toFixed(2)}
             </td>
           </tr>
           <tr>
             <td colSpan={3} style={{ padding: "8px" }}>
               <button>
-                <a href={`https://kathrinsbooks/orders/${orderId}`}>
+                <a href={`https://kathrinsbooks.com/orders/${orderId}`}>
                   View Order
                 </a>
               </button>
@@ -230,6 +231,7 @@ export const KathrinOrderNotificationTemplate: React.FC<
           </div>
           <div>
             <div style={{ padding: "8px" }}>
+              <p>{billingDetails?.name}</p>
               <p>{billingDetails?.address?.line1}</p>
               <p>{billingDetails?.address?.line2}</p>
               <p>
@@ -295,13 +297,16 @@ export const KathrinOrderNotificationTemplate: React.FC<
               Total
             </td>
             <td style={{ padding: "8px" }}>
-              ${(itemsTotal + shippingCost).toFixed(2)}
+              $
+              {(
+                (((itemsTotal as number / 100) + shippingCost) as number / 100) || 0.0
+              )?.toFixed(2)}
             </td>
           </tr>
           <tr>
             <td colSpan={3} style={{ padding: "8px" }}>
               <button>
-                <a href={`https://kathrinsbooks/admin/orders/${orderId}`}>
+                <a href={`https://kathrinsbooks.com/admin/orders/${orderId}`}>
                   View Order
                 </a>
               </button>
