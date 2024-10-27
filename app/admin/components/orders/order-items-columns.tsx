@@ -1,16 +1,7 @@
-"use client";
+"use client";;
 import { ColumnDef } from "@tanstack/react-table";
 import { OrderItemType } from "@/lib/types/types";
 import Image from "next/image";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { Button } from "@/components/ui/button";
-import { Eye } from "lucide-react";
-import { DataTableColumnHeader } from "./data-table-column-header";
-import Link from "next/link";
 
 export const orderItemColumns: ColumnDef<OrderItemType>[] = [
   {
@@ -23,6 +14,7 @@ export const orderItemColumns: ColumnDef<OrderItemType>[] = [
           alt={row?.original.book_title || "Book"}
           width={50}
           height={50}
+          className="rounded-sm object-contain"
         />
       ) : null,
   },

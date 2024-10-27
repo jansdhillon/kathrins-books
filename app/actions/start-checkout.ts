@@ -1,10 +1,6 @@
 "use server";
 import { createClient } from "@/utils/supabase/server";
-import {
-  getOrCreateCart,
-} from "@/utils/supabase/queries";
-import { redirect } from "next/navigation";
-import { getErrorRedirect } from "@/utils/helpers";
+import { getOrCreateCart } from "@/utils/supabase/queries";
 import { encodedRedirect } from "@/utils/utils";
 
 export const startCheckoutAction = async () => {
@@ -12,18 +8,20 @@ export const startCheckoutAction = async () => {
 
   const { data: user } = await supabase.auth.getUser();
 
-
   if (!user.user) {
-    return encodedRedirect("error", "/sign-in", "You must be signed in to view this page");
+    return encodedRedirect(
+      "error",
+      "/sign-in",
+      "You must be signed in to view this page"
+    );
   }
-
 
   const { data: cartDetails, error: cartError } = await getOrCreateCart(
     supabase,
     user?.user?.id
   );
 
-  if (cartError){
+  if (cartError) {
     console.error("Error fetching cart details:", cartError.message);
     return encodedRedirect("error", "/", "Error fetching cart details");
   }

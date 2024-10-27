@@ -1,5 +1,4 @@
-"use server";
-import { Database } from "@/utils/database.types";
+"use server";;
 import { getErrorRedirect, getStatusRedirect } from "@/utils/helpers";
 import { stripe } from "@/utils/stripe/config";
 import { updateBookImageDirectory } from "@/utils/supabase/queries";
