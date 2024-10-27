@@ -9,8 +9,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { signOutAction } from "@/app/actions/sign-out";
 import Link from "next/link";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { CircleUserRound, ShoppingCart, UserIcon } from "lucide-react";
+import { Avatar } from "./ui/avatar";
+import { CircleUserRound, ShoppingCart } from "lucide-react";
 import { Button } from "./ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { User } from "@supabase/supabase-js";

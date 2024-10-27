@@ -10,11 +10,7 @@ import {
   SanitizedAddress,
 } from "@/lib/types/types";
 import { sendEmail } from "@/app/actions/send-email";
-import {
-  BillingDetails,
-  ExpressCheckoutAddress,
-  ShippingAddress,
-} from "@stripe/stripe-js";
+import { BillingDetails } from "@stripe/stripe-js";
 
 const supabaseAdmin = createClient<Database>(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -241,17 +237,17 @@ const copyAddressDetailsToUser = async (
   }
 };
 
-const placeOrder = async (
-  session: Stripe.Checkout.Session,
-  itemsTotal: number,
-  shippingCost: number
-) => {
+const placeOrder = async (session: Stripe.Checkout.Session) => {
   const sessionId = session.id;
   const userId = session?.metadata?.userId;
+  let itemsTotal = 0;
+  for (const lineItem of session.line_items?.data ?? []) {
+    itemsTotal += lineItem.amount_total;
+  }
+  const shippingCost = session.total_details?.amount_shipping ?? 0;
 
   if (!userId) {
     throw new Error("User ID not found in session metadata");
-
   }
 
   const { data: order, error: orderError } = await createOrder(
@@ -295,9 +291,10 @@ const placeOrder = async (
   }
 
   return {
-    orderItemsData,
-    order,
-    userId,
+    order: order,
+    orderItemsData: orderItemsData,
+    itemsTotal: itemsTotal,
+    shippingCost: shippingCost,
   };
 };
 
@@ -361,11 +358,6 @@ async function clearCart(userId: string) {
 
 async function handleCheckoutSucceeded(session: Stripe.Checkout.Session) {
   try {
-    let itemsTotal = 0;
-    for (const lineItem of session.line_items?.data ?? []) {
-      itemsTotal += lineItem.amount_total;
-    }
-    const shippingCost = session.total_details?.amount_shipping ?? 0;
     const userId = session.metadata?.userId;
 
     if (!userId) throw new Error("User ID not found in session metadata");
@@ -377,14 +369,13 @@ async function handleCheckoutSucceeded(session: Stripe.Checkout.Session) {
       throw new Error(`Error fetching user data: ${customerError.message}`);
     }
 
-
-    await copyAddressDetailsToUser(userId, session.shipping_details?.address as Stripe.Address);
-
-    const { orderItemsData, order } = await placeOrder(
-      session,
-      itemsTotal,
-      shippingCost
+    await copyAddressDetailsToUser(
+      userId,
+      session.shipping_details?.address as Stripe.Address
     );
+
+    const { order, orderItemsData, itemsTotal, shippingCost } =
+      await placeOrder(session);
 
     await sendEmail(
       {

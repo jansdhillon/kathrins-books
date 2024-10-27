@@ -1,7 +1,7 @@
 "use client";
-import { ReactNode, Suspense, use, useEffect, useState } from "react";
+import { ReactNode, Suspense, useEffect, useState } from "react";
 import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { Button } from "@/components/ui/button";
@@ -105,7 +105,7 @@ export const Nav = ({ headerAuth }: { headerAuth: ReactNode }) => {
 
       <div className="flex items-center w-full justify-between lg:hidden  px-8  h-[60px]">
         <Link href="/" className="flex items-center gap-4 ">
-        <Image
+          <Image
             src="/logo.png"
             alt="Kathrin's Books"
             className="object-contain"

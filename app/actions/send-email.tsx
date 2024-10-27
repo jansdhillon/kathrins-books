@@ -75,7 +75,7 @@ export const sendEmail = async (data: EmailData, type: EmailType) => {
           shippingAddress,
         } = data as OrderConfirmationEmailData;
 
-        if (!name || !email || !orderId || !orderItems || !itemsTotal) {
+        if (!name || !email || !orderId || !orderItems || !itemsTotal || !shippingAddress) {
           console.error("Missing required fields for order confirmation email");
           throw new Error(
             "Missing required fields for order confirmation email"
