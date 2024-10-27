@@ -74,12 +74,7 @@ export const orderColumns: ColumnDef<OrderWithItemsType>[] = [
     cell: ({ row }) => (
       <div>
         $
-        {(
-          (row?.original?.items_total || 0) +
-          ((row?.original?.shipping_cost &&
-            row?.original?.shipping_cost / 100) ||
-            0)
-        ).toFixed(2)}
+        {((row.original.items_total || 0) + (row.original.shipping_cost || 0) / 100).toFixed(2)}
       </div>
     ),
   },

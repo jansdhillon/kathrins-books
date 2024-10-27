@@ -14,6 +14,7 @@ export const orderItemColumns: ColumnDef<OrderItemType>[] = [
           alt={row?.original.book_title || "Book"}
           width={50}
           height={50}
+          className="object-contain rounded-sm"
         />
       ) : null,
   },
