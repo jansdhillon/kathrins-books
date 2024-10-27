@@ -120,7 +120,7 @@ const addBillingDetailsToOrder = async (
   const { error } = await supabaseAdmin
     .from("orders")
     .update({
-      shipping_address: billingDetails,
+      billing_details: billingDetails,
     })
     .eq("id", orderId);
 

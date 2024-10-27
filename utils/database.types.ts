@@ -225,31 +225,31 @@ export type Database = {
       }
       orders: {
         Row: {
+          billing_details: Json | null
           id: string
           items_total: number | null
           ordered_at: string
           session_id: string | null
-          shipping_address: Json | null
           shipping_cost: number | null
           status: Database["public"]["Enums"]["order_status"] | null
           user_id: string
         }
         Insert: {
+          billing_details?: Json | null
           id?: string
           items_total?: number | null
           ordered_at?: string
           session_id?: string | null
-          shipping_address?: Json | null
           shipping_cost?: number | null
           status?: Database["public"]["Enums"]["order_status"] | null
           user_id: string
         }
         Update: {
+          billing_details?: Json | null
           id?: string
           items_total?: number | null
           ordered_at?: string
           session_id?: string | null
-          shipping_address?: Json | null
           shipping_cost?: number | null
           status?: Database["public"]["Enums"]["order_status"] | null
           user_id?: string

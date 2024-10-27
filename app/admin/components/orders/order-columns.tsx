@@ -1,4 +1,4 @@
-"use client";;
+"use client";
 import { Badge } from "@/components/ui/badge";
 import { DataTableColumnHeader } from "../books/data-table-column-header";
 import { OrderWithItemsType } from "@/lib/schemas/schemas";
@@ -13,7 +13,27 @@ export const orderColumns: ColumnDef<OrderWithItemsType>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Order ID" />
     ),
-    cell: ({ row }) => <div>{row.original.id}</div>,
+    cell: ({ row }) => (
+      <div className="flex space-x-2  max-w-[100px] md:max-w-[200px] ">
+        <span className="font-medium overflow-x-scroll">
+          {row.original.id || "-"}
+        </span>
+      </div>
+    ),
+  },
+
+  {
+    accessorKey: "items",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Items" />
+    ),
+    cell: ({ row }) => (
+      <OrderItemsDataTable
+        columns={orderItemColumns}
+        data={row.original.items}
+      />
+    ),
+    enableSorting: false,
   },
   {
     accessorKey: "ordered_at",
@@ -21,25 +41,20 @@ export const orderColumns: ColumnDef<OrderWithItemsType>[] = [
       <DataTableColumnHeader column={column} title="Ordered On" />
     ),
     cell: ({ row }) => (
-      <div>{row.original?.ordered_at && format(new Date(row.original?.ordered_at), "yyyy-MM-dd")}</div>
+      <div>
+        {row.original?.ordered_at &&
+          format(new Date(row.original?.ordered_at), "yyyy-MM-dd")}
+      </div>
     ),
   },
-  {
-    accessorKey: "items",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Items" />
-    ),
-    cell: ({ row }) => (
-      <OrderItemsDataTable columns={orderItemColumns} data={row.original.items} />
-    ),
-  },
+
   {
     accessorKey: "status",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Status" />
     ),
     cell: ({ row }) => <Badge variant="default">{row.original.status}</Badge>,
-    enableSorting: true,
+    enableSorting: false,
     enableColumnFilter: true,
   },
   {

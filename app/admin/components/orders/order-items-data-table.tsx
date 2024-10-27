@@ -102,10 +102,6 @@ export function OrderItemsDataTable<TData, TValue>({
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}
-                     onClick={() => {
-                      const item = OrderItemSchema.parse(row.original);
-                      router.push(`/books/${item.book_id}`);
-                    }}
                     >
                       {flexRender(
                         cell.column.columnDef.cell,

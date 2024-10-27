@@ -1,17 +1,9 @@
-"use client";
+"use client";;
 import { Badge } from "@/components/ui/badge";
 import { DataTableColumnHeader } from "./data-table-column-header";
 import { OrderWithItemsType } from "@/lib/schemas/schemas";
 import { format } from "date-fns";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { Eye } from "lucide-react";
 import { orderItemColumns } from "./order-items-columns";
 import { OrderItemsDataTable } from "../[id]/data-table";
 
