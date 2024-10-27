@@ -15,6 +15,15 @@ export const getAllBooks = cache(async (supabase: SupabaseClient) => {
   return { data: books, error };
 });
 
+export const getLatestBooks = cache(async (supabase: SupabaseClient) => {
+  const { data: books, error } = await supabase
+    .from("books")
+    .select("*")
+    .order("created_at", { ascending: false })
+    .limit(30);
+  return { data: books, error };
+});
+
 export const getFeaturedBooks = cache(async (supabase: SupabaseClient) => {
   const { data: books, error } = await supabase
     .from("books")

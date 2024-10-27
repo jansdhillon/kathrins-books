@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowRightIcon } from "lucide-react";
 import BgGlowContainer from "@/components/bg-glow-container";
-import { getAllBooks } from "./actions/get-all-books";
+import { getLatestBooks } from "./actions/get-latest-books";
 import { Book } from "@/app/books/components/book";
 import { BookType } from "@/lib/types/types";
 
@@ -32,7 +32,7 @@ const FeaturedBooks = ({ featuredBooks }: { featuredBooks: BookType[] }) => {
 };
 
 export default async function HomePage() {
-  const allBooks = await getAllBooks();
+  const latestBooks = await getLatestBooks();
   const featuredBooks = await getFeaturedBooks();
 
   return (
@@ -62,14 +62,14 @@ export default async function HomePage() {
 
       <section className="space-y-6 py-8 flex flex-col md:flex-row items-center gap-4  bg-secondary dark:bg-accent/40  ">
         <div className="flex flex-col space-y-6 w-full justify-center   md:my-0  ">
-          <div className="space-y-6 pl-8 md:pl-14 lg:pl-16">
+          <div className="space-y-6  mx-auto container">
             <h2 className="text-xl font-bold">Latest Books</h2>
             <p className="text-base mb-6 text-muted-foreground font-medium ">
               Just listed.
             </p>
           </div>
           <div className=" w-full ">
-            <BookDisplay books={allBooks} />
+            <BookDisplay books={latestBooks} />
           </div>
           <Link
             href="/books"
@@ -80,23 +80,6 @@ export default async function HomePage() {
               <ArrowRightIcon />
             </Button>
           </Link>
-        </div>
-      </section>
-
-      <section className="py-8 flex flex-col md:flex-row items-center gap-4 ">
-        <div className="flex flex-col space-y-6 justify-center container lg:my-0 pr-8">
-          <h2 className="text-xl font-bold">About</h2>
-          <p className="font-medium text-muted-foreground md:max-w-[50%]">
-            Kathrin is a passionate book lover and curator who believes in the
-            transformative power of literature. With over a decade of experience
-            as a book collector, she has a keen eye for hidden gems and timeless
-            classics.
-          </p>
-          <p className="font-medium text-muted-foreground md:max-w-[50%]">
-            Her mission is to connect readers with books that inspire, educate,
-            and entertain. Every book in Kathrin's collection is handpicked,
-            ensuring quality and diversity across genres.
-          </p>
         </div>
       </section>
     </div>

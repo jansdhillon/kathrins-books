@@ -42,7 +42,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <TooltipProvider delayDuration={0}>
-            <div className="flex flex-col justify-between gap-10  min-h-[100dvh]">
+            <div className="flex flex-col justify-between min-h-[100dvh]">
               <Nav headerAuth={<HeaderAuth />} />
 
               <main className="w-full overflow-x-clip flex flex-1 flex-col justify-start mt-20">
