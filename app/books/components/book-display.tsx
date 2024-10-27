@@ -18,7 +18,7 @@ const BookDisplay = ({ books }: { books: BookType[] }) => {
 
   return (
     <Suspense fallback={<Loading />}>
-      <Carousel opts={{startIndex: 1, loop: true}}>
+      <Carousel opts={{startIndex: 2, loop: true}}>
       <CarouselContent className="pl-8 md:my-0  overflow-visible">
           {books.map((book: BookType) => (
             <CarouselItem className="flex flex-wrap basis-2/3 items-center md:basis-1/3 lg:basis-1/4" key={book.id}>
