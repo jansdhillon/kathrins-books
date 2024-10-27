@@ -1,4 +1,4 @@
-"use client";;
+"use client";
 import { Book } from "./book";
 import { Suspense } from "react";
 import {
@@ -18,10 +18,13 @@ const BookDisplay = ({ books }: { books: BookType[] }) => {
 
   return (
     <Suspense fallback={<Loading />}>
-      <Carousel className="">
-      <CarouselContent className="pl-8 md:pl-14 lg:pl-16 md:my-0  overflow-visible">
+      <Carousel opts={{ startIndex: 1 }}>
+        <CarouselContent className="pl-8 md:pl-14 lg:pl-16 md:my-0  overflow-visible">
           {books.map((book: BookType) => (
-            <CarouselItem className="flex items-center md:basis-1/2 lg:basis-1/4" key={book.id}>
+            <CarouselItem
+              className="flex items-center md:basis-1/2 lg:basis-1/4"
+              key={book.id}
+            >
               <Book key={book.id} book={book} className="" />
             </CarouselItem>
           ))}
