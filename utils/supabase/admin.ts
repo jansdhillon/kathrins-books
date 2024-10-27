@@ -269,6 +269,7 @@ async function handleCheckoutSucceeded(session: Stripe.Checkout.Session) {
 
     await sendEmail(
       {
+        name: customerData.user?.user_metadata?.full_name || customerData.user?.user_metadata?.display_name,
         email: customerData.user?.email!,
         orderId: order.id,
         orderItems: orderItemsData,
@@ -280,6 +281,7 @@ async function handleCheckoutSucceeded(session: Stripe.Checkout.Session) {
 
     await sendEmail(
       {
+        name: "Kathrin",
         email: process.env.ADMIN_EMAIL!,
         orderId: order.id,
         orderItems: orderItemsData,
