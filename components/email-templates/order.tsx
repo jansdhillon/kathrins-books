@@ -114,7 +114,7 @@ export const OrderConfirmationTemplate: React.FC<
               Items Total
             </td>
             <td style={{ padding: "8px" }}>
-              ${((itemsTotal || (0 as number)) / 100)?.toFixed(2)}
+              ${(((itemsTotal as number) || 0) / 100)?.toFixed(2)}
             </td>
           </tr>
           <tr>
@@ -122,7 +122,7 @@ export const OrderConfirmationTemplate: React.FC<
               Shipping Cost
             </td>
             <td style={{ padding: "8px" }}>
-              ${((shippingCost || (0 as number)) / 100)?.toFixed(2)}
+              ${(((shippingCost as number) || 0) / 100)?.toFixed(2)}
             </td>
           </tr>
           <tr>
@@ -132,8 +132,8 @@ export const OrderConfirmationTemplate: React.FC<
             <td style={{ padding: "8px" }}>
               $
               {(
-                (itemsTotal || (0 as number) + shippingCost || (0 as number)) /
-                100
+                ((itemsTotal as number) || 0) +
+                ((shippingCost as number) || 0) / 100
               )?.toFixed(2)}
             </td>
           </tr>
@@ -277,7 +277,7 @@ export const KathrinOrderNotificationTemplate: React.FC<
               Items Total
             </td>
             <td style={{ padding: "8px" }}>
-              ${((itemsTotal || (0 as number)) / 100)?.toFixed(2)}
+              ${(((itemsTotal as number) || 0) / 100)?.toFixed(2)}
             </td>
           </tr>
           <tr>
@@ -285,7 +285,7 @@ export const KathrinOrderNotificationTemplate: React.FC<
               Shipping Cost
             </td>
             <td style={{ padding: "8px" }}>
-              ${((shippingCost || (0 as number)) / 100)?.toFixed(2)}
+              ${(((shippingCost as number) || 0) / 100)?.toFixed(2)}
             </td>
           </tr>
           <tr>
@@ -295,8 +295,8 @@ export const KathrinOrderNotificationTemplate: React.FC<
             <td style={{ padding: "8px" }}>
               $
               {(
-                (itemsTotal || (0 as number) + shippingCost || (0 as number)) /
-                100
+                ((itemsTotal as number) || 0) +
+                ((shippingCost as number) || 0) / 100
               )?.toFixed(2)}
             </td>
           </tr>

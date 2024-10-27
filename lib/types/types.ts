@@ -71,7 +71,7 @@ export type Address = {
   name: string;
   email?: string;
   line1: string;
-  line2: string | undefined;
+  line2: string | null;
   city: string;
   state: string;
   postal_code: string;

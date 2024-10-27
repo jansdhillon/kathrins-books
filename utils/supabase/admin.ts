@@ -10,6 +10,7 @@ import {
   Address,
 } from "@/lib/types/types";
 import { sendEmail } from "@/app/actions/send-email";
+import { ShippingAddress } from "@stripe/stripe-js";
 
 const supabaseAdmin = createClient<Database>(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -112,10 +113,7 @@ const deleteOrderItemsRecord = async (orderId: string) => {
     throw new Error(`Order Items deletion failed: ${deletionError.message}`);
 };
 
-const addBillingDetailsToOrder = async (
-  orderId: string,
-  address: Address
-) => {
+const addBillingDetailsToOrder = async (orderId: string, address: Address) => {
   const { error } = await supabaseAdmin
     .from("orders")
     .update({ address: address })
@@ -256,12 +254,33 @@ async function handleCheckoutSucceeded(session: Stripe.Checkout.Session) {
       throw new Error(`Error fetching user data: ${customerError.message}`);
     }
 
-    const { name, email, line1, line2, city, state, postal_code, country } = session.shipping_details as Address;
+    const { name: name, address: address } =
+      session.shipping_details as Stripe.Checkout.Session.ShippingDetails;
 
-    await addBillingDetailsToOrder(
-      userId,
-      { name, email, line1, line2, city, state, postal_code, country }
-    );
+    if (
+      !address ||
+      !name ||
+      !address.line1 ||
+      !address.city ||
+      !address.state ||
+      !address.postal_code ||
+      !address.country
+    ) {
+      throw new Error("Shipping address not found in session metadata");
+    }
+
+    const formattedAddress: Address = {
+      name: name,
+      email: customerData.user?.email!,
+      line1: address.line1,
+      line2: address.line2,
+      city: address.city,
+      state: address.state,
+      postal_code: address.postal_code,
+      country: address.country,
+    };
+
+    await addBillingDetailsToOrder(session.id, formattedAddress);
 
     const { order, orderItemsData, itemsTotal, shippingCost } =
       await placeOrder(session);
@@ -276,7 +295,7 @@ async function handleCheckoutSucceeded(session: Stripe.Checkout.Session) {
         orderItems: orderItemsData,
         itemsTotal,
         shippingCost,
-        address: { name, email, line1, line2, city, state, postal_code, country },
+        address: formattedAddress,
       },
       "order-confirmation"
     );
@@ -289,6 +308,7 @@ async function handleCheckoutSucceeded(session: Stripe.Checkout.Session) {
         orderItems: orderItemsData,
         itemsTotal,
         shippingCost,
+        address: formattedAddress,
       },
       "kathrin-notification"
     );
