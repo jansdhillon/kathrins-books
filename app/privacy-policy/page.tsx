@@ -91,7 +91,7 @@ export default function PrivacyPolicy() {
         className="font-medium underline"
         href="mailto:kathrinsbookshelp@gmail.com"
       >
-        kathrinsbookssupport@gmail.com
+        kathrinsbookshelp@gmail.com
       </Link>
 
       <p>

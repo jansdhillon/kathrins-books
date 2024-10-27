@@ -94,7 +94,7 @@ export default function TermsOfServicePage() {
         className="font-medium underline"
         href="mailto:kathrinsbookshelp@gmail.com"
       >
-        kathrinsbookssupport@gmail.com
+        kathrinsbookshelp@gmail.com
       </Link>
 
       <p>
