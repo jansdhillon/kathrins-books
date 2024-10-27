@@ -120,7 +120,19 @@ const addBillingDetailsToOrder = async (
   const { error } = await supabaseAdmin
     .from("orders")
     .update({
-      billing_details: billingDetails,
+      billing_details: {
+        name: billingDetails.name,
+        email: billingDetails.email,
+        phone: billingDetails.phone,
+        address: {
+          line1: billingDetails.address.line1,
+          line2: billingDetails.address.line2,
+          city: billingDetails.address.city,
+          state: billingDetails.address.state,
+          postal_code: billingDetails.address.postal_code,
+          country: billingDetails.address.country,
+        } as Address,
+      },
     })
     .eq("id", orderId);
 
@@ -275,6 +287,7 @@ async function handleCheckoutSucceeded(session: Stripe.Checkout.Session) {
         orderItems: orderItemsData,
         itemsTotal,
         shippingCost,
+        billingDetails: session.shipping_details as BillingDetails,
       },
       "order-confirmation"
     );

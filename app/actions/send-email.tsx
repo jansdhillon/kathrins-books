@@ -72,10 +72,15 @@ export const sendEmail = async (data: EmailData, type: EmailType) => {
           orderItems,
           itemsTotal,
           shippingCost,
-          shippingAddress,
+          billingDetails,
         } = data as OrderConfirmationEmailData;
 
-        if (!name || !email || !orderId || !orderItems || !itemsTotal || !shippingAddress) {
+        if (!billingDetails) {
+          console.error("Missing billing details for order confirmation email");
+          throw new Error("Missing billing details for order confirmation email");
+        }
+
+        if (!name || !email || !orderId || !orderItems || !itemsTotal || !billingDetails) {
           console.error("Missing required fields for order confirmation email");
           throw new Error(
             "Missing required fields for order confirmation email"
@@ -89,7 +94,7 @@ export const sendEmail = async (data: EmailData, type: EmailType) => {
             orderItems={orderItems}
             itemsTotal={itemsTotal}
             shippingCost={shippingCost}
-            shippingAddress={shippingAddress}
+            billingDetails={billingDetails}
           />
         );
         subject = "Your Order Confirmation";
@@ -104,7 +109,7 @@ export const sendEmail = async (data: EmailData, type: EmailType) => {
           orderItems,
           itemsTotal,
           shippingCost,
-          shippingAddress,
+          billingDetails,
         } = data as OrderConfirmationEmailData;
 
         if (!orderId || !orderItems || !itemsTotal) {
@@ -123,7 +128,7 @@ export const sendEmail = async (data: EmailData, type: EmailType) => {
             orderItems={orderItems}
             itemsTotal={itemsTotal}
             shippingCost={shippingCost}
-            shippingAddress={shippingAddress}
+            billingDetails={billingDetails}
           />
         );
         subject = "New Order Placed";

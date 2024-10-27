@@ -1,4 +1,5 @@
 import { OrderItemInsertType, Address } from "@/lib/types/types";
+import { BillingDetails } from "@stripe/stripe-js";
 import * as React from "react";
 
 interface OrderConfirmationTemplateProps {
@@ -7,7 +8,7 @@ interface OrderConfirmationTemplateProps {
   orderItems: OrderItemInsertType[];
   itemsTotal: number;
   shippingCost: number;
-  shippingAddress: Address;
+  billingDetails: BillingDetails;
 }
 
 export const OrderConfirmationTemplate: React.FC<
@@ -18,7 +19,7 @@ export const OrderConfirmationTemplate: React.FC<
   orderItems,
   itemsTotal,
   shippingCost,
-  shippingAddress,
+  billingDetails,
 }) => (
   <div
     style={{
@@ -104,12 +105,12 @@ export const OrderConfirmationTemplate: React.FC<
           </tr>
           <tr>
             <td colSpan={3} style={{ padding: "8px" }}>
-              <p>{shippingAddress?.line1}</p>
-              <p>{shippingAddress?.line2}</p>
+              <p>{billingDetails?.address.line1}</p>
+              {billingDetails?.address.line2 && <p>{billingDetails?.address.line2}</p>}
               <p>
-                {shippingAddress?.city}, {shippingAddress?.postal_code}
+                {billingDetails?.address?.city}, {billingDetails?.address?.postal_code}
               </p>
-              <p>{shippingAddress?.country}</p>
+              <p>{billingDetails?.address?.country}</p>
             </td>
           </tr>
         </tbody>
@@ -183,7 +184,7 @@ export const OrderConfirmationTemplate: React.FC<
 
 export const KathrinOrderNotificationTemplate: React.FC<
   OrderConfirmationTemplateProps
-> = ({ name, orderId, orderItems, itemsTotal, shippingCost, shippingAddress  }) => (
+> = ({ name, orderId, orderItems, itemsTotal, shippingCost, billingDetails  }) => (
   <div
     style={{
       fontFamily: "'Arial', sans-serif",
@@ -229,12 +230,12 @@ export const KathrinOrderNotificationTemplate: React.FC<
           </div>
           <div>
             <div style={{ padding: "8px" }}>
-              <p>{shippingAddress?.line1}</p>
-              <p>{shippingAddress?.line2}</p>
+              <p>{billingDetails?.address?.line1}</p>
+              <p>{billingDetails?.address?.line2}</p>
               <p>
-                {shippingAddress?.city}, {shippingAddress?.postal_code}
+                {billingDetails?.address?.city}, {billingDetails?.address?.postal_code}
               </p>
-              <p>{shippingAddress?.country}</p>
+              <p>{billingDetails?.address?.country}</p>
             </div>
           </div>
 

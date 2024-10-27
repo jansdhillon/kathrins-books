@@ -1,5 +1,6 @@
 import { Database } from "@/utils/database.types";
 import { OrderWithItemsType } from "../schemas/schemas";
+import { BillingDetails } from "@stripe/stripe-js";
 
 export type CartType = Database["public"]["Tables"]["cart"]["Row"];
 
@@ -54,7 +55,7 @@ export interface OrderConfirmationEmailData extends BaseEmailData {
   orderItems: OrderItemInsertType[];
   itemsTotal: number;
   shippingCost: number;
-  shippingAddress: Address;
+  billingDetails: BillingDetails;
 }
 
 export interface ShippingConfirmationEmailData extends BaseEmailData {

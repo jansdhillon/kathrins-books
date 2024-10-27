@@ -1,4 +1,5 @@
 import type { Tables } from '@/utils/database.types';
+import path from 'path';
 type Price = Tables<'prices'>;
 
 export const getURL = (path: string = '') => {
@@ -40,7 +41,7 @@ export const toDateTime = (secs: number) => {
 
 const toastKeyMap: { [key: string]: string[] } = {
   status: ['status', 'status_description'],
-  error: ['error', 'error_description']
+  error: ['error', 'error_description'],
 };
 
 const getToastRedirect = (
