@@ -87,9 +87,7 @@ export const Nav = ({ headerAuth }: { headerAuth: ReactNode }) => {
         </Link>
 
         <Suspense fallback={<Loading />}>
-          <div className="container">
-            <Searchbar />
-          </div>
+          <Searchbar />
         </Suspense>
 
         <div className="flex items-center justify-start gap-8">
