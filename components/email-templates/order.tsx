@@ -1,16 +1,18 @@
-import { OrderItemInsertType } from "@/lib/types/types";
+import { OrderItemInsertType, SanitizedAddress } from "@/lib/types/types";
 import * as React from "react";
 
 interface OrderConfirmationTemplateProps {
+  name: string;
   orderId: string;
   orderItems: OrderItemInsertType[];
   itemsTotal: number;
   shippingCost: number;
+  shippingAddress: SanitizedAddress;
 }
 
 export const OrderConfirmationTemplate: React.FC<
   OrderConfirmationTemplateProps
-> = ({ orderId, orderItems, itemsTotal, shippingCost }) => (
+> = ({ name, orderId, orderItems, itemsTotal, shippingCost, shippingAddress }) => (
   <div
     style={{
       fontFamily: "'Arial', sans-serif",
@@ -35,7 +37,8 @@ export const OrderConfirmationTemplate: React.FC<
     >
       Order Confirmation
     </h1>
-    <p>Thank you for your purchase! Here are the details of your order:</p>
+    <p>Hi {name},</p>
+    <p>Thanks for shopping at Kathrin's Books! Here are the order details:</p>
 
     <div
       style={{
@@ -45,7 +48,9 @@ export const OrderConfirmationTemplate: React.FC<
         marginBottom: "20px",
       }}
     >
-      <p><strong>Order ID:</strong> {orderId}</p>
+      <p>
+        <strong>Order ID:</strong> {orderId}
+      </p>
 
       <table
         style={{
@@ -84,19 +89,50 @@ export const OrderConfirmationTemplate: React.FC<
               <td style={{ padding: "8px" }}>${item.price.toFixed(2)}</td>
             </tr>
           ))}
+
+          <tr>
+            <td colSpan={3} style={{ padding: "8px", fontWeight: "bold" }}>
+              Shipping Address
+            </td>
+          </tr>
+          <tr>
+            <td colSpan={3} style={{ padding: "8px" }}>
+              <p>{shippingAddress?.line1}</p>
+              <p>{shippingAddress?.line2}</p>
+              <p>
+                {shippingAddress?.city}, {shippingAddress?.postal_code}
+              </p>
+              <p>{shippingAddress?.country}</p>
+            </td>
+          </tr>
         </tbody>
         <tfoot>
           <tr>
-            <td colSpan={2} style={{ padding: "8px", fontWeight: "bold" }}>Items Total</td>
-            <td style={{ padding: "8px" }}>${(itemsTotal as number || 0)?.toFixed(2)}</td>
+            <td colSpan={2} style={{ padding: "8px", fontWeight: "bold" }}>
+              Items Total
+            </td>
+            <td style={{ padding: "8px" }}>
+              ${((itemsTotal as number) || 0)?.toFixed(2)}
+            </td>
           </tr>
           <tr>
-            <td colSpan={2} style={{ padding: "8px", fontWeight: "bold" }}>Shipping Cost</td>
-            <td style={{ padding: "8px" }}>${(shippingCost as number || 0)?.toFixed(2)}</td>
+            <td colSpan={2} style={{ padding: "8px", fontWeight: "bold" }}>
+              Shipping Cost
+            </td>
+            <td style={{ padding: "8px" }}>
+              ${((shippingCost as number) || 0)?.toFixed(2)}
+            </td>
           </tr>
           <tr>
-            <td colSpan={2} style={{ padding: "8px", fontWeight: "bold" }}>Total</td>
-            <td style={{ padding: "8px" }}>${(itemsTotal as number + shippingCost as number || 0.00)?.toFixed(2) }</td>
+            <td colSpan={2} style={{ padding: "8px", fontWeight: "bold" }}>
+              Total
+            </td>
+            <td style={{ padding: "8px" }}>
+              $
+              {(
+                (((itemsTotal as number) + shippingCost) as number) || 0.0
+              )?.toFixed(2)}
+            </td>
           </tr>
         </tfoot>
       </table>
@@ -117,7 +153,6 @@ export const OrderConfirmationTemplate: React.FC<
     </div>
   </div>
 );
-
 
 export const KathrinOrderNotificationTemplate: React.FC<
   OrderConfirmationTemplateProps
@@ -156,7 +191,9 @@ export const KathrinOrderNotificationTemplate: React.FC<
         marginBottom: "20px",
       }}
     >
-      <p><strong>Order ID:</strong> {orderId}</p>
+      <p>
+        <strong>Order ID:</strong> {orderId}
+      </p>
 
       <table
         style={{
@@ -198,16 +235,24 @@ export const KathrinOrderNotificationTemplate: React.FC<
         </tbody>
         <tfoot>
           <tr>
-            <td colSpan={2} style={{ padding: "8px", fontWeight: "bold" }}>Items Total</td>
+            <td colSpan={2} style={{ padding: "8px", fontWeight: "bold" }}>
+              Items Total
+            </td>
             <td style={{ padding: "8px" }}>${itemsTotal.toFixed(2)}</td>
           </tr>
           <tr>
-            <td colSpan={2} style={{ padding: "8px", fontWeight: "bold" }}>Shipping Cost</td>
+            <td colSpan={2} style={{ padding: "8px", fontWeight: "bold" }}>
+              Shipping Cost
+            </td>
             <td style={{ padding: "8px" }}>${shippingCost.toFixed(2)}</td>
           </tr>
           <tr>
-            <td colSpan={2} style={{ padding: "8px", fontWeight: "bold" }}>Total</td>
-            <td style={{ padding: "8px" }}>${(itemsTotal + shippingCost).toFixed(2)}</td>
+            <td colSpan={2} style={{ padding: "8px", fontWeight: "bold" }}>
+              Total
+            </td>
+            <td style={{ padding: "8px" }}>
+              ${(itemsTotal + shippingCost).toFixed(2)}
+            </td>
           </tr>
         </tfoot>
       </table>

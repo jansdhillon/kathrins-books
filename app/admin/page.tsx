@@ -6,7 +6,6 @@ import { encodedRedirect } from "@/utils/utils";
 import { BooksClientWrapper } from "./components/books/client-wrapper";
 import { OrdersClientWrapper } from "./components/orders/client-wrapper";
 import { getAllOrders } from "../actions/get-all-orders";
-import { updateUserRole } from "@/utils/supabase/admin";
 
 export default async function AdminDashboard() {
   const supabase = createClient();
@@ -20,12 +19,9 @@ export default async function AdminDashboard() {
     );
   }
 
-
-
   const books = await getAllBooks();
 
   const orders = await getAllOrders();
-
 
   return (
     <div className="space-y-6">

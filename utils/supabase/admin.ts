@@ -251,19 +251,8 @@ const placeOrder = async (
 
   if (!userId) {
     throw new Error("User ID not found in session metadata");
+
   }
-
-  const { data: user, error: userError } =
-    await supabaseAdmin.auth.admin.getUserById(userId);
-
-  if (userError) {
-    throw new Error(`Error fetching user data: ${userError.message}`);
-  }
-
-  await createOrRetrieveCustomer({
-    email: user.user?.email!,
-    uuid: userId,
-  });
 
   const { data: order, error: orderError } = await createOrder(
     supabaseAdmin,
@@ -387,6 +376,9 @@ async function handleCheckoutSucceeded(session: Stripe.Checkout.Session) {
     if (customerError) {
       throw new Error(`Error fetching user data: ${customerError.message}`);
     }
+
+
+    await copyAddressDetailsToUser(userId, session.shipping_details?.address as Stripe.Address);
 
     const { orderItemsData, order } = await placeOrder(
       session,

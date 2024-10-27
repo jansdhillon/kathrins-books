@@ -37,6 +37,7 @@ export type EmailType =
 
 interface BaseEmailData {
   email: string;
+  name?: string;
 }
 
 export interface ContactEmailData extends BaseEmailData {
@@ -53,6 +54,7 @@ export interface OrderConfirmationEmailData extends BaseEmailData {
   orderItems: OrderItemInsertType[];
   itemsTotal: number;
   shippingCost: number;
+  shippingAddress: SanitizedAddress;
 }
 
 export interface ShippingConfirmationEmailData extends BaseEmailData {
