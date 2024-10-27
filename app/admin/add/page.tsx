@@ -3,7 +3,6 @@ import { addBookAction } from "@/app/actions/add-book";
 import AddBookForm from "@/app/admin/components/books/add-book-form";
 import { Message } from "@/components/form-message";
 import { getErrorRedirect } from "@/utils/helpers";
-import { getUserDataById } from "@/utils/supabase/queries";
 import { createClient } from "@/utils/supabase/server";
 import { encodedRedirect } from "@/utils/utils";
 import { redirect } from "next/navigation";
@@ -20,10 +19,8 @@ export default async function HomePage() {
     );
   }
 
-  const { data: userData } = await getUserDataById(supabase, user?.user!.id);
-
   try {
-    if (userData.is_admin !== true) {
+    if (user.user.role !== "admin") {
       getErrorRedirect("/", "Error", "You must be an admin to view this page");
     }
   } catch (error) {

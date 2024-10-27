@@ -1,4 +1,3 @@
-import { getUserDataById } from "@/utils/supabase/queries";
 import { createClient } from "@/utils/supabase/server";
 import { encodedRedirect } from "@/utils/utils";
 
@@ -19,9 +18,7 @@ export default async function Template({
     );
   }
 
-  const { data: userData } = await getUserDataById(supabase, user?.user!.id);
-
-  if (userData.is_admin !== true) {
+  if (user.user.role !== "admin") {
     return encodedRedirect(
       "error",
       "/",

@@ -19,7 +19,6 @@ import { orderItemColumns } from "@/app/orders/components/order-items-columns";
 import { useToast } from "@/hooks/use-toast";
 import { OrderItemType, OrderType } from "@/lib/schemas/schemas";
 import { createClient } from "@/utils/supabase/client";
-import { getUserDataAction } from "@/app/actions/get-user-data";
 
 export default function AdminOrderDetailsPage({
   params,
@@ -54,14 +53,12 @@ export default function AdminOrderDetailsPage({
           router.push("/sign-in");
         }
 
-        const { data: userData } = await getUserDataAction(user.user!.id);
-        if (!userData) return router.push("/sign-in");
-        if (!userData.is_admin) {
+        if (!user.user?.role || user.user.role !== "admin") {
           router.push("/");
         }
 
-        setEmail(userData.email);
-        setShippingAddress(userData.shipping_address);
+        setEmail(user.user!.email!);
+        setShippingAddress(user.user?.user_metadata.shipping_address);
       } catch (error) {
         console.error("Error fetching order details:", error);
         setError("Failed to load order details.");
