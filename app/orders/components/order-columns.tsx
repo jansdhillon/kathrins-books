@@ -1,4 +1,4 @@
-"use client";;
+"use client";
 import { Badge } from "@/components/ui/badge";
 import { DataTableColumnHeader } from "./data-table-column-header";
 import { OrderWithItemsType } from "@/lib/schemas/schemas";
@@ -27,7 +27,7 @@ export const orderColumns: ColumnDef<OrderWithItemsType>[] = [
       <DataTableColumnHeader column={column} title="Ordered On" />
     ),
     cell: ({ row }) => (
-      <div >{format(new Date(row.original.ordered_at), "yyyy-MM-dd")}</div>
+      <div>{format(new Date(row.original.ordered_at), "yyyy-MM-dd")}</div>
     ),
   },
   {
@@ -66,7 +66,11 @@ export const orderColumns: ColumnDef<OrderWithItemsType>[] = [
     cell: ({ row }) => (
       <div>
         $
-        {((row.original.items_total || 0) + (row.original.shipping_cost || 0) / 100).toFixed(2)}
+        {(
+          (((row.original.items_total as number) || 0) +
+            ((row.original.shipping_cost as number) || 0)) /
+          100
+        ).toFixed(2)}
       </div>
     ),
   },
