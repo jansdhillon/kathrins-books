@@ -1,18 +1,9 @@
-"use client";
+"use client";;
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import Loading from "../loading";
 import { postData } from "@/utils/helpers";
-import Image from "next/image";
 import { OrderItemsDataTable } from "../orders/[id]/data-table";
 import { orderItemColumns } from "../orders/components/order-items-columns";
 import { Button } from "@/components/ui/button";

@@ -14,12 +14,12 @@ import { Separator } from "@/components/ui/separator";
 import { getOrderAction } from "@/app/actions/get-order-by-id";
 import Loading from "@/app/loading";
 import { updateOrderStatus } from "@/app/actions/update-order-status";
-import { OrderItemsDataTable } from "@/app/orders/[id]/data-table";
-import { orderItemColumns } from "@/app/orders/components/order-items-columns";
 import { useToast } from "@/utils/hooks/use-toast";
 import { OrderItemType, OrderType } from "@/lib/schemas/schemas";
 import { createClient } from "@/utils/supabase/client";
 import { Address } from "@/lib/types/types";
+import { orderItemColumns } from "../../components/orders/order-items-columns";
+import { OrderItemsDataTable } from "../../components/orders/order-items-data-table";
 
 export default function AdminOrderDetailsPage({
   params,
