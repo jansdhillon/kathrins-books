@@ -280,10 +280,10 @@ async function handleCheckoutSucceeded(session: Stripe.Checkout.Session) {
       country: address.country,
     };
 
-    await addBillingDetailsToOrder(session.id, formattedAddress);
-
     const { order, orderItemsData, itemsTotal, shippingCost } =
       await placeOrder(session);
+
+    await addBillingDetailsToOrder(order.id, formattedAddress);
 
     await sendEmail(
       {
