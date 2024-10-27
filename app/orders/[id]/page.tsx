@@ -8,9 +8,8 @@ import { getOrderAction } from "@/app/actions/get-order-by-id";
 import Loading from "@/app/loading";
 import { OrderItemsDataTable } from "@/app/orders/[id]/data-table";
 import { orderItemColumns } from "@/app/orders/components/order-items-columns";
-import { OrderItemType, OrderType } from "@/lib/schemas/schemas";
 import { createClient } from "@/utils/supabase/client";
-import { Address } from "@/lib/types/types";
+import { Address, OrderItemType, OrderType } from "@/lib/types/types";
 
 export default function OrderDetailsPage({
   params,
