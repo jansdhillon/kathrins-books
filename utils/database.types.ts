@@ -231,6 +231,7 @@ export type Database = {
           ordered_at: string
           session_id: string | null
           shipping_cost: number | null
+          shipping_provider: string | null
           status: Database["public"]["Enums"]["order_status"] | null
           tracking_number: string | null
           user_id: string
@@ -242,6 +243,7 @@ export type Database = {
           ordered_at?: string
           session_id?: string | null
           shipping_cost?: number | null
+          shipping_provider?: string | null
           status?: Database["public"]["Enums"]["order_status"] | null
           tracking_number?: string | null
           user_id: string
@@ -253,6 +255,7 @@ export type Database = {
           ordered_at?: string
           session_id?: string | null
           shipping_cost?: number | null
+          shipping_provider?: string | null
           status?: Database["public"]["Enums"]["order_status"] | null
           tracking_number?: string | null
           user_id?: string

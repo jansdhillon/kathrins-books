@@ -1,4 +1,4 @@
-"use client";
+"use client";;
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -10,16 +10,17 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ArrowLeft } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
 import { getOrderAction } from "@/app/actions/get-order-by-id";
 import Loading from "@/app/loading";
 import { updateOrderStatus } from "@/app/actions/update-order-status";
 import { useToast } from "@/utils/hooks/use-toast";
-import { OrderItemType, OrderType } from "@/lib/schemas/schemas";
 import { createClient } from "@/utils/supabase/client";
-import { Address } from "@/lib/types/types";
 import { orderItemColumns } from "../../components/orders/order-items-columns";
 import { OrderItemsDataTable } from "../../components/orders/order-items-data-table";
+import { sendEmail } from "@/app/actions/send-email";
+import { Address, OrderItemType, OrderType } from "@/lib/types/types";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 
 export default function AdminOrderDetailsPage({
   params,
@@ -33,6 +34,8 @@ export default function AdminOrderDetailsPage({
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [address, setAddress] = useState<Address | null>(null);
+  const [trackingNumber, setTrackingNumber] = useState<string>("");
+  const [shippingProvider, setShippingProvider] = useState<string>("");
 
   const { toast } = useToast();
 
@@ -86,7 +89,17 @@ export default function AdminOrderDetailsPage({
     fetchOrderDetails();
   }, [orderId]);
 
-  const getOrderStatusMessage = (status: string | null) => {
+  const getOrderStatusMessage = (
+    status:
+      | "Delivered"
+      | "Shipped"
+      | "Ordered"
+      | "Failed"
+      | "pending"
+      | null
+      | undefined
+      | null
+  ) => {
     switch (status) {
       case "Delivered":
         return "Order has been delivered.";
@@ -96,29 +109,78 @@ export default function AdminOrderDetailsPage({
         return "Order has been placed successfully and is ready for processing.";
       case "Failed":
         return "There was an issue with this order. Please review the details.";
-      case "Pending":
+      case "pending":
         return "Order is being processed.";
       default:
         return "Unknown order status. Please investigate.";
     }
   };
 
-  const handleUpdateOrderStatus = async (newStatus: string) => {
+  const handleUpdateOrderStatus = async (
+    newStatus:
+      | "Delivered"
+      | "Shipped"
+      | "Ordered"
+      | "Failed"
+      | "pending"
+      | null
+      | undefined
+  ) => {
     try {
       if (!order) {
         return;
       }
-      await updateOrderStatus(order.id, newStatus);
+
+      if (newStatus === "Shipped" && (!trackingNumber || !shippingProvider)) {
+        toast({
+          variant: "destructive",
+          title: "Missing Information",
+          description:
+            "Please provide both tracking number and shipping provider.",
+        });
+        return;
+      }
+
+      await updateOrderStatus(
+        order.id,
+        newStatus,
+        trackingNumber,
+        shippingProvider
+      );
+
+      if (newStatus === "Shipped") {
+        await sendEmail(
+          {
+            email: address?.email!,
+            orderId: order.id,
+            trackingNumber,
+            shippingProvider,
+          },
+          "shipping-confirmation"
+        );
+      } else if (newStatus === "Delivered") {
+        // Optionally send a delivery confirmation email
+      }
+
       toast({
         variant: "default",
         title: "Order status updated",
         description: `Order status has been updated to ${newStatus}`,
       });
+
+      // Clear tracking info after updating
+      setTrackingNumber("");
+      setShippingProvider("");
+
       router.refresh();
     } catch (error) {
       console.error("Error updating order status:", error);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to update order status.",
+      });
     }
-    console.log("Updating order status to:", newStatus);
   };
 
   if (isLoading) {
@@ -165,7 +227,9 @@ export default function AdminOrderDetailsPage({
                 </p>
               )}
 
-              <p className="text-base font-semibold text-card-foreground">{statusMessage}</p>
+              <p className="text-base font-semibold text-card-foreground">
+                {statusMessage}
+              </p>
             </div>
           </CardHeader>
 
@@ -174,40 +238,45 @@ export default function AdminOrderDetailsPage({
           </CardContent>
           <CardFooter className="flex flex-col items-start space-y-4">
             <h4 className="font-semibold">Manage Order Status</h4>
-            <div className="flex space-x-4">
-              <Button
-                onClick={() => handleUpdateOrderStatus("Shipped")}
-                variant="outline"
-              >
-                Mark as Shipped
-              </Button>
-              <Button
-                onClick={() => handleUpdateOrderStatus("Delivered")}
-                variant="outline"
-              >
-                Mark as Delivered
-              </Button>
-              {/* <AlertDialog>
-                  <AlertDialogTrigger asChild>
-                    <Button variant="destructive">Cancel Order</Button>
-                  </AlertDialogTrigger>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>Cancel Order</AlertDialogTitle>
-                      <AlertDialogDescription>
-                        Are you sure you want to cancel this order?
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel>Go Back</AlertDialogCancel>
-                      <AlertDialogAction
-                        onClick={() => handleUpdateOrderStatus("Cancelled")}
-                      >
-                        Confirm
-                      </AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog> */}
+            <div className="flex flex-col space-y-4">
+              {order.status !== "Shipped" && (
+                <>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <Label htmlFor="trackingNumber">Tracking Number</Label>
+                      <Input
+                        id="trackingNumber"
+                        value={trackingNumber}
+                        onChange={(e) => setTrackingNumber(e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="shippingProvider">
+                        Shipping Provider
+                      </Label>
+                      <Input
+                        id="shippingProvider"
+                        value={shippingProvider}
+                        onChange={(e) => setShippingProvider(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <Button
+                    onClick={() => handleUpdateOrderStatus("Shipped")}
+                    variant="outline"
+                  >
+                    Mark as Shipped
+                  </Button>
+                </>
+              )}
+              {order.status === "Shipped" && (
+                <Button
+                  onClick={() => handleUpdateOrderStatus("Delivered")}
+                  variant="outline"
+                >
+                  Mark as Delivered
+                </Button>
+              )}
             </div>
           </CardFooter>
         </Card>

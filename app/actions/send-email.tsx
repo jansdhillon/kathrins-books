@@ -9,22 +9,19 @@ import {
   OrderConfirmationTemplate,
 } from "@/components/email-templates/order";
 import { ShippingConfirmationTemplate } from "@/components/email-templates/shipping";
-import { DeliveryConfirmationTemplate } from "@/components/email-templates/delivery";
 import {
   EmailType,
   ContactEmailData,
   NewsletterEmailData,
   OrderConfirmationEmailData,
   ShippingConfirmationEmailData,
-  DeliveryConfirmationEmailData,
 } from "@/lib/types/types";
 
 type EmailData =
   | ContactEmailData
   | NewsletterEmailData
   | OrderConfirmationEmailData
-  | ShippingConfirmationEmailData
-  | DeliveryConfirmationEmailData;
+  | ShippingConfirmationEmailData;
 
 export const sendEmail = async (data: EmailData, type: EmailType) => {
   const resend = new Resend(process.env.RESEND_API_KEY!);
@@ -77,10 +74,19 @@ export const sendEmail = async (data: EmailData, type: EmailType) => {
 
         if (!address) {
           console.error("Missing billing details for order confirmation email");
-          throw new Error("Missing billing details for order confirmation email");
+          throw new Error(
+            "Missing billing details for order confirmation email"
+          );
         }
 
-        if (!name || !email || !orderId || !orderItems || !itemsTotal || !address) {
+        if (
+          !name ||
+          !email ||
+          !orderId ||
+          !orderItems ||
+          !itemsTotal ||
+          !address
+        ) {
           console.error("Missing required fields for order confirmation email");
           throw new Error(
             "Missing required fields for order confirmation email"
@@ -103,13 +109,8 @@ export const sendEmail = async (data: EmailData, type: EmailType) => {
       }
 
       case "kathrin-notification": {
-        const {
-          orderId,
-          orderItems,
-          itemsTotal,
-          shippingCost,
-          address,
-        } = data as OrderConfirmationEmailData;
+        const { orderId, orderItems, itemsTotal, shippingCost, address } =
+          data as OrderConfirmationEmailData;
 
         if (!orderId || !orderItems || !itemsTotal) {
           console.error(
@@ -156,24 +157,6 @@ export const sendEmail = async (data: EmailData, type: EmailType) => {
           />
         );
         subject = "Your Order Has Shipped";
-        toEmail = email;
-        break;
-      }
-
-      case "delivery-confirmation": {
-        const { email, orderId } = data as DeliveryConfirmationEmailData;
-
-        if (!email || !orderId) {
-          console.error(
-            "Missing required fields for delivery confirmation email"
-          );
-          throw new Error(
-            "Missing required fields for delivery confirmation email"
-          );
-        }
-
-        emailTemplate = <DeliveryConfirmationTemplate orderId={orderId} />;
-        subject = "Your Order Has Been Delivered";
         toEmail = email;
         break;
       }

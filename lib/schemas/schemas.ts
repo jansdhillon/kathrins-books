@@ -1,6 +1,25 @@
-import { z } from 'zod';
+import { z } from "zod";
 
-const OrderStatusEnum = z.enum(["Delivered", "Shipped", "Ordered", "Failed", "pending"]);
+const OrderStatusEnum = z.enum([
+  "Delivered",
+  "Shipped",
+  "Ordered",
+  "Failed",
+  "pending",
+]);
+
+export const AddressSchema = z.object({
+  name: z.string(),
+  email: z.string(),
+  line1: z.string(),
+  line2: z.string().nullable(),
+  city: z.string(),
+  state: z.string(),
+  country: z.string(),
+  postal_code: z.string(),
+});
+
+export type AddressType = z.infer<typeof AddressSchema>;
 
 export const OrderSchema = z.object({
   id: z.string(),
@@ -10,6 +29,9 @@ export const OrderSchema = z.object({
   shipping_cost: z.number().nullable(),
   status: OrderStatusEnum.nullable(),
   user_id: z.string(),
+  address: AddressSchema,
+  tracking_number: z.string().nullable(),
+  shipping_provider: z.string().nullable(),
 });
 
 export type OrderType = z.infer<typeof OrderSchema>;
@@ -31,7 +53,6 @@ export type OrderItemType = z.infer<typeof OrderItemSchema>;
 export type OrderWithItemsType = OrderType & {
   items: OrderItemType[];
 };
-
 
 export const BookSchema = z.object({
   author: z.string(),

@@ -1,5 +1,4 @@
 import { OrderItemInsertType, Address } from "@/lib/types/types";
-import { BillingDetails } from "@stripe/stripe-js";
 import * as React from "react";
 
 interface OrderConfirmationTemplateProps {

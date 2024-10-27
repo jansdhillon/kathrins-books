@@ -1,18 +1,30 @@
 "use server";
-import { updateOrderStatus as update } from "@/utils/supabase/queries";
 import { createClient } from "@/utils/supabase/server";
+import { OrderType } from "@/lib/types/types";
 
-const updateOrderStatus = async (orderId: string, status: string) => {
+export const updateOrderStatus = async (
+  orderId: string,
+  status: "Delivered" | "Shipped" | "Ordered" | "Failed" | "pending" | null | undefined,
+  trackingNumber?: string,
+  shippingProvider?: string
+) => {
   const supabase = createClient();
-  const { error } = await update(supabase, orderId, status);
 
-  if (error) {
-    console.error("Error updating status:", error.message);
-  } else {
-    console.log("Order status updated successfully");
+  const updates: Partial<OrderType> = { status };
+
+  if (status === "Shipped") {
+    updates.tracking_number = trackingNumber;
+    updates.shipping_provider = shippingProvider;
   }
 
-  return { error };
-};
+  const { data, error } = await supabase
+    .from("orders")
+    .update(updates)
+    .eq("id", orderId);
 
-export { updateOrderStatus };
+  if (error) {
+    throw error;
+  }
+
+  return data;
+};
