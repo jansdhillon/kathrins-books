@@ -14,8 +14,16 @@ import { CircleUserRound, ShoppingCart } from "lucide-react";
 import { Button } from "./ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { User } from "@supabase/supabase-js";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export const NavAvatar = ({ user }: { user: User }) => {
+  const router = useRouter();
+  useEffect(() => {
+    if (user?.user_metadata?.is_admin === true) {
+      router.prefetch("/admin");
+    }
+  }, [user]);
   return (
     <div className="flex items-center gap-4">
       <Tooltip>
