@@ -137,10 +137,24 @@ export const sendEmail = async (data: EmailData, type: EmailType) => {
       }
 
       case "shipping-confirmation": {
-        const { email, orderId, trackingNumber, shippingProvider } =
-          data as ShippingConfirmationEmailData;
+        const {
+          email,
+          orderId,
+          orderItems,
+          itemsTotal,
+          shippingCost,
+          address,
+          trackingNumber,
+          shippingProvider,
+        } = data as ShippingConfirmationEmailData;
 
-        if (!email || !orderId || !trackingNumber || !shippingProvider) {
+        if (
+          !orderItems ||
+          !orderId ||
+          !trackingNumber ||
+          !shippingProvider ||
+          !address
+        ) {
           console.error(
             "Missing required fields for shipping confirmation email"
           );
@@ -152,6 +166,10 @@ export const sendEmail = async (data: EmailData, type: EmailType) => {
         emailTemplate = (
           <ShippingConfirmationTemplate
             orderId={orderId}
+            orderItems={orderItems}
+            itemsTotal={itemsTotal}
+            shippingCost={shippingCost}
+            address={address}
             trackingNumber={trackingNumber}
             shippingProvider={shippingProvider}
           />

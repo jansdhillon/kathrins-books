@@ -37,7 +37,7 @@ export const OrderConfirmationTemplate: React.FC<
     >
       Order Confirmation
     </h1>
-    <p>Hi {name},</p>
+    <p>Hello {name},</p>
     <p>Thanks for shopping at Kathrin's Books! Here are the order details:</p>
 
     <div
@@ -202,8 +202,9 @@ export const KathrinOrderNotificationTemplate: React.FC<
         fontSize: "24px",
       }}
     >
-      New Order Notification
+      New Order Placed
     </h1>
+    <p>Hello Kathrin,</p>
     <p>A new order has been placed! Here are the order details:</p>
 
     <div

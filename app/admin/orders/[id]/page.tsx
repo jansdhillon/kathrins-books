@@ -149,11 +149,15 @@ export default function AdminOrderDetailsPage({
         shippingProvider
       );
 
-      if (newStatus === "Shipped") {
+      if (newStatus === "Shipped" && address) {
         await sendEmail(
           {
-            email: address?.email!,
+            email: address.email!,
             orderId: order.id,
+            orderItems: orderItems,
+            itemsTotal: (order.items_total || 0) / 100,
+            shippingCost: (order.shipping_cost || 0) / 100,
+            address: address,
             trackingNumber,
             shippingProvider,
           },
@@ -248,7 +252,9 @@ export default function AdminOrderDetailsPage({
                   </p>
                 </>
               )}
-              <p className=" flex w-full justify-center font-bold text-base text-primary">{statusMessage}</p>
+              <p className=" flex w-full justify-center font-bold text-base text-primary">
+                {statusMessage}
+              </p>
             </div>
           </CardHeader>
 

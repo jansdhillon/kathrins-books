@@ -59,6 +59,10 @@ export interface OrderConfirmationEmailData extends BaseEmailData {
 
 export interface ShippingConfirmationEmailData extends BaseEmailData {
   orderId: string;
+  orderItems: OrderItemInsertType[];
+  itemsTotal: number;
+  shippingCost: number;
+  address: Address;
   trackingNumber: string;
   shippingProvider: string;
 }

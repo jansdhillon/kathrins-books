@@ -132,6 +132,14 @@ export const createCartItem = async (
   return { data: cartItem, error };
 };
 
+export const removeCartItem = async (
+  supabase: SupabaseClient,
+  cartItemId: string
+) => {
+  const { error } = await supabase.from("cart_items").delete().eq("id", cartItemId);
+  return { error };
+}
+
 export const getOrCreateCart = async (
   supabase: SupabaseClient,
   userId: string
@@ -180,12 +188,13 @@ export const getOrCreateCart = async (
   let cartItems: EnhancedCartItemType[] = [];
 
   for (const item of cartItemsData) {
-    const quantity = item.quantity;
+    const quantity = item?.quantity || 0;
 
-    const currentBook = item.book;
+    const currentBook = item?.book;
 
-    if (currentBook.stock < quantity) {
-      return encodedRedirect("error", "/", "Not enough stock.");
+    if (currentBook && currentBook?.stock < quantity) {
+      await removeCartItem(supabase, item.id);
+      return encodedRedirect("error", "/", "Item out of stock");
     }
 
     const price = item.product_price.prices[0].unit_amount;

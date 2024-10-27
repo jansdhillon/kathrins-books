@@ -54,7 +54,7 @@ export default function CartPage() {
         setTotalAmount(amount + calculatedShipping);
         setCartItems(cartDetails);
       } catch (error: any) {
-        console.error("Error fetching cart items:", error?.message);
+        console.error("Error fetching cart items:", error);
       } finally {
         setIsLoading(false);
       }
