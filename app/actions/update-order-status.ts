@@ -7,7 +7,7 @@ const updateOrderStatus = async (orderId: string, status: string) => {
   const { error } = await update(supabase, orderId, status);
 
   if (error) {
-    console.error("Error fetching books:", error.message);
+    console.error("Error updating status:", error.message);
   } else {
     console.log("Order status updated successfully");
   }

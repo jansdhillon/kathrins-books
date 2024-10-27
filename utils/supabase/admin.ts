@@ -423,7 +423,18 @@ async function handleCheckoutSucceeded(session: Stripe.Checkout.Session) {
   }
 }
 
+async function updateUserRole(userId: string, role: string) {
+  const { error } = await supabaseAdmin.auth.admin.updateUserById(userId, {
+    role,
+  });
+  if (error) {
+    console.error(`Error updating user role: ${error.message}`);
+  }
+}
+
+
 export {
+  updateUserRole,
   upsertProductRecord,
   upsertPriceRecord,
   deleteProductRecord,

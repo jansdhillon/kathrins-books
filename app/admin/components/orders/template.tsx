@@ -23,7 +23,7 @@ export default async function Template({
     );
   }
 
-  if (user.user.role !== "admin") {
+  if (user.user.user_metadata.is_admin !== true) {
     return encodedRedirect(
       "error",
       "/",

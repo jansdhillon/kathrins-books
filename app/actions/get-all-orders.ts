@@ -8,7 +8,7 @@ const getAllOrders = cache(async () => {
   const { data: orders, error } = await getAllOrdersWithOrderItems(supabase);
 
   if (error) {
-    console.error("Error fetching books:", error.message);
+    console.error("Error fetching orders:", error.message);
   }
 
   if (!orders) {

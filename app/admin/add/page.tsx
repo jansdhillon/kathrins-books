@@ -20,7 +20,7 @@ export default async function HomePage() {
   }
 
   try {
-    if (user.user.role !== "admin") {
+    if (user.user.user_metadata.is_admin !== true) {
       getErrorRedirect("/", "Error", "You must be an admin to view this page");
     }
   } catch (error) {

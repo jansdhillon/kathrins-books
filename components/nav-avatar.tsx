@@ -58,7 +58,7 @@ export const NavAvatar = () => {
               </div>
               <DropdownMenuSeparator />
 
-              {user?.role === "admin" && (
+              {user?.user_metadata?.is_admin === true && (
                 <Link href="/admin" className="font-medium">
                   <DropdownMenuItem>Admin</DropdownMenuItem>
                 </Link>

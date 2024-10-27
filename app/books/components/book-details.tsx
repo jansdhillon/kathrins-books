@@ -63,7 +63,7 @@ export function BookDetails({ book }: BookDetailsProps) {
         return;
       }
 
-      if (user.user.role === "admin") {
+      if (user.user.user_metadata.is_admin === true) {
         setIsAdmin(true);
       }
 

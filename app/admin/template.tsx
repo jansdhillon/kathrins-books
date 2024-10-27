@@ -15,7 +15,7 @@ export default async function Template({
   const { data: user } = await supabase.auth.getUser();
 
 
-  if (!user.user || user.user.role !== "admin") {
+  if (!user.user || user.user?.user_metadata.is_admin !== true) {
     return encodedRedirect("error", "/sign-in", "You must be signed in to view this page");
   }
 

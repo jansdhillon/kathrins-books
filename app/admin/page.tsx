@@ -6,19 +6,19 @@ import { encodedRedirect } from "@/utils/utils";
 import { BooksClientWrapper } from "./components/books/client-wrapper";
 import { OrdersClientWrapper } from "./components/orders/client-wrapper";
 import { getAllOrders } from "../actions/get-all-orders";
+import { updateUserRole } from "@/utils/supabase/admin";
 
 export default async function AdminDashboard() {
   const supabase = createClient();
-  const { data: user } = await supabase.auth.getUser();
+  const { data: user, error } = await supabase.auth.getUser();
 
-  if (!user.user) {
+  if (error || !user.user) {
     return encodedRedirect(
       "error",
       "/sign-in",
       "You must be signed in to view this page"
     );
   }
-
 
 
 

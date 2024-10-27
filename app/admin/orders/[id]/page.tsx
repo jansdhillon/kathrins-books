@@ -53,9 +53,6 @@ export default function AdminOrderDetailsPage({
           router.push("/sign-in");
         }
 
-        if (!user.user?.role || user.user.role !== "admin") {
-          router.push("/");
-        }
 
         setEmail(user.user!.email!);
         setShippingAddress(user.user?.user_metadata.shipping_address);
