@@ -239,11 +239,11 @@ export default function CartPage() {
                 className="leading-none text-muted-foreground"
               >
                 I agree to the{" "}
-                <Link href="/terms-of-service" className="underline">
+                <Link href="/terms" className="underline">
                   Terms of Service
                 </Link>{" "}
                 and{" "}
-                <Link href="/privacy-policy" className="underline">
+                <Link href="/privacy" className="underline">
                   Privacy Policy
                 </Link>
                 .
