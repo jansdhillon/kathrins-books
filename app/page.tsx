@@ -43,7 +43,7 @@ export default async function HomePage() {
             Find Your Next
             <br /> Great Read.
           </div>
-          <p className="text-base md:text-xl md:max-w-[50%] font-medium  leading-loose">
+          <p className="text-base md:text-xl md:max-w-[50%] font-medium text-muted-foreground  leading-loose">
             Discover a curated selection of rare books. From classics to
             lifestyle books and modern novels,{" "}
             <span className="font-bold">Kathrin&apos;s Books</span> has
