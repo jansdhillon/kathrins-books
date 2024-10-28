@@ -69,12 +69,12 @@ export function Book({ book, className }: BookProps) {
                 loader={imageLoader}
               />
             </div>
-            <CardTitle className="text-xl font-semibold text-primary line-clamp-2 text-ellipsis ">
+            <CardTitle className="text-xl font-bold text-primary line-clamp-2 text-ellipsis ">
               {book.title}
             </CardTitle>
           </Link>
           <Separator />
-          <p> by {book.author}</p>
+          <p className="font-semibold"> by {book.author}</p>
           {book.genre && (
             <div className="flex gap-1 flex-wrap">
               {book.genre.map((g) =>

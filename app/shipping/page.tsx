@@ -5,53 +5,41 @@ import Link from "next/link";
 export default function ShippingAndDeliveryPage() {
   return (
     <div className="flex flex-col space-y-6 container mx-auto ">
-    <h1 className="text-2xl font-bold">Shipping</h1>
-    <p className=" text-muted-foreground font-medium">
-      {" "}
-      Learn more about our shipping options and return options.
-    </p>
+      <h1 className="text-2xl font-bold">Shipping</h1>
+      <p className=" text-muted-foreground font-semibold">
+        {" "}
+        Learn more about our shipping options and return options.
+      </p>
 
       <div className="space-y-8">
         <div className="space-y-2">
-          <h3 className="font-semibold">1. Standard Shipping</h3>
+          <p>
+            All prices listed are in Canadian dollars. We do not offer
+            international shipping at this time.{" "}
+          </p>
+          <p>
+            Orders are shipped from Calgary, Alberta via Canada Post or similar
+            carriers. Tracking information will be provided once your order has
+            been shipped.
+          </p>
+          <p>We offer the following shipping options:</p>
           <ul className="list-disc list-inside ml-4 space-y-1">
             <li>
-              <span className="font-semibold">Cost:</span> $15 flat rate per
-              order.
+              <span className="font-medium text-muted-foreground">Standard Shipping:</span> $15 flat
+              rate per order
             </li>
             <li>
-              <span className="font-semibold">Delivery Time:</span> 3-5 business
-              days within Canada.
-            </li>
-            <li>
-              <span className="font-semibold">Details:</span> Orders are shipped
-              via Canada Post or similar carriers. Tracking information will be
-              provided once your order has been shipped.
-            </li>
-          </ul>
-        </div>
-        <div className="space-y-2">
-          <h3 className=" font-semibold">
-            2. Free Shipping Over Orders of $75
-          </h3>
-          <ul className="list-disc list-inside ml-4 space-y-1">
-            <li>
-              <strong>Cost:</strong> Free for orders over $75.
-            </li>
-            <li>
-              <strong>Delivery Time:</strong> 3-5 business days within Canada.
-            </li>
-            <li>
-              <strong>Details:</strong> Orders are shipped via Canada Post or
-              similar carriers. Tracking information will be provided once your
-              order has been shipped.
+              <span className="font-medium text-muted-foreground">Free Shipping:</span> Orders over $75
             </li>
           </ul>
         </div>
 
-        <p className="text-muted-foreground pt-6">
+        <p className=" pt-6">
           Questions or Special Requests?{" "}
-          <Link href="/contact" className="font-bold underline">
+          <Link
+            href="/contact"
+            className="text-muted-foreground font-medium underline"
+          >
             Contact us
           </Link>
           .
@@ -62,7 +50,7 @@ export default function ShippingAndDeliveryPage() {
 
       <p className="text-md">
         Unfortunately we are unable to offer returns or refunds at this time.
-        Please refer to our terms of service for more information.
+        Please refer to our <a href="/terms" className="font-medium underline text-muted-foreground">terms of service</a> for more information.
       </p>
     </div>
   );

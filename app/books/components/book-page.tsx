@@ -105,7 +105,7 @@ export const BookPage = ({ books, title, subtitle, query }: BookPageProps) => {
   return (
     <div className="flex flex-col space-y-6 container mx-auto ">
       <h1 className="text-2xl font-bold">{title}</h1>
-      <p className="text text-muted-foreground font-medium">{subtitle}</p>
+      <p className="text text-muted-foreground font-semibold">{subtitle}</p>
 
       <DataTableToolbar
         table={table}

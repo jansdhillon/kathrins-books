@@ -1,11 +1,9 @@
-"use client";
-import { Separator } from "@/components/ui/separator";
-
+"use client";;
 export default function AboutPage() {
   return (
     <div className="flex flex-col space-y-6 container mx-auto ">
       <h1 className="text-2xl font-bold">About</h1>
-      <p className="text-muted-foreground font-medium">
+      <p className="text-muted-foreground font-semibold">
         {" "}
         The story behind Kathrin's Books.
       </p>

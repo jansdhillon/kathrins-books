@@ -46,7 +46,7 @@ export default async function HomePage() {
           <p className="text-base md:text-xl md:max-w-[50%] font-semibold text-muted-foreground  leading-loose">
             Discover a curated selection of rare books. From classics to
             lifestyle books and modern novels,{" "}
-            <span className="font-bold">Kathrin&apos;s Books</span> has
+            <span className="font-bold text-primary tracking-wide">Kathrin&apos;s Books</span> has
             something for every reader.
           </p>
           <Link href="/books">

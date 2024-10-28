@@ -23,9 +23,9 @@ export default function ContactPage({
     await contactFormAction(formData);
   };
   return (
-    <div className="flex flex-col space-y-6 container mx-auto ">
+    <div className="flex flex-col space-y-6 container mx-auto max-w-5xl ">
       <h1 className="text-2xl font-bold">Contact</h1>
-      <p className="text-muted-foreground font-medium">
+      <p className="text-muted-foreground font-semibold">
         {" "}
         Get in touch with us for any inquiries, requests, and feedback.
       </p>
@@ -70,11 +70,16 @@ export default function ContactPage({
       <h1 className="text-xl font-bold text-left">Support</h1>
       <div className="flex flex-col gap-4">
         <div className="flex items-center">
-          <Link href="mailto:kathrinsbookhelp@gmail.com" className="flex items-center gap-2">
+          <div className="flex items-center gap-2">
             <Mail className="h-4 w-4  font-semibold text-muted-foreground" />
-            <p className="text-muted-foreground font-semibold">Email: </p>
-            <p>kathrinsbookshelp@gmail.com</p>
-          </Link>
+            <p className="font-semibold">Email: </p>
+            <Link
+              href="mailto:kathrinsbookhelp@gmail.com"
+              className="underline font-medium text-muted-foreground "
+            >
+              kathrinsbookshelp@gmail.com
+            </Link>
+          </div>
         </div>{" "}
       </div>
     </div>

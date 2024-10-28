@@ -350,14 +350,14 @@ export default function CartPage() {
                   />
                   <label
                     htmlFor="terms-mobile"
-                    className="text-xs leading-none text-muted-foreground"
+                    className="text-xs leading-none "
                   >
                     I agree to the{" "}
-                    <Link href="/terms" className="underline text-xs">
+                    <Link href="/terms" className="underline text-xs text-muted-foreground font-medium">
                       Terms of Service
                     </Link>{" "}
                     and{" "}
-                    <Link href="/privacy" className="underline text-xs">
+                    <Link href="/privacy" className="underline text-xs text-muted-foreground font-medium">
                       Privacy Policy
                     </Link>
                     .

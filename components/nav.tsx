@@ -59,7 +59,7 @@ const Searchbar = ({
         className="pl-8 font-medium"
       />
       <Search
-        className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground"
+        className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground font-semibold"
         size={14}
       />
     </div>
