@@ -49,7 +49,7 @@ export function Book({ book, className }: BookProps) {
   return (
     <Card
       className={cn(
-        "rounded-xl flex flex-col justify-between h-full max-w-[350px]  border-accent dark:border-accent/50   ",
+        "rounded-xl flex flex-col justify-between h-full max-w-[350px] ",
         className
       )}
     >
@@ -65,7 +65,7 @@ export function Book({ book, className }: BookProps) {
                 alt={book.title}
                 width={300}
                 height={400}
-                className="object-contain rounded-xl border border-accent dark:border-accent/50"
+                className="object-contain rounded-xl"
                 loader={imageLoader}
               />
             </div>

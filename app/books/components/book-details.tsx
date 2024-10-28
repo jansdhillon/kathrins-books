@@ -96,7 +96,7 @@ export function BookDetails({ book }: BookDetailsProps) {
                   alt={book.title}
                   width={400}
                   height={600}
-                  className="object-contain rounded-xl h-auto border max-w-full max-h-[600px]"
+                  className="object-contain rounded-xl h-auto max-w-full max-h-[600px]"
                   sizes="(max-width: 500px) 100vw, 50vw"
                   loader={imageLoader}
                 />
@@ -118,7 +118,7 @@ export function BookDetails({ book }: BookDetailsProps) {
                       alt={`${book.title} - Image ${index + 2}`}
                       width={400}
                       height={600}
-                      className="object-contain rounded-xl h-auto border max-w-full max-h-[600px]"
+                      className="object-contain rounded-xl h-auto max-w-full max-h-[600px]"
                       sizes="(max-width: 768px) 100vw, 50vw"
                       loader={imageLoader}
                     />
