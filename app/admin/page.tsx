@@ -6,6 +6,8 @@ import { encodedRedirect } from "@/utils/utils";
 import { BooksClientWrapper } from "./components/books/client-wrapper";
 import { OrdersClientWrapper } from "./components/orders/client-wrapper";
 import { getAllOrders } from "../actions/get-all-orders";
+import { Suspense } from "react";
+import Loading from "../loading";
 
 export default async function AdminDashboard() {
   const supabase = createClient();
@@ -35,12 +37,14 @@ export default async function AdminDashboard() {
             <TabsTrigger value="orders">Orders</TabsTrigger>
           </TabsList>
         </div>
-        <TabsContent value="orders" className="space-y-4">
-          <OrdersClientWrapper data={orders} />
-        </TabsContent>
-        <TabsContent value="books" className="space-y-4 ">
-          <BooksClientWrapper data={books} />
-        </TabsContent>
+        <Suspense fallback={<Loading />}>
+          <TabsContent value="orders" className="space-y-4">
+            <OrdersClientWrapper data={orders} />
+          </TabsContent>
+          <TabsContent value="books" className="space-y-4 ">
+            <BooksClientWrapper data={books} />
+          </TabsContent>
+        </Suspense>
       </Tabs>
     </div>
   );
