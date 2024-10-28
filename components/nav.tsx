@@ -70,7 +70,7 @@ export const Nav = ({ headerAuth }: { headerAuth: ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 border-b w-full bg-primary-foreground">
+    <header className="fixed top-0 left-0 right-0 z-50 border-b border-b-accent dark:border-b-accent/50  w-full bg-primary-foreground">
       <nav className="hidden lg:flex items-center w-full px-8  justify-between gap-10 h-[60px] container lg:my-0 pr-8">
         <Link href="/" className="flex items-center gap-4 ">
           <Image

@@ -54,7 +54,6 @@ export function BookDetails({ book }: BookDetailsProps) {
 
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
 
-
   useEffect(() => {
     const fetchUserData = async () => {
       const supabase = createClient();
@@ -66,7 +65,6 @@ export function BookDetails({ book }: BookDetailsProps) {
       if (user.user.user_metadata.is_admin === true) {
         setIsAdmin(true);
       }
-
     };
 
     fetchUserData();
@@ -80,7 +78,7 @@ export function BookDetails({ book }: BookDetailsProps) {
         </Button>
       </div>
       <Suspense fallback={<Loading />}>
-        <Carousel className="mx-10 md:mx-0">
+      <Carousel className="mx-10">
           <CarouselContent>
             <CarouselItem
               className={`flex flex-col rounded-xl justify-center ${
@@ -89,22 +87,19 @@ export function BookDetails({ book }: BookDetailsProps) {
                   : ""
               }`}
             >
-              <Link href={coverImage}>
-                <div className="relative cursor-pointer mb-5 flex justify-center ">
-                  <Suspense
-                    fallback={<Skeleton className="w-[600px] h-[800px]" />}
-                  >
-                    <Image
-                      src={coverImage}
-                      alt={book.title}
-                      width={400}
-                      height={600}
-                      className="object-contain rounded-xl  h-auto border"
-                      sizes="(max-width: 500px) 100vw, 50vw"
-                      loader={imageLoader}
-                    />
-                  </Suspense>
-                </div>
+              <Link
+                href={coverImage}
+                className="relative cursor-pointer mb-5 flex justify-center "
+              >
+                <Image
+                  src={coverImage}
+                  alt={book.title}
+                  width={400}
+                  height={600}
+                  className="object-contain rounded-xl h-auto border max-w-full max-h-[600px]"
+                  sizes="(max-width: 500px) 100vw, 50vw"
+                  loader={imageLoader}
+                />
               </Link>
             </CarouselItem>
             {/* Additional Images */}
@@ -114,22 +109,19 @@ export function BookDetails({ book }: BookDetailsProps) {
                   key={index}
                   className="flex flex-col md:basis-1/2 lg:basis-1/3 rounded-xl justify-center"
                 >
-                  <Link href={image}>
-                    <div className="relative cursor-pointer mb-5 flex justify-center">
-                      <Suspense
-                        fallback={<Skeleton className="w-[600px] h-[800px]" />}
-                      >
-                        <Image
-                          src={image}
-                          alt={`${book.title} - Image ${index + 2}`}
-                          width={600}
-                          height={800}
-                          className="object-contain rounded-xl max-w-full h-auto border "
-                          sizes="(max-width: 768px) 100vw, 50vw"
-                          loader={imageLoader}
-                        />
-                      </Suspense>
-                    </div>
+                  <Link
+                    href={image}
+                    className="relative cursor-pointer mb-5 flex justify-center"
+                  >
+                    <Image
+                      src={image}
+                      alt={`${book.title} - Image ${index + 2}`}
+                      width={400}
+                      height={600}
+                      className="object-contain rounded-xl h-auto border max-w-full max-h-[600px]"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      loader={imageLoader}
+                    />
                   </Link>
                 </CarouselItem>
               ))}
@@ -162,7 +154,7 @@ export function BookDetails({ book }: BookDetailsProps) {
 
             <div className="space-y-2 pb-4">
               <p>
-                <span className="text-primary font-semibold">Author:</span>{" "}
+                <span className="text-primary font-semibold">Author(s):</span>{" "}
                 {book.author}
               </p>
               {book.isbn && (
@@ -173,7 +165,7 @@ export function BookDetails({ book }: BookDetailsProps) {
               )}
               {book.genre && book.genre.length > 0 && (
                 <div className="flex gap-1 flex-wrap">
-                  <span className="text-primary font-semibold">Genre:</span>
+                  <span className="text-primary font-semibold">Genre(s):</span>
                   {book.genre
                     .join(",")
                     .split(",")
@@ -218,7 +210,7 @@ export function BookDetails({ book }: BookDetailsProps) {
               <>
                 {book.stock > 0 && (
                   <p className="text-xl font-semibold text-primary mb-4">
-                    ${book.price.toFixed(2)} CAD{" "}
+                    ${book.price.toFixed(2)}{" "}
                   </p>
                 )}
               </>
@@ -232,11 +224,7 @@ export function BookDetails({ book }: BookDetailsProps) {
                 ) : (
                   <>
                     <ShoppingCart className="mr-2 h-5 w-5" />{" "}
-                    <>
-                      {book.stock > 0
-                        ? "Add to Cart"
-                        : `Sold`}
-                    </>
+                    <>{book.stock > 0 ? "Add to Cart" : `Sold`}</>
                   </>
                 )}
               </Button>

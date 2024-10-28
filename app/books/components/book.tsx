@@ -49,7 +49,7 @@ export function Book({ book, className }: BookProps) {
   return (
     <Card
       className={cn(
-        "rounded-xl flex flex-col justify-between h-full max-w-[350px]   ",
+        "rounded-xl flex flex-col justify-between h-full max-w-[350px]  border-accent dark:border-accent/50   ",
         className
       )}
     >
@@ -59,13 +59,13 @@ export function Book({ book, className }: BookProps) {
             href={`/books/${book.id}`}
             className="relative cursor-pointer space-y-4   "
           >
-            <div className="w-full flex justify-center container max-h-[400px]">
+            <div className="w-full flex justify-center container ml-0 pl-0 md:max-h-[400px]">
               <Image
                 src={coverImage}
                 alt={book.title}
                 width={300}
                 height={400}
-                className="object-contain rounded-xl border  aspect-auto "
+                className="object-contain rounded-xl border border-accent dark:border-accent/50"
                 loader={imageLoader}
               />
             </div>
