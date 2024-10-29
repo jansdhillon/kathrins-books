@@ -95,8 +95,8 @@ steps:
           --build-arg SUPABASE_SERVICE_ROLE_KEY="$(cat supabase_service_role_key.txt)" \
           --build-arg STRIPE_WEBHOOK_SECRET="$(cat stripe_webhook_secret.txt)" \
           --build-arg ADMIN_EMAIL="$(cat admin_email.txt)" \
-          --build-arg NEXT_PUBLIC_GOOGLE_ANALYTICS_MEASUREMENT_ID="$(cat next_public_google_analytics_measurement_id.txt.txt)" \
-          --build-arg NEXT_PUBLIC_GA_PROPERTY_ID="$(cat next_public_ga_property_id.txt.txt)" \
+          --build-arg NEXT_PUBLIC_GOOGLE_ANALYTICS_MEASUREMENT_ID="$(cat next_public_google_analytics_measurement_id.txt)" \
+          --build-arg NEXT_PUBLIC_GA_PROPERTY_ID="$(cat next_public_ga_property_id.txt)" \
           -t gcr.io/prairie-books/prairie-books \
           .
 
