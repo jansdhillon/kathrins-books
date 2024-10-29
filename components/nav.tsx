@@ -1,7 +1,7 @@
 "use client";
 import { ReactNode, Suspense, useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { Button } from "@/components/ui/button";
@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import Image from "next/image";
 import Loading from "@/app/loading";
+import ReactGA from "react-ga4";
 
 const navItems = [
   { href: "/books", label: "Books" },
@@ -68,6 +69,14 @@ const Searchbar = ({
 
 export const Nav = ({ headerAuth }: { headerAuth: ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
+  const page = "https://kathrinsbooks.com" + pathname;
+  useEffect(() => {
+    ReactGA.initialize("G-XXXXXXXXX");
+
+    ReactGA.send({ hitType: "pageview", page: page });
+  }, []);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b w-full bg-primary-foreground dark:bg-card">
