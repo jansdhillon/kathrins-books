@@ -2,12 +2,7 @@
 
 import { BetaAnalyticsDataClient } from "@google-analytics/data";
 
-const analyticsDataClient = new BetaAnalyticsDataClient({
-  credentials: {
-    client_email: process.env.GA_CLIENT_EMAIL,
-    private_key: process.env.GA_PRIVATE_KEY?.replace(/\\n/g, "\n"),
-  },
-});
+const analyticsDataClient = new BetaAnalyticsDataClient();
 
 const getAnalytics = async () => {
   const [response] = await analyticsDataClient.runReport({
