@@ -69,6 +69,33 @@ steps:
       - |
         gcloud secrets versions access latest --secret=NEXT_PUBLIC_GOOGLE_ANALYTICS_MEASUREMENT_ID --format='get(payload.data)' \
         | tr '_-' '/+' | base64 -d > next_public_google_analytics_measurement_id.txt
+  - name: "gcr.io/cloud-builders/gcloud"
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        gcloud secrets versions access latest --secret=GA_CLIENT_EMAIL --format='get(payload.data)' \
+        | tr '_-' '/+' | base64 -d > ga_client_email.txt
+
+
+  - name: "gcr.io/cloud-builders/docker"
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        docker build \
+          --build-arg GA_PRIVATE_KEY="$(cat ga_private_key.json)" \
+          -t gcr.io/prairie-books/prairie-books .
+
+  - name: "gcr.io/cloud-builders/gcloud"
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        gcloud secrets versions access latest --secret=NEXT_PUBLIC_GA_PROPERTY_ID --format='get(payload.data)' \
+        | tr '_-' '/+' | base64 -d > next_public_ga_property_id.txt
+
+
 
   - name: "gcr.io/cloud-builders/docker"
     entrypoint: "bash"
@@ -84,7 +111,9 @@ steps:
           --build-arg SUPABASE_SERVICE_ROLE_KEY="$(cat supabase_service_role_key.txt)" \
           --build-arg STRIPE_WEBHOOK_SECRET="$(cat stripe_webhook_secret.txt)" \
           --build-arg ADMIN_EMAIL="$(cat admin_email.txt)" \
-          --build-arg NEXT_PUBLIC_GOOGLE_ANALYTICS_MEASUREMENT_ID="$(cat next_public_google_analytics_measurement_id.txt)" \
+          --build-arg GA_CLIENT_EMAIL="$(cat ga_client_email.txt)" \
+          --build-arg GA_PRIVATE_KEY="$(cat ga_private_key.json)" \
+          --build-arg NEXT_PUBLIC_GA_PROPERTY_ID="$(cat next_public_ga_property_id.txt.txt)" \
           -t gcr.io/prairie-books/prairie-books \
           .
 

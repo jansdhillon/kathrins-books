@@ -37,9 +37,10 @@ export default function RootLayout({
     <html lang="en" className={inter.className} suppressHydrationWarning>
       <Script
         async
+        strategy="beforeInteractive"
         src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_MEASUREMENT_ID}`}
       />
-      <Script id="google-analytics">
+      <Script id="google-analytics" strategy="beforeInteractive">
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}

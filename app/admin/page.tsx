@@ -8,6 +8,8 @@ import { OrdersClientWrapper } from "./components/orders/client-wrapper";
 import { getAllOrders } from "../actions/get-all-orders";
 import { Suspense } from "react";
 import Loading from "../loading";
+import { AnalyticsWrapper } from "./components/analytics/analytics-wrapper";
+import { getAnalytics } from "../actions/get-analytics";
 
 export default async function AdminDashboard() {
   const supabase = createClient();
@@ -35,6 +37,7 @@ export default async function AdminDashboard() {
             <TabsTrigger value="books">Books</TabsTrigger>
 
             <TabsTrigger value="orders">Orders</TabsTrigger>
+            <TabsTrigger value="analytics">Analytics</TabsTrigger>
           </TabsList>
         </div>
         <Suspense fallback={<Loading />}>
@@ -43,6 +46,9 @@ export default async function AdminDashboard() {
           </TabsContent>
           <TabsContent value="books" className="space-y-4 ">
             <BooksClientWrapper data={books} />
+          </TabsContent>
+          <TabsContent value="analytics">
+            <AnalyticsWrapper getAnalytics={getAnalytics} />
           </TabsContent>
         </Suspense>
       </Tabs>
