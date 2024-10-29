@@ -201,7 +201,7 @@ export default function CartPage() {
                         </div>
                       </TableCell>
                       <TableCell className="text-start">
-                        ${item.price.toFixed(2)} CAD
+                        ${item.price.toFixed(2)}
                       </TableCell>
                     </TableRow>
                   ))
@@ -213,7 +213,7 @@ export default function CartPage() {
                   <TableCell colSpan={4} className="text-right">
                     Shipping:
                   </TableCell>
-                  <TableCell>${shippingCost.toFixed(2)} CAD</TableCell>
+                  <TableCell>${shippingCost.toFixed(2)}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell colSpan={4} className="text-right font-bold">
@@ -294,7 +294,7 @@ export default function CartPage() {
                       Price:
                       <p className="text-foreground font-semibold">
                         {" "}
-                        ${item.price.toFixed(2)} CAD
+                        ${item.price.toFixed(2)}
                       </p>
                     </CardDescription>
                   </CardHeader>
@@ -334,14 +334,14 @@ export default function CartPage() {
                   <CardDescription className="flex gap-2">
                     Subtotal:
                     <p className="font-bold text-foreground">
-                      ${initialAmount.toFixed(2)} CAD
+                      ${initialAmount.toFixed(2)}
                     </p>
                   </CardDescription>
 
                   <CardDescription className="flex gap-2">
                     Shipping:
                     <p className="font-bold text-foreground">
-                      ${shippingCost.toFixed(2)} CAD
+                      ${shippingCost.toFixed(2)}
                     </p>
                   </CardDescription>
 
