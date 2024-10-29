@@ -62,6 +62,13 @@ steps:
       - |
         gcloud secrets versions access latest --secret=ADMIN_EMAIL --format='get(payload.data)' \
         | tr '_-' '/+' | base64 -d > admin_email.txt
+  - name: "gcr.io/cloud-builders/gcloud"
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        gcloud secrets versions access latest --secret=NEXT_PUBLIC_GOOGLE_ANALYTICS_MEASUREMENT_ID --format='get(payload.data)' \
+        | tr '_-' '/+' | base64 -d > next_public_google_analytics_measurement_id.txt
 
   - name: 'gcr.io/cloud-builders/docker'
     entrypoint: 'bash'
