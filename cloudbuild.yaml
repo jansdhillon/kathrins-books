@@ -1,72 +1,79 @@
 steps:
-  - name: 'gcr.io/cloud-builders/gcloud'
-    entrypoint: 'bash'
+  - name: "gcr.io/cloud-builders/gcloud"
+    entrypoint: "bash"
     args:
-      - '-c'
+      - "-c"
       - |
         gcloud secrets versions access latest --secret=STRIPE_SECRET_KEY --format='get(payload.data)' \
         | tr '_-' '/+' | base64 -d > stripe_secret_key.txt
 
-  - name: 'gcr.io/cloud-builders/gcloud'
-    entrypoint: 'bash'
+  - name: "gcr.io/cloud-builders/gcloud"
+    entrypoint: "bash"
     args:
-      - '-c'
+      - "-c"
       - |
         gcloud secrets versions access latest --secret=NEXT_PUBLIC_STRIPE_PUBLIC_KEY --format='get(payload.data)' \
         | tr '_-' '/+' | base64 -d > next_public_stripe_public_key.txt
 
-  - name: 'gcr.io/cloud-builders/gcloud'
-    entrypoint: 'bash'
+  - name: "gcr.io/cloud-builders/gcloud"
+    entrypoint: "bash"
     args:
-      - '-c'
+      - "-c"
       - |
         gcloud secrets versions access latest --secret=RESEND_API_KEY --format='get(payload.data)' \
         | tr '_-' '/+' | base64 -d > resend_api_key.txt
 
-  - name: 'gcr.io/cloud-builders/gcloud'
-    entrypoint: 'bash'
+  - name: "gcr.io/cloud-builders/gcloud"
+    entrypoint: "bash"
     args:
-      - '-c'
+      - "-c"
       - |
         gcloud secrets versions access latest --secret=NEXT_PUBLIC_SUPABASE_URL --format='get(payload.data)' \
         | tr '_-' '/+' | base64 -d > next_public_supabase_url.txt
 
-  - name: 'gcr.io/cloud-builders/gcloud'
-    entrypoint: 'bash'
+  - name: "gcr.io/cloud-builders/gcloud"
+    entrypoint: "bash"
     args:
-      - '-c'
+      - "-c"
       - |
         gcloud secrets versions access latest --secret=NEXT_PUBLIC_SUPABASE_ANON_KEY --format='get(payload.data)' \
         | tr '_-' '/+' | base64 -d > next_public_supabase_anon_key.txt
 
-  - name: 'gcr.io/cloud-builders/gcloud'
-    entrypoint: 'bash'
+  - name: "gcr.io/cloud-builders/gcloud"
+    entrypoint: "bash"
     args:
-      - '-c'
+      - "-c"
       - |
         gcloud secrets versions access latest --secret=SUPABASE_SERVICE_ROLE_KEY --format='get(payload.data)' \
         | tr '_-' '/+' | base64 -d > supabase_service_role_key.txt
 
-  - name: 'gcr.io/cloud-builders/gcloud'
-    entrypoint: 'bash'
+  - name: "gcr.io/cloud-builders/gcloud"
+    entrypoint: "bash"
     args:
-      - '-c'
+      - "-c"
       - |
         gcloud secrets versions access latest --secret=STRIPE_WEBHOOK_SECRET --format='get(payload.data)' \
         | tr '_-' '/+' | base64 -d > stripe_webhook_secret.txt
 
-  - name: 'gcr.io/cloud-builders/gcloud'
-    entrypoint: 'bash'
+  - name: "gcr.io/cloud-builders/gcloud"
+    entrypoint: "bash"
     args:
-      - '-c'
+      - "-c"
       - |
         gcloud secrets versions access latest --secret=ADMIN_EMAIL --format='get(payload.data)' \
         | tr '_-' '/+' | base64 -d > admin_email.txt
-
-  - name: 'gcr.io/cloud-builders/docker'
-    entrypoint: 'bash'
+  - name: "gcr.io/cloud-builders/gcloud"
+    entrypoint: "bash"
     args:
-      - '-c'
+      - "-c"
+      - |
+        gcloud secrets versions access latest --secret=NEXT_PUBLIC_GOOGLE_ANALYTICS_MEASUREMENT_ID --format='get(payload.data)' \
+        | tr '_-' '/+' | base64 -d > admin_email.txt
+
+  - name: "gcr.io/cloud-builders/docker"
+    entrypoint: "bash"
+    args:
+      - "-c"
       - |
         docker build \
           --build-arg STRIPE_SECRET_KEY="$(cat stripe_secret_key.txt)" \
@@ -77,25 +84,25 @@ steps:
           --build-arg SUPABASE_SERVICE_ROLE_KEY="$(cat supabase_service_role_key.txt)" \
           --build-arg STRIPE_WEBHOOK_SECRET="$(cat stripe_webhook_secret.txt)" \
           --build-arg ADMIN_EMAIL="$(cat admin_email.txt)" \
+          --build-arg NEXT_PUBLIC_GOOGLE_ANALYTICS_MEASUREMENT_ID="$(cat next_public_google_analytics_measurement_id.txt)"
           -t gcr.io/prairie-books/prairie-books \
           .
 
-  - name: 'gcr.io/cloud-builders/docker'
+  - name: "gcr.io/cloud-builders/docker"
     args:
-      - 'push'
-      - 'gcr.io/prairie-books/prairie-books'
+      - "push"
+      - "gcr.io/prairie-books/prairie-books"
 
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: 'gcloud'
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    entrypoint: "gcloud"
     args:
-      - 'run'
-      - 'deploy'
-      - 'prairie-books'
-      - '--image'
-      - 'gcr.io/prairie-books/prairie-books'
-      - '--region'
-      - 'us-central1'
-
+      - "run"
+      - "deploy"
+      - "prairie-books"
+      - "--image"
+      - "gcr.io/prairie-books/prairie-books"
+      - "--region"
+      - "us-central1"
 
 options:
   logging: CLOUD_LOGGING_ONLY

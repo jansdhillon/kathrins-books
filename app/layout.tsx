@@ -9,6 +9,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Viewport } from "next";
 import { getURL } from "@/utils/helpers";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import Script from "next/script";
 
 export const viewport: Viewport = {
   initialScale: 1,
@@ -34,6 +35,18 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.className} suppressHydrationWarning>
+      <Script
+        async
+        src={`https://www.googletagmanager.com/gtag/js?id={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_MEASUREMENT_ID}`}
+      />
+      <Script id="google-analytics">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_MEASUREMENT_ID}');
+        `}
+      </Script>
       <body className="bg-background font-medium ">
         <ThemeProvider
           attribute="class"
