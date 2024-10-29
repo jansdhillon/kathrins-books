@@ -127,7 +127,7 @@ export function UserOrdersDataTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No books.
+                  No orders yet.
                 </TableCell>
               </TableRow>
             )}

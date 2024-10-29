@@ -22,6 +22,7 @@ import {
   CardContent,
   CardDescription,
   CardFooter,
+  CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Eye, Trash } from "lucide-react";
@@ -36,6 +37,7 @@ import {
 } from "@/components/ui/tooltip";
 import { Label } from "@/components/ui/label";
 import { createClient } from "@/utils/supabase/client";
+import { Separator } from "@/components/ui/separator";
 
 export default function CartPage() {
   const router = useRouter();
@@ -199,7 +201,7 @@ export default function CartPage() {
                         </div>
                       </TableCell>
                       <TableCell className="text-start">
-                        ${item.price.toFixed(2)}
+                        ${item.price.toFixed(2)} CAD
                       </TableCell>
                     </TableRow>
                   ))
@@ -211,14 +213,14 @@ export default function CartPage() {
                   <TableCell colSpan={4} className="text-right">
                     Shipping:
                   </TableCell>
-                  <TableCell>${shippingCost.toFixed(2)}</TableCell>
+                  <TableCell>${shippingCost.toFixed(2)} CAD</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell colSpan={4} className="text-right font-bold">
                     Total:
                   </TableCell>
                   <TableCell className="font-bold">
-                    ${totalAmount.toFixed(2)}
+                    ${totalAmount.toFixed(2)} CAD
                   </TableCell>
                 </TableRow>
               </TableFooter>
@@ -266,37 +268,36 @@ export default function CartPage() {
               <div className="text-center">Your cart is empty.</div>
             ) : (
               cartItems?.map((item: EnhancedCartItemType) => (
-                <Card key={item.id} className="flex flex-col p-4">
-                  <CardContent className="flex items-center space-x-4">
-                    <Suspense
-                      fallback={<Skeleton className="w-[75px] h-[100px]" />}
-                    >
-                      <Image
-                        src={
-                          item.book.image_directory !== null &&
-                          item.book.num_images &&
-                          item.book.num_images > 0
-                            ? `${item.book.image_directory}image-1.png`
-                            : "/placeholder.png"
-                        }
-                        alt={item.book.title}
-                        width={75}
-                        height={100}
-                        className="object-contain rounded-md"
-                      />
-                    </Suspense>
-                    <div className="flex-1">
-                      <CardTitle className="text-base font-semibold">
-                        {item.book.title}
-                      </CardTitle>
-                      <CardDescription className="text-sm text-muted-foreground">
-                        {item.book.author}
-                      </CardDescription>
-                      <CardDescription className="text-sm font-bold mt-2">
-                        Price: ${item.price.toFixed(2)}
-                      </CardDescription>
-                    </div>
-                  </CardContent>
+                <Card key={item.id}>
+                  <CardHeader>
+                    <Image
+                      src={
+                        item.book.image_directory !== null &&
+                        item.book.num_images &&
+                        item.book.num_images > 0
+                          ? `${item.book.image_directory}image-1.png`
+                          : "/placeholder.png"
+                      }
+                      alt={item.book.title}
+                      width={75}
+                      height={100}
+                      className="object-contain rounded-md"
+                    />
+
+                    <CardTitle className="text-lg">
+                      {item.book.title}
+                    </CardTitle>
+                    <CardDescription className="">
+                      {item.book.author}
+                    </CardDescription>
+                    <CardDescription className="flex gap-2">
+                      Price:
+                      <p className="text-foreground font-semibold">
+                        {" "}
+                        ${item.price.toFixed(2)} CAD
+                      </p>
+                    </CardDescription>
+                  </CardHeader>
                   <CardFooter className="flex justify-end space-x-2 mt-4">
                     <Button
                       variant="ghost"
@@ -325,52 +326,73 @@ export default function CartPage() {
               ))
             )}
             {cartItems && cartItems.length > 0 && (
-              <Card className="p-4 space-y-4 leading-loose flex flex-col">
-                <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
-                <div className="flex justify-between">
-                  <p>Subtotal:</p>
-                  <p>${initialAmount.toFixed(2)}</p>
-                </div>
-                <div className="flex justify-between">
-                  <p>Shipping:</p>
-                  <p>${shippingCost.toFixed(2)}</p>
-                </div>
-                <div className="flex justify-between font-bold mt-2">
-                  <p>Total:</p>
-                  <p>${totalAmount.toFixed(2)}</p>
-                </div>
+              <Card className="">
+                <CardHeader>
+                  <CardTitle>Order Summary</CardTitle>
+                </CardHeader>
+                <CardContent className="flex flex-col items-start gap-2">
+                  <CardDescription className="flex gap-2">
+                    Subtotal:
+                    <p className="font-bold text-foreground">
+                      ${initialAmount.toFixed(2)} CAD
+                    </p>
+                  </CardDescription>
 
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="terms-mobile"
-                    checked={agreedToTerms}
-                    onCheckedChange={(checked) =>
-                      setAgreedToTerms(checked === true)
-                    }
-                  />
-                  <label
-                    htmlFor="terms-mobile"
-                    className="text-xs leading-none "
-                  >
-                    I agree to the{" "}
-                    <Link href="/terms" className="underline text-xs text-muted-foreground font-medium">
-                      Terms of Service
-                    </Link>{" "}
-                    and{" "}
-                    <Link href="/privacy" className="underline text-xs text-muted-foreground font-medium">
-                      Privacy Policy
-                    </Link>
-                    .
-                  </label>
-                </div>
+                  <CardDescription className="flex gap-2">
+                    Shipping:
+                    <p className="font-bold text-foreground">
+                      ${shippingCost.toFixed(2)} CAD
+                    </p>
+                  </CardDescription>
 
-                <Button
-                  className="w-full "
-                  onClick={handleCheckout}
-                  disabled={cartItems?.length === 0 || !agreedToTerms}
-                >
-                  Proceed to Checkout
-                </Button>
+                  <CardDescription className="flex gap-2">
+                    Total:{" "}
+                    <p className="font-bold text-foreground">
+                      ${totalAmount.toFixed(2)} CAD
+                    </p>
+                  </CardDescription>
+                </CardContent>
+
+                <CardFooter className="flex flex-col items-end gap-4">
+                  <div className="flex items-center gap-2">
+                    <Checkbox
+                      id="terms-mobile"
+                      checked={agreedToTerms}
+                      onCheckedChange={(checked) =>
+                        setAgreedToTerms(checked === true)
+                      }
+                    />
+                    <Label
+                      htmlFor="terms-mobile"
+                      className="text-xs leading-none "
+                    >
+                      I agree to the{" "}
+                      <Link
+                        href="/terms"
+                        className="underline text-xs text-muted-foreground font-medium"
+                      >
+                        Terms of Service
+                      </Link>{" "}
+                      and{" "}
+                      <Link
+                        href="/privacy"
+                        className="underline text-xs text-muted-foreground font-medium"
+                      >
+                        Privacy Policy
+                      </Link>
+                      .
+                    </Label>
+                  </div>
+                  <div>
+                    <Button
+                      className="w-full "
+                      onClick={handleCheckout}
+                      disabled={cartItems?.length === 0 || !agreedToTerms}
+                    >
+                      Proceed to Checkout
+                    </Button>
+                  </div>
+                </CardFooter>
               </Card>
             )}
           </div>

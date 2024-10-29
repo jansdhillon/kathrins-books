@@ -140,7 +140,7 @@ export function BookDetails({ book }: BookDetailsProps) {
           <CardHeader className="text-muted-foreground">
             <div className="flex md:flex-col justify-between items-start flex-row">
               <div className="flex items-baseline">
-                <CardTitle className="text-2xl font-semibold text-primary mb-4">
+                <CardTitle className="text-2xl font-semibold text-foreground mb-4">
                   {book.title}
                 </CardTitle>
                 {isAdmin && (
@@ -152,20 +152,20 @@ export function BookDetails({ book }: BookDetailsProps) {
             </div>
             <Separator className="my-4" />
 
-            <div className="space-y-2 pb-4">
-              <p>
-                <span className="text-primary font-semibold">Author(s):</span>{" "}
+            <div className="space-y-2 pb-4 text-foreground" >
+              <p >
+                <span className="text-muted-foreground font-semibold">Author(s):</span>{" "}
                 {book.author}
               </p>
               {book.isbn && (
                 <p>
-                  <span className="text-primary font-semibold">ISBN:</span>{" "}
+                  <span className="text-muted-foreground font-semibold">ISBN:</span>{" "}
                   {book.isbn}
                 </p>
               )}
               {book.genre && book.genre.length > 0 && (
                 <div className="flex gap-1 flex-wrap">
-                  <span className="text-primary font-semibold">Genre(s):</span>
+                  <span className="text-muted-foreground font-semibold">Genre(s):</span>
                   {book.genre
                     .join(",")
                     .split(",")
@@ -181,7 +181,7 @@ export function BookDetails({ book }: BookDetailsProps) {
               )}
               {book.publication_date && (
                 <p>
-                  <span className="text-primary font-semibold">
+                  <span className="text-muted-foreground font-semibold">
                     Publication Date:
                   </span>{" "}
                   {book.publication_date || "Not specified"}
@@ -189,19 +189,19 @@ export function BookDetails({ book }: BookDetailsProps) {
               )}
               {book.publisher && (
                 <p>
-                  <span className="text-primary font-semibold">Publisher:</span>{" "}
+                  <span className="text-muted-foreground font-semibold">Publisher:</span>{" "}
                   {book.publisher || "Not specified"}
                 </p>
               )}
               {book.edition && (
                 <p>
-                  <span className="text-primary font-semibold">Edition:</span>{" "}
+                  <span className="text-muted-foreground font-semibold">Edition:</span>{" "}
                   {book.edition || "Not specified"}
                 </p>
               )}
               {book.condition && (
                 <p>
-                  <span className="text-primary font-semibold">Condition:</span>{" "}
+                  <span className="text-muted-foreground font-semibold">Condition:</span>{" "}
                   {book.condition || "Not specified"}
                 </p>
               )}
@@ -209,7 +209,7 @@ export function BookDetails({ book }: BookDetailsProps) {
             <div className="flex flex-col justify-between items-end">
               <>
                 {book.stock > 0 && (
-                  <p className="text-xl font-semibold text-primary mb-4">
+                  <p className="text-xl font-semibold text-foreground mb-4">
                     ${book.price.toFixed(2)}{" "}
                   </p>
                 )}
@@ -231,7 +231,7 @@ export function BookDetails({ book }: BookDetailsProps) {
             </div>
           </CardHeader>
           <CardContent>
-            <h3 className="text-lg font-semibold mb-2 text-primary">
+            <h3 className="text-lg font-semibold mb-2 text-foreground">
               Description
             </h3>
             <Separator className="my-4" />

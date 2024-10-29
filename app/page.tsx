@@ -43,10 +43,10 @@ export default async function HomePage() {
             Find Your Next
             <br /> Great Read.
           </div>
-          <p className="text-base md:text-xl md:max-w-[50%] font-semibold text-muted-foreground  leading-loose">
+          <p className="text-base md:text-xl md:max-w-[50%] font-semibold text-foreground  leading-loose">
             Discover a curated selection of rare books. From classics to
             lifestyle books and modern novels,{" "}
-            <span className="font-bold text-primary tracking-wide">Kathrin&apos;s Books</span> has
+            <span className="font-bold text-muted-foreground tracking-wide">Kathrin&apos;s Books</span> has
             something for every reader.
           </p>
           <Link href="/books">

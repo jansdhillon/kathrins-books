@@ -15,7 +15,7 @@ export default function Signup() {
         </Link>
       </p>
 
-      <form className="flex-1 flex flex-col text-base text-primary">
+      <form className="flex-1 flex flex-col text-base text-foreground">
         <div className="flex flex-col gap-2 [&>input]:mb-3 ">
           <Label htmlFor="email">Email</Label>
           <Input name="email" placeholder="you@example.com" required />

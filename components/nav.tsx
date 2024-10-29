@@ -56,7 +56,7 @@ const Searchbar = ({
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         onKeyDown={handleKeyDown}
-        className="pl-8 font-medium"
+        className="pl-8 font-medium text-foreground"
       />
       <Search
         className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground font-semibold"
@@ -126,7 +126,7 @@ export const Nav = ({ headerAuth }: { headerAuth: ReactNode }) => {
           <SheetContent>
             <div className="flex flex-col gap-4 mt-8">
               <Suspense fallback={<Loading />}>
-                <div className="container">
+                <div className=" flex flex-col items-start">
                   <Searchbar />
                 </div>
               </Suspense>

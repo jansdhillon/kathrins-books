@@ -1,11 +1,12 @@
-import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 
 export default function TermsOfServicePage() {
   return (
     <div className="leading-loose flex flex-col gap-3">
       <h1 className="text-2xl font-bold">Terms of Service</h1>
-      <p className="font-semibold text-muted-foreground">Last updated: October 27, 2024</p>
+      <p className="font-semibold text-muted-foreground">
+        Last updated: October 28, 2024
+      </p>
 
       <h2 className="font-semibold">Acceptance of Terms</h2>
       <p>
@@ -29,13 +30,11 @@ export default function TermsOfServicePage() {
         constitutes a breach of the Terms.
       </p>
 
-      <h2 className="font-semibold">Intellectual Property</h2>
+      <h2 className="font-semibold">Refund Policy</h2>
       <p>
-        The Site and its original content, features, and functionality are and
-        will remain the exclusive property of Kathrin's Books and its licensors.
-        All book covers and images displayed on the Site are the property of
-        their respective publishers and are used solely for the purpose of
-        identifying the products.
+        All products are sold as is and all sales are final. We will do our best
+        to provide accurate descriptions, but do not offer refunds or exchanges
+        for any products purchased on the Site unless required by law.
       </p>
 
       <h2 className="font-semibold">Purchases and Payment Processing</h2>
@@ -46,7 +45,8 @@ export default function TermsOfServicePage() {
         description or price of the product, or error in your order.
       </p>
       <p>
-        All prices are in Canadian dollars and are subject to applicable taxes.
+        All prices are in Canadian dollars (CAD) and are subject to applicable
+        taxes.
       </p>
       <p>
         Transactions are securely processed through Stripe, a third-party
@@ -61,10 +61,13 @@ export default function TermsOfServicePage() {
         .
       </p>
 
-      <h2 className="font-semibold">Refund Policy</h2>
+      <h2 className="font-semibold">Intellectual Property</h2>
       <p>
-        All sales are final. We do not offer refunds or exchanges for any
-        products purchased on the Site unless required by law.
+        The Site and its original content, features, and functionality are and
+        will remain the exclusive property of Kathrin's Books and its licensors.
+        All book covers and images displayed on the Site are the property of
+        their respective publishers and are used solely for the purpose of
+        identifying the products.
       </p>
 
       <h2 className="font-semibold">Limitation of Liability</h2>

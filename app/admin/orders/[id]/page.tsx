@@ -205,24 +205,24 @@ export default function AdminOrderDetailsPage({
             <CardTitle>Order Summary</CardTitle>
             <div className="text-sm space-y-4 pt-4 text-muted-foreground">
               <p>
-                <span className="font-semibold text-primary">Order ID:</span>{" "}
+                <span className="font-semibold text-foreground">Order ID:</span>{" "}
                 {order.id}
               </p>
               <p>
-                <span className="font-semibold text-primary">Order Date:</span>{" "}
+                <span className="font-semibold text-foreground">Order Date:</span>{" "}
                 {new Date(order?.ordered_at).toLocaleDateString()}
               </p>
               <p>
-                <span className="font-semibold text-primary">Total:</span> $
+                <span className="font-semibold text-foreground">Total:</span> $
                 {((order?.items_total || (0 as number)) / 100).toFixed(2)}
               </p>
               <p>
-                <span className="font-semibold text-primary">Shipping:</span> $
+                <span className="font-semibold text-foreground">Shipping:</span> $
                 {((order?.shipping_cost || (0 as number)) / 100).toFixed(2)}
               </p>
               {address && (
                 <p>
-                  <span className="font-semibold text-primary">
+                  <span className="font-semibold text-foreground">
                     Shipping Address:
                   </span>{" "}
                   {`${address?.name!}, `}
@@ -233,26 +233,26 @@ export default function AdminOrderDetailsPage({
               )}
 
               <p>
-                <span className="font-semibold text-primary">Status:</span>{" "}
+                <span className="font-semibold text-foreground">Status:</span>{" "}
                 <Badge>{order.status}</Badge>
               </p>
               {order.status === "Shipped" && (
                 <>
                   <p>
-                    <span className="font-semibold text-primary">
+                    <span className="font-semibold text-foreground">
                       Tracking Number:
                     </span>{" "}
                     {order.tracking_number}
                   </p>
                   <p>
-                    <span className="font-semibold text-primary">
+                    <span className="font-semibold text-foreground">
                       Shipping Provider:
                     </span>{" "}
                     {order.shipping_provider}
                   </p>
                 </>
               )}
-              <p className=" flex w-full justify-center font-bold text-base text-primary">
+              <p className=" flex w-full justify-center font-bold text-base text-foreground">
                 {statusMessage}
               </p>
             </div>

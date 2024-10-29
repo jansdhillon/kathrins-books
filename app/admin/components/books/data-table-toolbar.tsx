@@ -62,7 +62,7 @@ export function DataTableToolbar<TData>({
             value={globalFilter ?? ""}
             onChange={handleFilterChange}
             placeholder="Search books..."
-            className="w-full max-w-sm pl-8"
+            className="w-full max-w-sm pl-8 text-foreground"
           />
           <Search
             className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground"
