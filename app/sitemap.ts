@@ -27,18 +27,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.1,
     },
     {
-      url: "https://kathrinsbooks.com/cart",
-      lastModified: new Date(),
-      changeFrequency: "always",
-      priority: 0.1,
-    },
-    {
-      url: "https://kathrinsbooks.com/success",
-      lastModified: new Date(),
-      changeFrequency: "never",
-      priority: 0.1,
-    },
-    {
       url: "https://kathrinsbooks.com/contact",
       lastModified: new Date(),
       changeFrequency: "yearly",
@@ -51,28 +39,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.6,
     },
     {
-      url: "https://kathrinsbooks.com/orders",
-      lastModified: new Date(),
-      changeFrequency: "always",
-      priority: 0.1,
-    },
-    {
       url: "https://kathrinsbooks.com/shipping",
       lastModified: new Date(),
       changeFrequency: "yearly",
       priority: 0.2,
-    },
-    {
-      url: "https://kathrinsbooks.com/error",
-      lastModified: new Date(),
-      changeFrequency: "never",
-      priority: 0.1,
-    },
-    {
-      url: "https://kathrinsbooks.com/reset-password",
-      lastModified: new Date(),
-      changeFrequency: "yearly",
-      priority: 0.1,
     },
     {
       url: "https://kathrinsbooks.com/shipping",

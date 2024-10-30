@@ -6,7 +6,7 @@ import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
 import Feedback from "@/components/feedback";
 import { Toaster } from "@/components/ui/toaster";
-import { Viewport } from "next";
+import { Metadata, Viewport } from "next";
 import { getURL } from "@/utils/helpers";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Script from "next/script";
@@ -22,10 +22,10 @@ const inter = Inter({
   display: "swap",
 });
 
-export const metadata = {
-  metadataBase: getURL(),
+export const metadata: Metadata = {
+  metadataBase: new URL(getURL()),
   title: "Kathrin's Books",
-  description: "A curated online book store",
+  description: "An online bookstore for rare and unique books, curated by Kathrin.",
 };
 
 export default function RootLayout({
