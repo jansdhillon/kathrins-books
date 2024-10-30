@@ -13,7 +13,7 @@ export function AnalyticsWrapper({ getAnalytics } : { getAnalytics: () => Promis
       setAnalyticsData(
         data.rows?.map((row: any) => ({
           date: row?.dimensionValues && row.dimensionValues[0]?.value && moment(row.dimensionValues[0].value, "YYYYMMDD").format("DD/MM/YYYY"),
-          users: row?.metricValues && row.metricValues[0]?.value,
+          activeUsers: row?.metricValues && row.metricValues[0]?.value,
         }))
       );
       console.log("Analytics data", analyticsData);
@@ -26,15 +26,15 @@ export function AnalyticsWrapper({ getAnalytics } : { getAnalytics: () => Promis
       <ResponsiveContainer width="100%" height={400}>
         <LineChart data={analyticsData}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="date" label="date" name="Date" />
+          <XAxis dataKey="date" />
           <YAxis />
           <Tooltip />
           <Legend />
           <Line
             type="monotone"
-            label="users"
-            name="Users"
-            dataKey="users"
+            label="activeUsers"
+            name="Active Users"
+            dataKey="activeUsers"
             stroke="#8884d8"
             activeDot={{ r: 8 }}
           />
