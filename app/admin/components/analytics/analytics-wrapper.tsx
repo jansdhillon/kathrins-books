@@ -1,22 +1,9 @@
 "use client";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { useEffect, useState } from "react";
-import { formatDate } from "date-fns";
+import moment from "moment";
 
-export function AnalyticsWrapper({
-  getAnalytics,
-}: {
-  getAnalytics: () => Promise<any>;
-}) {
+export function AnalyticsWrapper({ getAnalytics } : { getAnalytics: () => Promise<any> }) {
   const [analyticsData, setAnalyticsData] = useState([]);
 
   useEffect(() => {
@@ -25,10 +12,7 @@ export function AnalyticsWrapper({
       console.log("Data from GA", data);
       setAnalyticsData(
         data.rows?.map((row: any) => ({
-          date: formatDate(
-            new Date(row.dimensionValues[0].value),
-            "yyyy-MM-dd"
-          ).toString(),
+          date: row?.dimensionValues && row.dimensionValues[0]?.value && moment(row.dimensionValues[0].value, "YYYYMMDD").format("DD/MM/YYYY"),
           users: row?.metricValues && row.metricValues[0]?.value,
         }))
       );
