@@ -7,8 +7,7 @@ export function AnalyticsWrapper({ getAnalytics } : { getAnalytics: () => Promis
 
   useEffect(() => {
     async function fetchAnalytics() {
-      const response = await getAnalytics();
-      const data = await response.json();
+      const data = await getAnalytics();
       setAnalyticsData(
         data.rows.map((row: any) => ({
           date: row.dimensionValues[0].value,
