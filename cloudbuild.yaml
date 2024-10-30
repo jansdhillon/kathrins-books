@@ -79,6 +79,15 @@ steps:
         gcloud secrets versions access latest --secret=NEXT_PUBLIC_GA_PROPERTY_ID --format='get(payload.data)' \
         | tr '_-' '/+' | base64 -d > next_public_ga_property_id.txt
 
+  - name: "gcr.io/cloud-builders/gcloud"
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        gcloud secrets versions access latest --secret=NEXT_PUBLIC_GA_PROJECT_ID --format='get(payload.data)' \
+        | tr '_-' '/+' | base64 -d > next_public_ga_project_id.txt
+
+
 
 
   - name: "gcr.io/cloud-builders/docker"
@@ -97,6 +106,7 @@ steps:
           --build-arg ADMIN_EMAIL="$(cat admin_email.txt)" \
           --build-arg NEXT_PUBLIC_GOOGLE_ANALYTICS_MEASUREMENT_ID="$(cat next_public_google_analytics_measurement_id.txt)" \
           --build-arg NEXT_PUBLIC_GA_PROPERTY_ID="$(cat next_public_ga_property_id.txt)" \
+          --build-arg NEXT_PUBLIC_GA_PROPERTY_ID="$(cat next_public_ga_project_id.txt)" \
           -t gcr.io/prairie-books/prairie-books \
           .
 
