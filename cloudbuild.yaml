@@ -70,7 +70,6 @@ steps:
         gcloud secrets versions access latest --secret=NEXT_PUBLIC_GOOGLE_ANALYTICS_MEASUREMENT_ID --format='get(payload.data)' \
         | tr '_-' '/+' | base64 -d > next_public_google_analytics_measurement_id.txt
 
-
   - name: "gcr.io/cloud-builders/gcloud"
     entrypoint: "bash"
     args:
@@ -102,7 +101,6 @@ steps:
         gcloud secrets versions access latest --secret=GA_PRIVATE_KEY --format='get(payload.data)' \
         | tr '_-' '/+' | base64 -d > ga_private_key.json
 
-
   - name: "gcr.io/cloud-builders/docker"
     entrypoint: "bash"
     args:
@@ -121,7 +119,7 @@ steps:
           --build-arg NEXT_PUBLIC_GA_PROPERTY_ID="$(cat next_public_ga_property_id.txt)" \
           --build-arg NEXT_PUBLIC_GA_PROJECT_ID="$(cat next_public_ga_project_id.txt)" \
           --build-arg GA_CLIENT_EMAIL="$(cat ga_client_email.txt)" \
-          --build-arg GA_PRIVATE_KEY="$(cat ga_private_key.json)" \
+          --build-arg GA_PRIVATE_KEY="$(cat ga_private_key.json | base64 | tr -d '\n')" \
           -t gcr.io/prairie-books/prairie-books \
           .
 
