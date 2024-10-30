@@ -10,7 +10,6 @@ import { Suspense } from "react";
 import Loading from "../loading";
 import { AnalyticsWrapper } from "./components/analytics/analytics-wrapper";
 import { getAnalytics } from "../actions/get-analytics";
-import moment from "moment";
 
 export default async function AdminDashboard() {
   const supabase = createClient();
@@ -27,16 +26,6 @@ export default async function AdminDashboard() {
   const books = await getAllBooks();
 
   const orders = await getAllOrders();
-
-  const analytics = await getAnalytics();
-
-  const analyticData = analytics.rows?.map((row: any) => ({
-    date:
-      row?.dimensionValues &&
-      row.dimensionValues[0]?.value &&
-      moment(row.dimensionValues[0].value, "YYYYMMDD").format("DD/MM/YYYY"),
-    users: row?.metricValues && row.metricValues[0]?.value,
-  }));
 
   return (
     <div className="space-y-6">
@@ -59,7 +48,7 @@ export default async function AdminDashboard() {
             <BooksClientWrapper data={books} />
           </TabsContent>
           <TabsContent value="analytics">
-            <AnalyticsWrapper data={analyticData} />
+            <AnalyticsWrapper getAnalytics={getAnalytics} />
           </TabsContent>
         </Suspense>
       </Tabs>
