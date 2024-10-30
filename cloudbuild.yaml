@@ -77,15 +77,6 @@ steps:
       - |
         gcloud secrets versions access latest --secret=GA_PROPERTY_ID --format='get(payload.data)' \
         | tr '_-' '/+' | base64 -d > ga_property_id.txt
-
-  - name: "gcr.io/cloud-builders/gcloud"
-    entrypoint: "bash"
-    args:
-      - "-c"
-      - |
-        gcloud secrets versions access latest --secret=GA_CLIENT_EMAIL --format='get(payload.data)' \
-        | tr '_-' '/+' | base64 -d > ga_client_email.txt
-
   - name: "gcr.io/cloud-builders/gcloud"
     entrypoint: "bash"
     args:
@@ -110,7 +101,6 @@ steps:
           --build-arg ADMIN_EMAIL="$(cat admin_email.txt)" \
           --build-arg NEXT_PUBLIC_GA_MEASUREMENT_ID="$(cat next_public_ga_measurement_id.txt)" \
           --build-arg GA_PROPERTY_ID="$(cat ga_property_id.txt)" \
-          --build-arg GA_CLIENT_EMAIL="$(cat ga_client_email.txt)" \
           --build-arg GA_PRIVATE_KEY="$(cat ga_private_key.json | base64 | tr -d '\n')" \
           -t gcr.io/prairie-books/prairie-books \
           .

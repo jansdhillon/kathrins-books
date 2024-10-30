@@ -8,12 +8,14 @@ export function AnalyticsWrapper({ getAnalytics } : { getAnalytics: () => Promis
   useEffect(() => {
     async function fetchAnalytics() {
       const data = await getAnalytics();
+      console.log("Data from GA", data);
       setAnalyticsData(
         data.rows.map((row: any) => ({
           date: row.dimensionValues[0].value,
           users: row.metricValues[0].value,
         }))
       );
+      console.log("Analytics data", analyticsData);
     }
     fetchAnalytics();
   }, []);

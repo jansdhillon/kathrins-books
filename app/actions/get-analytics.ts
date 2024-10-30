@@ -3,9 +3,9 @@
 import { BetaAnalyticsDataClient } from "@google-analytics/data";
 
 const getAnalytics = async () => {
-  const GA_CLIENT_EMAIL = process.env.GA_CLIENT_EMAIL;
   const GA_PRIVATE_KEY_JSON = JSON.parse(process.env.GA_PRIVATE_KEY!);
   const GA_PRIVATE_KEY = GA_PRIVATE_KEY_JSON.private_key;
+  const GA_CLIENT_EMAIL = GA_PRIVATE_KEY_JSON.client_email;
   const analyticsDataClient = new BetaAnalyticsDataClient({
     credentials: { client_email: GA_CLIENT_EMAIL, private_key: GA_PRIVATE_KEY },
   });
@@ -14,6 +14,7 @@ const getAnalytics = async () => {
     dateRanges: [{ startDate: "30daysAgo", endDate: "today" }],
     metrics: [{ name: "activeUsers" }],
   });
+  console.log("Response from GA", response);
   return response;
 };
 
