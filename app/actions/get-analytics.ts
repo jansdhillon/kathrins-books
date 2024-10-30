@@ -13,6 +13,7 @@ const getAnalytics = async () => {
     property: `properties/${process.env.GA_PROPERTY_ID}`,
     dateRanges: [{ startDate: "30daysAgo", endDate: "today" }],
     metrics: [{ name: "activeUsers" }],
+    dimensions: [{ name: "date" }],
   });
   console.log("Response from GA", response);
   return response;
