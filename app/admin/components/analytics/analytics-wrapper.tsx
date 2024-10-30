@@ -12,7 +12,7 @@ export function AnalyticsWrapper({ getAnalytics } : { getAnalytics: () => Promis
       setAnalyticsData(
         data.rows?.map((row: any) => ({
           date: row?.dimensionValues && row.dimensionValues[0]?.value,
-          activeUsers: row?.metricValues && row.metricValues[0]?.value,
+          users: row?.metricValues && row.metricValues[0]?.value,
         }))
       );
       console.log("Analytics data", analyticsData);
@@ -21,13 +21,15 @@ export function AnalyticsWrapper({ getAnalytics } : { getAnalytics: () => Promis
   }, []);
 
   return (
-    <LineChart width={500} height={300} data={analyticsData}>
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="date" />
-      <YAxis />
-      <Tooltip />
-      <Legend />
-      <Line type="monotone" dataKey="users" stroke="#8884d8" />
-    </LineChart>
+    <div className="space-y-6 flex flex-col w-full place-items-center container">
+      <LineChart width={500} height={300} data={analyticsData}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="date" />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        <Line type="monotone" dataKey="users" stroke="#8884d8" />
+      </LineChart>
+    </div>
   );
 }
