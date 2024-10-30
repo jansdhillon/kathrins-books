@@ -1,8 +1,22 @@
 "use client";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 import { useEffect, useState } from "react";
+import { formatDate } from "date-fns";
 
-export function AnalyticsWrapper({ getAnalytics } : { getAnalytics: () => Promise<any> }) {
+export function AnalyticsWrapper({
+  getAnalytics,
+}: {
+  getAnalytics: () => Promise<any>;
+}) {
   const [analyticsData, setAnalyticsData] = useState([]);
 
   useEffect(() => {
@@ -11,7 +25,10 @@ export function AnalyticsWrapper({ getAnalytics } : { getAnalytics: () => Promis
       console.log("Data from GA", data);
       setAnalyticsData(
         data.rows?.map((row: any) => ({
-          date: row?.dimensionValues && row.dimensionValues[0]?.value,
+          date: formatDate(
+            new Date(row.dimensionValues[0].value),
+            "yyyy-MM-dd"
+          ).toString(),
           users: row?.metricValues && row.metricValues[0]?.value,
         }))
       );
@@ -21,15 +38,24 @@ export function AnalyticsWrapper({ getAnalytics } : { getAnalytics: () => Promis
   }, []);
 
   return (
-    <div className="space-y-6 flex flex-col w-full place-items-center container">
-      <LineChart width={500} height={300} data={analyticsData}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="date" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Line type="monotone" dataKey="users" stroke="#8884d8" />
-      </LineChart>
+    <div className="w-full flex justify-center items-center">
+      <ResponsiveContainer width="100%" height={400}>
+        <LineChart data={analyticsData}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="date" label="date" name="Date" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Line
+            type="monotone"
+            label="users"
+            name="Users"
+            dataKey="users"
+            stroke="#8884d8"
+            activeDot={{ r: 8 }}
+          />
+        </LineChart>
+      </ResponsiveContainer>
     </div>
   );
 }
